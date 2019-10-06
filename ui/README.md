@@ -1,4 +1,4 @@
-# renown-apperel
+# ui
 
 ## Project setup
 ```
