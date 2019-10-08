@@ -1,6 +1,22 @@
 <template>
-  <div class ="nav" id="nav">
-    <router-link to="/">Home</router-link>
+  <div>
+
+    <div class="nav" id="nav">
+      <b-nav class="nav-bar" tabs align="center">
+        <b-nav-item>
+          <router-link to="/Mens">Mens</router-link>
+        </b-nav-item>
+        <b-nav-item>
+          <router-link to="/Womens">Womens</router-link>
+        </b-nav-item>
+        <b-nav-item>
+          <router-link to="/About">About</router-link>
+        </b-nav-item>
+        <b-nav-item>
+          <router-link to="/All">All</router-link>
+        </b-nav-item>
+      </b-nav>
+    </div>
   </div>
 </template>
 
@@ -14,7 +30,20 @@ export default class Nav extends Vue {
 </script>
 
 <style lang="scss">
-.nav{
-    border: 1px solid;
+@import '../styles/global.scss';
+
+.nav-bar{
+  width: 100%;
+  background-color: $flash-white;
+}
+
+#nav {
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+    &.router-link-exact-active {
+      color: $red;
+    }
+  }
 }
 </style>

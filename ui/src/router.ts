@@ -20,6 +20,26 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () =>
         import(/* webpackChunkName: "about" */ "./views/Admin.vue")
+    },
+    {
+      path: "/mens",
+      name: "mens",
+      component: Home
+    },
+    {
+      path: "/womens",
+      name: "womens",
+      component: Home
+    },
+    {
+      path: "/about",
+      name: "about",
+      component: Home
+    },
+    {
+      path: "/all",
+      name: "all",
+      component: Home
     }
   ]
 });
