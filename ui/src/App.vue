@@ -5,18 +5,24 @@
         <img class alt="Vue logo" src="./assets/logo.png" />
       </router-link>
     </div>
-    <router-view />
+    <Home />
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import {GetDeals} from './services/mock-data.ts'
+import { Component, Vue } from "vue-property-decorator";
+import Home from "@/views/Home.vue"; // @   is an alias to /src
 
 const deals = GetDeals();
 
-export default {
-  
-}
+@Component({
+  components: {
+    Home
+  }
+})
+
+export default class App extends Vue {}
 </script>
 
 <style lang="scss">

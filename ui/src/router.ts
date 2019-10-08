@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/Home.vue";
+import Landing from "./components/Landing.vue";
+import Mens from "./views/Mens.vue";
 
 Vue.use(Router);
 
@@ -9,8 +10,8 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "home",
-      component: Home
+      name: "main",
+      component: Landing
     },
     {
       path: "/admin",
@@ -24,22 +25,22 @@ export default new Router({
     {
       path: "/mens",
       name: "mens",
-      component: Home
+      component: Mens
     },
     {
       path: "/womens",
-      name: "womens",
-      component: Home
+      name: "womens"//,
+      //component: null
     },
     {
       path: "/about",
-      name: "about",
-      component: Home
+      name: "about"//,
+      //component: null
     },
     {
       path: "/all",
-      name: "all",
-      component: Home
+      name: "all"//,
+      //component: null
     }
   ]
 });

@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="container">
   <img class="banner-img" src="https://i.ebayimg.com/images/g/ogIAAOSwLPpdmlXS/s-l500.jpg"/>
   <!-- <img class="banner-img" src="../assets/s-l500.jpg"/> -->
 </div>
@@ -9,7 +9,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
-export default class HelloWorld extends Vue {
+export default class Landing extends Vue {
   @Prop() private msg!: string;
 }
 </script>
