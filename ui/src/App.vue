@@ -1,18 +1,19 @@
 <template>
   <div id="app">
     <b-row id="logo-row">
-     <b-col offset="4">
+      <b-col offset="4">
         <router-link to="/">
           <img class alt="Vue logo" src="./assets/logo.png" />
         </router-link>
       </b-col>
-      <b-col>
-        <font-awesome-icon class="cart-icon" :icon="['fab', 'open-cart']" size="3x">
-          <b-badge>1</b-badge>
-        </font-awesome-icon>
+      <b-col class="cart-container">
+        <div>
+          <font-awesome-icon class="cart-icon" :icon="['fab', 'opencart']" size="2x"></font-awesome-icon>
+          <b-badge class="item-count">1</b-badge>
+        </div>
       </b-col>
     </b-row>
-    <Home /> 
+    <Home />
   </div>
 </template>
 
@@ -50,15 +51,19 @@ img {
 .logo-row {
   background-color: $gun-metal;
 }
-
+.cart-container {
+  text-align: right;
+}
 .cart-icon {
-  position: absolute;
-  right: 2em;
-  top: 1em;
-  height: 3em;
-  width: 3em;
-  display: block;
+  display: inline-block;
   color: black;
-  border: 1px solid blue;
+    margin-top: .5em;
+    margin-right: 0.5em;
+}
+
+.item-count {
+  position: absolute;
+  bottom: 15px;
+  right: 25px;
 }
 </style>

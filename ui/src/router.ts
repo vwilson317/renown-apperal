@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Landing from './components/Landing.vue';
+import Landing from './views/Landing.vue';
 import Mens from './views/Mens.vue';
 
 Vue.use(Router);
