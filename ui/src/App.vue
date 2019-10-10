@@ -10,23 +10,22 @@
 </template>
 
 <script lang="ts">
-import {GetDeals} from './services/mock-data.ts'
-import { Component, Vue } from "vue-property-decorator";
-import Home from "@/views/Home.vue"; // @   is an alias to /src
+import {GetDeals} from './services/mock-data';
+import Vue from 'vue';
+import Home from '@/views/Home.vue'; // @   is an alias to /src
 
 const deals = GetDeals();
 
-@Component({
-  components: {
-    Home
-  }
-})
-
-export default class App extends Vue {}
+export default Vue.extend({
+    name: 'App',
+    components: {
+      Home,
+  },
+});
 </script>
 
-<style lang="scss">
-@import "@/styles/global.scss";
+<style lang='scss'>
+@import '@/styles/global.scss';
 
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;

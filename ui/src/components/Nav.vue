@@ -21,12 +21,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import Vue from 'vue';
 
-@Component
-export default class Nav extends Vue {
-  //@Prop() private msg!: string;
-}
+export default Vue.extend({
+  name: 'Nav',
+  // @Prop() private msg!: string;
+});
 </script>
 
 <style lang="scss">

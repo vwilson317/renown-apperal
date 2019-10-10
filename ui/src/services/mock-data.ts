@@ -3,7 +3,7 @@ export const GetDeals = () => {
         {
             Name: 'Big shirt',
             ImageUrl: '',
-            Price: '3.00'
+            Price: '3.00',
         },
     ];
-}
+};
