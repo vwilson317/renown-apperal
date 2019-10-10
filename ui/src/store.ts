@@ -16,4 +16,13 @@ export default new Vuex.Store({
   actions: {
 
   },
+  getters: {
+    total(state){
+      let val: number = 0;
+      state.cartItems.forEach((currentItem: IListing) => {
+          val += parseInt(currentItem.Price);
+      });
+      return val;
+  }
+  }
 });

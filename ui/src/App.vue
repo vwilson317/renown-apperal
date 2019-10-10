@@ -33,8 +33,7 @@ export default Vue.extend({
   },
   methods:{
     click(){
-      const item = {Name: 'Test'};
-      this.$router.push({name: 'detail', params: {item: item}});
+      this.$router.push('cart');
     }
   },
   computed:{
