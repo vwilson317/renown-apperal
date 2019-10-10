@@ -28,14 +28,18 @@ export default Vue.extend({
     Home
   },
   data(){
-    return{
-      itemCount: 10
+    return {
     }
   },
   methods:{
     click(){
       const item = {Name: 'Test'};
       this.$router.push({name: 'detail', params: {item: item}});
+    }
+  },
+  computed:{
+    itemCount(){
+      return this.$store.state.cartItems.length;
     }
   }
 });

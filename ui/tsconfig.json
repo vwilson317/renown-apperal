@@ -10,6 +10,7 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "allowJs": true,
     "types": [
       "webpack-env"
     ],
@@ -26,11 +27,9 @@
     ]
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "src/**/*"
   ],
   "exclude": [
     "node_modules"
