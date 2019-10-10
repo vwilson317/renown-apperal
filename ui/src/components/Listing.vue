@@ -9,18 +9,21 @@
 import Vue from "vue";
 import { IListing } from "../services/mock-data";
 import router from "../router";
+import store from "../store";
 
 export default Vue.extend({
   name: "Listing",
   props: {
-    'item': {type: IListing}
+    item: { type: IListing }
   },
   data() {
     return {};
   },
   methods: {
     click: (item: IListing): void => {
-      router.push({ name: "detail", params: {item: item }});
+      //move to add button
+      store.commit("addItemToCart", item);
+      router.push({ name: "detail", params: { item: item } });
     }
   }
 });
