@@ -9,7 +9,7 @@
       <b-col class="cart-container">
         <div>
           <font-awesome-icon class="cart-icon" :icon="['fab', 'opencart']" size="2x"></font-awesome-icon>
-          <b-badge class="item-count">1</b-badge>
+          <b-badge class="item-count">{{itemCount}}</b-badge>
         </div>
       </b-col>
     </b-row>
@@ -26,6 +26,11 @@ export default Vue.extend({
   name: "App",
   components: {
     Home
+  },
+  data(){
+    return{
+      itemCount: 10
+    }
   }
 });
 </script>

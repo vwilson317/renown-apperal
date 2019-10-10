@@ -6,10 +6,7 @@
       </b-col>
     </b-row>
     <b-row algin-h="around">
-      <b-col v-for="item in items" :key="item.index">
-        <b-img thumbnail fluid rounded="circle" class="banner-img" :src="item.ImageUrl" />
-        <h5>{{item.Name}}</h5>
-      </b-col>
+      <Listing v-for="item in items" :key="item.index" :item="item"/>
     </b-row>
   </b-container>
 </template>
@@ -17,6 +14,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { GetListing, IListing } from "../services/mock-data";
+import Listing from '../components/Listing.vue';
 
 export default Vue.extend({
   name: "Landing",
@@ -51,6 +49,9 @@ export default Vue.extend({
       //     console.log(error)
       // })
     }
+  },
+  components:{
+    Listing
   }
 });
 </script>
