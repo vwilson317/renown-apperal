@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Landing from './views/Landing.vue';
 import Mens from './views/Mens.vue';
+import Detail from './views/Detail.vue';
+import Cart from './views/Cart.vue';
 
 Vue.use(Router);
 
@@ -44,8 +46,14 @@ export default new Router({
     },
     {
       path: '/detail',
-      name: 'detail', // ,
-      // component: null
+      name: 'detail',
+      component: Detail,
+      props: {}
+    },
+    {
+      path: '/cart',
+      name: 'cart',
+      component: Cart
     }
   ]
 });

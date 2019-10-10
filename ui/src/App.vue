@@ -7,7 +7,7 @@
         </router-link>
       </b-col>
       <b-col class="cart-container">
-        <div>
+        <div @click="click">
           <font-awesome-icon class="cart-icon" :icon="['fab', 'opencart']" size="2x"></font-awesome-icon>
           <b-badge class="item-count">{{itemCount}}</b-badge>
         </div>
@@ -30,6 +30,12 @@ export default Vue.extend({
   data(){
     return{
       itemCount: 10
+    }
+  },
+  methods:{
+    click(){
+      const item = {Name: 'Test'};
+      this.$router.push({name: 'detail', params: {item: item}});
     }
   }
 });

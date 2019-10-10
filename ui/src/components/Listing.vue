@@ -4,11 +4,13 @@
         <h5>{{item.Name}}</h5>
       </b-col>
 </template>
-<script lang="ts">
-import {IListing} from '../services/mock-data';
-import {Router} from '../router';
 
-export default {
+<script lang="ts">
+import Vue from 'vue';
+import {IListing} from '../services/mock-data';
+import router from '../router'
+
+export default Vue.extend({
     name: 'Listing',
     props: {
         item: IListing
@@ -20,8 +22,8 @@ export default {
     },
     methods: {
         click: (): void => {
-            this.$router.push('detail');//, {params: this.item});
+            router.push({name: 'detail', params: {item: this.item}});
         }
     }
-}
+});
 </script>

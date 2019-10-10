@@ -1,6 +1,6 @@
 <template>
     <b-container>
-        {{itemx}}
+        Cart
     </b-container>
 </template>
 
@@ -8,13 +8,12 @@
 import { IListing } from '../services/mock-data';
 
 export default {
-    name: 'Detail',
+    name: 'Cart',
     props: {
-        item: IListing
     },
     data(){
         return{
-            itemx: this.item
+
         }
     }
 }
