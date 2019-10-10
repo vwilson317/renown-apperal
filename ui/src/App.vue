@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <b-row id="logo-row">
+    <b-row class="logo-row">
       <b-col offset="4">
         <router-link to="/">
           <img class alt="Vue logo" src="./assets/logo.png" />
@@ -52,8 +52,8 @@ img {
 }
 
 .logo-row {
-  background-color: $gun-metal;
 }
+
 .cart-container {
   text-align: right;
 }
