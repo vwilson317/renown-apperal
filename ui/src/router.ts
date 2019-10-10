@@ -48,7 +48,7 @@ export default new Router({
       path: '/detail',
       name: 'detail',
       component: Detail,
-      props: {}
+      props: true
     },
     {
       path: '/cart',

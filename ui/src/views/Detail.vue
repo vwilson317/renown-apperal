@@ -1,21 +1,19 @@
 <template>
     <b-container>
-        {{itemx}}
+        {{item.Name}}
     </b-container>
 </template>
 
 <script lang="ts">
+import Vue from 'vue';
 import { IListing } from '../services/mock-data';
 
-export default {
+export default Vue.extend({
     name: 'Detail',
-    props: {
-        item: IListing
-    },
+    props: ['item'],
     data(){
         return{
-            itemx: this.item
         }
     }
-}
+});
 </script>
