@@ -18,11 +18,9 @@
 </template>
 
 <script lang="ts">
-import { GetDeals } from "./services/mock-data";
 import Vue from "vue";
 import Home from "@/views/Home.vue"; // @   is an alias to /src
 
-const deals = GetDeals();
 
 export default Vue.extend({
   name: "App",
@@ -65,5 +63,10 @@ img {
   position: absolute;
   bottom: 15px;
   right: 25px;
+}
+
+.badge-secondary {
+  background-color: $red;
+  opacity: 0.8;
 }
 </style>

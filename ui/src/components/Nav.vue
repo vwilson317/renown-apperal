@@ -1,6 +1,4 @@
 <template>
-  <div>
-
     <div class="nav" id="nav">
       <b-nav class="nav-bar" tabs align="center">
         <b-nav-item>
@@ -17,7 +15,6 @@
         </b-nav-item>
       </b-nav>
     </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -25,7 +22,6 @@ import Vue from 'vue';
 
 export default Vue.extend({
   name: 'Nav',
-  // @Prop() private msg!: string;
 });
 </script>
 
@@ -45,5 +41,8 @@ export default Vue.extend({
       color: $red;
     }
   }
+
+  margin-bottom: 2em;
+
 }
 </style>
