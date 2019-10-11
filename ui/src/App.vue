@@ -1,13 +1,14 @@
 <template>
   <div id="app">
     <b-row class="logo-row">
-      <b-col offset="4">
+      <b-col offset="2">
         <router-link to="/">
           <img class alt="Vue logo" src="./assets/logo.png" />
         </router-link>
       </b-col>
-      <b-col class="cart-container">
+      <b-col class="cart-container" cols="2">
         <div @click="click">
+          <span>Cart</span>
           <font-awesome-icon class="cart-icon" :icon="['fab', 'opencart']" size="2x"></font-awesome-icon>
           <b-badge class="item-count">{{itemCount}}</b-badge>
         </div>
@@ -21,23 +22,21 @@
 import Vue from "vue";
 import Home from "@/views/Home.vue"; // @   is an alias to /src
 
-
 export default Vue.extend({
   name: "App",
   components: {
     Home
   },
-  data(){
-    return {
+  data() {
+    return {};
+  },
+  methods: {
+    click() {
+      this.$router.push("cart");
     }
   },
-  methods:{
-    click(){
-      this.$router.push('cart');
-    }
-  },
-  computed:{
-    itemCount(){
+  computed: {
+    itemCount() {
       return this.$store.state.cartItems.length;
     }
   }
@@ -65,12 +64,14 @@ img {
 
 .cart-container {
   text-align: right;
+  border-left: 1px solid gray;
 }
+
 .cart-icon {
   display: inline-block;
   color: black;
-    margin-top: .5em;
-    margin-right: 0.5em;
+  margin-top: 0.5em;
+  margin-right: 0.5em;
 }
 
 .item-count {

@@ -5,7 +5,7 @@
         <h1>Most Viewed</h1>
       </b-col>
     </b-row>
-    <b-row algin-h="around">
+    <b-row>
       <Listing v-for="item in items" :key="item.index" :item="item"/>
     </b-row>
   </b-container>
@@ -61,9 +61,5 @@ export default Vue.extend({
 h3 {
   margin: 40px 0 0;
 }
-.banner-img {
-  height: 35vh;
-  width: 100%;
-  margin-top: 2em;
-}
+
 </style>

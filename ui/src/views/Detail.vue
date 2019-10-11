@@ -1,19 +1,82 @@
 <template>
-    <b-container>
-        {{item.Name}}
-    </b-container>
+  <b-container class="detail-container">
+    <b-row align-h="center">
+      <div class="main-img">
+        <b-img :src="mainImg" />
+      </div>
+      <b-col class="addition-images-col" cols="1">
+        <b-row align-h="start">
+          <b-img
+            v-for="currentImage in additionalImages"
+            :src="currentImage"
+            :key="currentImage.index"
+            @mouseenter="changeMainPic(currentImage)"
+            @mouseleave="changeMainPic(item.ImageUrl)"
+          />
+        </b-row>
+      </b-col>
+    </b-row>
+    <b-row align-h="center">{{item.Name}}</b-row>
+  </b-container>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { IListing } from '../services/mock-data';
+import Vue from "vue";
+import { IListing } from "../services/mock-data";
 
 export default Vue.extend({
-    name: 'Detail',
-    props: ['item'],
-    data(){
-        return{
-        }
+  name: "Detail",
+  props: ["item"],
+  data() {
+    return {
+      additionalImages: [
+        "https://i.ebayimg.com/thumbs/images/g/9s0AAOSwURhdmlXN/s-l225.webp",
+        "https://i.ebayimg.com/thumbs/images/g/9s0AAOSwURhdmlXN/s-l225.webp",
+        "https://i.ebayimg.com/thumbs/images/g/9s0AAOSwURhdmlXN/s-l225.webp",
+        "https://i.ebayimg.com/thumbs/images/g/9s0AAOSwURhdmlXN/s-l225.webp",
+        "https://i.ebayimg.com/thumbs/images/g/9s0AAOSwURhdmlXN/s-l225.webp",
+        "https://i.ebayimg.com/thumbs/images/g/9s0AAOSwURhdmlXN/s-l225.webp",
+        "https://i.ebayimg.com/thumbs/images/g/9s0AAOSwURhdmlXN/s-l225.webp"
+      ],
+      mainImg: "" as string
+    };
+  },
+  beforeMount() {
+    this.mainImg = this.$props.item.ImageUrl;
+  },
+  methods: {
+    changeMainPic(imgSrc: string) {
+      this.mainImg = imgSrc;
     }
+  }
 });
 </script>
+
+<style scoped lang="scss">
+.detail-container{
+    img {
+        margin: 0;
+    }
+}
+
+.main-img {
+  height: 25em;
+  width: 25em;
+  border: 1px solid black;
+  margin-right: 1em;
+
+  img{
+      width: 100%;
+      height: 100%;
+  }
+}
+
+.addition-images-col {
+  border: 1px solid black;
+
+  img {
+    width: 100%;
+    padding-bottom: .5em;
+  }
+}
+</style>
