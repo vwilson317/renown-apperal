@@ -3,10 +3,10 @@
     <b-container>
       <b-img thumbnail fluid-grow class="banner-img" :src="item.ImageUrl" @click="itemClick(item)" />
     </b-container>
-    <div>
-      <a @click="addToCartClick(item)">
+    <div class="detail-container">
+      <b-button variant="link" @click="addToCartClick(item)">
         <font-awesome-icon :icon="['far', 'plus-square']" size="2x"></font-awesome-icon>
-      </a>
+      </b-button>
       <h6>{{shortenName(item.Name)}}</h6>
     </div>
   </b-col>
@@ -47,10 +47,11 @@ export default Vue.extend({
 @import "@/styles/global.scss";
 
 .listing-item-container {
-  a {
+  button {
     position: absolute;
     right: 1em;
     bottom: -1.25em;
+    color: $gun-metal;
 
     transition: color 5ms;
     :hover {
@@ -66,6 +67,10 @@ export default Vue.extend({
   :hover {
     cursor: pointer;
     transition-delay: s;
+  }
+
+  .detail-container{
+    border: 2px solid black;
   }
 }
 </style>
