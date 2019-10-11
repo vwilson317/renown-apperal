@@ -37,7 +37,6 @@ export default Vue.extend({
         })
         .catch((error) => {
           this.loading = false;
-          console.log(error);
         });
       // axios.get('/youApiUrl')
       // .then(response => {
