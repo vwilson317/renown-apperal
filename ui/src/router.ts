@@ -4,6 +4,7 @@ import Landing from './views/Landing.vue';
 import Mens from './views/Mens.vue';
 import Detail from './views/Detail.vue';
 import Cart from './views/Cart.vue';
+import Checkout from './views/Checkout.vue';
 
 Vue.use(Router);
 
@@ -54,6 +55,11 @@ export default new Router({
       path: '/cart',
       name: 'cart',
       component: Cart
+    },
+    {
+      path: '/checkout',
+      name: 'checkout',
+      component: Checkout
     }
   ]
 });

@@ -14,19 +14,30 @@
         <b-img thumbnail :src="currentItem.ImageUrl" />
       </b-col>
       <b-col>{{currentItem.Name}}</b-col>
+      <b-col>{{currentItem.Price}}</b-col>
       <b-col>
         <b-button variant="link" @click="remove(index)">
           <font-awesome-icon :icon="['far', 'minus-square']" size="2x"></font-awesome-icon>
         </b-button>
       </b-col>
     </b-row>
-    <b-row cols="12" v-show="!noItemsInCart">Total: {{total}}</b-row>
+    <b-row cols="12" v-show="!noItemsInCart">
+        <b-col>
+            Total: {{total}}
+        </b-col>
+        <b-col>
+            <b-button @click="checkout"> 
+Checkout
+            </b-button>
+        </b-col>
+        </b-row>
   </b-container>
 </template>
 
 <script lang="ts">
 import { IListing } from "../services/mock-data";
 import store from "../store";
+import router from '../router';
 
 export default {
   name: "Cart",
@@ -51,6 +62,9 @@ export default {
     remove(index: number) {
       this.cartItems.splice(index, 1);
       store.replaceState({ cartItems: this.cartItems });
+    },
+    checkout(){
+        router.push('checkout');
     }
   }
 };
