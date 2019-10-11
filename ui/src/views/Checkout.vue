@@ -29,38 +29,37 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Minicart from "../components/MiniCart.vue";
-import CustomerInfo from "../components/CustomerInfo.vue";
-import Address from "../components/Address.vue";
-import ShippingOptions from "../components/ShippingOptions.vue";
-import Payment from "../components/Payment.vue";
+import Vue from 'vue';
+import Minicart from '../components/MiniCart.vue';
+import CustomerInfo from '../components/CustomerInfo.vue';
+import Address from '../components/Address.vue';
+import ShippingOptions from '../components/ShippingOptions.vue';
+import Payment from '../components/Payment.vue';
 
 export default Vue.extend({
-  name: "Checkout",
+  name: 'Checkout',
   components: {
     Minicart,
     CustomerInfo,
     Address,
     ShippingOptions,
-    Payment
+    Payment,
   },
   data() {
     return {
-      enabled: true
+      enabled: true,
     };
   },
-  computed:{
-    isSameAsBilling(){
+  computed: {
+    isSameAsBilling() {
       return this.enabled;
-    }
+    },
   },
   methods: {
-    toggleEnabled(value: boolean){
-      debugger;
+    toggleEnabled(value: boolean) {
       enabled = !value;
-    }
-  }
+    },
+  },
 });
 </script>
 

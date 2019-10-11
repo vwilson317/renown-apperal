@@ -6,7 +6,11 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "lint:fix": "vue-cli-service lint --fix"
+    "lint:fix": "vue-cli-service lint --fix",
+    "build:docker": "npm run build && npm run dockerfile:move && npm run docker:compose",
+    "docker:compose": "docker-compose -f ./dist/docker-compose.yml up --build",
+    "dockerfile:move": "cp docker/* dist",
+    "docker:down": "docker-compose down"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.25",

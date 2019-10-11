@@ -15,15 +15,15 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 
 export default Vue.extend({
-  name: "Minicart",
-    props:['enabled'],
-    computed:{
-        isEnabled(){
+  name: 'Minicart',
+    props: ['enabled'],
+    computed: {
+        isEnabled() {
             return this.enabled;
-        }
-    }
+        },
+    },
 });
 </script>

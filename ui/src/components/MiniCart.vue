@@ -43,17 +43,17 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from 'vue';
 
 export default Vue.extend({
-  name: "Minicart",
+  name: 'Minicart',
   computed: {
     cartItems() {
       return this.$store.state.cartItems;
     },
-    total(){
+    total() {
       return this.$store.getters.total;
-    }
-  }
+    },
+  },
 });
 </script>
