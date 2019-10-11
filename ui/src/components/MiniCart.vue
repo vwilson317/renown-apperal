@@ -6,7 +6,14 @@
           <span class="badge badge-secondary badge-pill">3</span>
         </h4>
         <ul class="list-group mb-3">
-          <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <li v-for="(currentItem, index) in cartItems" :key="index" class="list-group-item d-flex justify-content-between lh-condensed"/>
+            <div>
+              <h6 class="my-0">{{currentItem.Name}}</h6>
+              <small class="text-muted">{{currentItem.Name}}</small>
+            </div>
+            <span class="text-muted">${{currentItem.Price}}</span>
+            </li>
+          <!-- <li class="list-group-item d-flex justify-content-between lh-condensed">
             <div>
               <h6 class="my-0">Product name</h6>
               <small class="text-muted">Brief description</small>
@@ -26,7 +33,7 @@
               <small class="text-muted">Brief description</small>
             </div>
             <span class="text-muted">$5</span>
-          </li>
+          </li> -->
           <li class="list-group-item d-flex justify-content-between bg-light">
             <div class="text-success">
               <h6 class="my-0">Promo code</h6>
@@ -50,3 +57,18 @@
         </form>
       </div>
 </template>
+
+<script lang="ts">
+import Vue from 'vue';
+import store from '../store';
+
+
+export default Vue.extend({
+  name: 'Minicart',
+  computed: {
+      cartItems() {
+          return store.state.cardItems;
+      },
+  },
+});
+</script>

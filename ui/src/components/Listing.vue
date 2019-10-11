@@ -13,33 +13,33 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { IListing } from "../services/mock-data";
-import router from "../router";
-import store from "../store";
+import Vue from 'vue';
+import { IListing } from '../services/mock-data';
+import router from '../router';
+import store from '../store';
 
 const shortenName = (input: string): string => {
-    let parts = input.split(" ");
-    return [parts[0], parts[1], parts[2]].join(" ");
-}
+    const parts = input.split(' ');
+    return [parts[0], parts[1], parts[2]].join(' ');
+};
 
 export default Vue.extend({
-  name: "Listing",
+  name: 'Listing',
   props: {
-    item: { type: IListing }
+    item: {},
   },
   data() {
     return {};
   },
   methods: {
-    itemClick: (item: IListing): void => {
-      router.push({ name: "detail", params: { item: item } });
+    itemClick: (item: any): void => {
+      router.push({ name: 'detail', params: { item } });
     },
     addToCartClick: (item: IListing): void => {
-      store.commit("addItemToCart", item);
+      store.commit('addItemToCart', item);
     },
-    shortenName
-  }
+    shortenName,
+  },
 });
 </script>
 

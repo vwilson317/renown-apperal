@@ -5,12 +5,12 @@
       <div class="col-md-8 order-md-1">
         <form class="needs-validation" novalidate>
           <CustomerInfo />
-          
+
           <hr class="mb-4" />
 
           <h4 class="mb-3">Billing address</h4>
-
           <Address />
+          
           <hr class="mb-4" />
           <Payment />
           <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
@@ -28,13 +28,13 @@ import Address from '../components/Address.vue';
 import Payment from '../components/Payment.vue';
 
 export default Vue.extend({
-  name: "Checkout",
-  components:{
+  name: 'Checkout',
+  components: {
     Minicart,
     CustomerInfo,
     Address,
-    Payment
-  }
+    Payment,
+  },
 });
 </script>
 

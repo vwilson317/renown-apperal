@@ -35,16 +35,16 @@ Checkout
 </template>
 
 <script lang="ts">
-import { IListing } from "../services/mock-data";
-import store from "../store";
+import { IListing } from '../services/mock-data';
+import store from '../store';
 import router from '../router';
 
 export default {
-  name: "Cart",
+  name: 'Cart',
   props: {},
   data() {
     return {
-      currentCartItems: []
+      currentCartItems: [],
     };
   },
   computed: {
@@ -56,17 +56,17 @@ export default {
     },
     noItemsInCart() {
       return store.state.cartItems.length === 0;
-    }
+    },
   },
   methods: {
     remove(index: number) {
-      this.cartItems.splice(index, 1);
-      store.replaceState({ cartItems: this.cartItems });
+      store.state.cartItems.splice(index, 1);
+      // store.replaceState({ cartItems: this.cartItems });
     },
-    checkout(){
+    checkout() {
         router.push('checkout');
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -21,24 +21,24 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { IListing } from "../services/mock-data";
+import Vue from 'vue';
+import { IListing } from '../services/mock-data';
 
 export default Vue.extend({
-  name: "Detail",
-  props: ["item"],
+  name: 'Detail',
+  props: ['item'],
   data() {
     return {
       additionalImages: [
-        "https://i.ebayimg.com/thumbs/images/g/9s0AAOSwURhdmlXN/s-l225.webp",
-        "https://i.ebayimg.com/thumbs/images/g/nXAAAOSwA5RdmlXO/s-l225.webp",
-        "https://i.ebayimg.com/thumbs/images/g/IAYAAOSw1EZdn8Pp/s-l225.webp",
-        "https://i.ebayimg.com/thumbs/images/g/1swAAOSwSChdn8PJ/s-l225.webp",
-        "https://i.ebayimg.com/thumbs/images/g/BHsAAOSwxjxdn8S1/s-l225.webp",
-        "https://i.ebayimg.com/thumbs/images/g/7QEAAOSwEYBdn8Py/s-l225.webp",
-        "https://i.ebayimg.com/thumbs/images/m/m-20LBx8QHXqGehfzKduUEA/s-l225.jpg"
+        'https://i.ebayimg.com/thumbs/images/g/9s0AAOSwURhdmlXN/s-l225.webp',
+        'https://i.ebayimg.com/thumbs/images/g/nXAAAOSwA5RdmlXO/s-l225.webp',
+        'https://i.ebayimg.com/thumbs/images/g/IAYAAOSw1EZdn8Pp/s-l225.webp',
+        'https://i.ebayimg.com/thumbs/images/g/1swAAOSwSChdn8PJ/s-l225.webp',
+        'https://i.ebayimg.com/thumbs/images/g/BHsAAOSwxjxdn8S1/s-l225.webp',
+        'https://i.ebayimg.com/thumbs/images/g/7QEAAOSwEYBdn8Py/s-l225.webp',
+        'https://i.ebayimg.com/thumbs/images/m/m-20LBx8QHXqGehfzKduUEA/s-l225.jpg',
       ],
-      mainImg: "" as string
+      mainImg: '' as string,
     };
   },
   beforeMount() {
@@ -47,8 +47,8 @@ export default Vue.extend({
   methods: {
     changeMainPic(imgSrc: string) {
       this.mainImg = imgSrc;
-    }
-  }
+    },
+  },
 });
 </script>
 

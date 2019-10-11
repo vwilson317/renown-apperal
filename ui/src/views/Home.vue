@@ -12,8 +12,7 @@ import Nav from '@/components/Nav.vue';
 export default Vue.extend({
   name: 'Home',
   components: {
-    Nav
-  }
+    Nav,
+  },
 });
-
 </script>

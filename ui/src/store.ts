@@ -6,23 +6,23 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    cartItems: []
+    cartItems: [],
   },
   mutations: {
-    addItemToCart(state: any, item: IListing){
+    addItemToCart(state: any, item: IListing) {
       state.cartItems.push(item);
-    }
+    },
   },
   actions: {
 
   },
   getters: {
-    total(state){
+    total(state) {
       let val: number = 0;
       state.cartItems.forEach((currentItem: IListing) => {
           val += parseInt(currentItem.Price);
       });
       return val;
-  }
-  }
+  },
+  },
 });

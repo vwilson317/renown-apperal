@@ -49,17 +49,17 @@ export default new Router({
       path: '/detail',
       name: 'detail',
       component: Detail,
-      props: true
+      props: true,
     },
     {
       path: '/cart',
       name: 'cart',
-      component: Cart
+      component: Cart,
     },
     {
       path: '/checkout',
       name: 'checkout',
-      component: Checkout
-    }
-  ]
+      component: Checkout,
+    },
+  ],
 });

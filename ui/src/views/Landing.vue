@@ -12,16 +12,16 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { GetListing, IListing } from "../services/mock-data";
+import Vue from 'vue';
+import { GetListing, IListing } from '../services/mock-data';
 import Listing from '../components/Listing.vue';
 
 export default Vue.extend({
-  name: "Landing",
+  name: 'Landing',
   data() {
     return {
       loading: false,
-      items: [] as IListing[]
+      items: [] as IListing[],
     };
   },
   created() {
@@ -35,7 +35,7 @@ export default Vue.extend({
           this.loading = false;
           this.items = response;
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false;
           console.log(error);
         });
@@ -48,11 +48,11 @@ export default Vue.extend({
       //     this.loading = false
       //     console.log(error)
       // })
-    }
+    },
   },
-  components:{
-    Listing
-  }
+  components: {
+    Listing,
+  },
 });
 </script>
 

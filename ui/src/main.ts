@@ -9,13 +9,13 @@ import { faPlusSquare, faMinusSquare } from '@fortawesome/free-regular-svg-icons
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 library.add(faOpencart, faPlusSquare, faMinusSquare);
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
 
-new Vue({
+export default new Vue({
   router,
   store,
   render: (h) => h(App),
