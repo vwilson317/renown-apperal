@@ -1,10 +1,8 @@
 <template>
   <b-container class="cart-container">
-      <b-row v-show="noItemsInCart">
-          <b-col>
-              No items in cart
-          </b-col>
-      </b-row>
+    <b-row v-show="noItemsInCart">
+      <b-col>No items in cart</b-col>
+    </b-row>
     <b-row
       cols="12"
       align-v="start"
@@ -45,19 +43,14 @@ export default {
     total() {
       return store.getters.total;
     },
-    noItemsInCart(){
-        return store.state.cartItems.length === 0;
+    noItemsInCart() {
+      return store.state.cartItems.length === 0;
     }
   },
-  methods:{
-    remove(index: number){
-        if(index === 0 && this.cartItems.length === 1){
-            store.replaceState({cartItems: []});
-
-        }else{
-        this.cartItems.splice(index, 1);
-        store.replaceState({cartItems: this.cartItems});
-        }
+  methods: {
+    remove(index: number) {
+      this.cartItems.splice(index, 1);
+      store.replaceState({ cartItems: this.cartItems });
     }
   }
 };
