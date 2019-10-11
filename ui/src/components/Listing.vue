@@ -5,7 +5,7 @@
     </b-container>
     <div>
       <a @click="addToCartClick(item)">
-        <font-awesome-icon :icon="['far', 'plus-square']" size="3x"></font-awesome-icon>
+        <font-awesome-icon :icon="['far', 'plus-square']" size="2x"></font-awesome-icon>
       </a>
       <h6>{{shortenName(item.Name)}}</h6>
     </div>
