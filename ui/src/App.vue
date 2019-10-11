@@ -1,31 +1,34 @@
 <template>
   <div id="app">
-    <b-row class="logo-row">
-      <b-col offset="2">
-        <router-link to="/">
-          <img class alt="Vue logo" src="./assets/logo.png" />
-        </router-link>
-      </b-col>
-      <b-col class="cart-container" cols="2">
-        <div @click="click">
-          <span>Cart</span>
-          <font-awesome-icon class="cart-icon" :icon="['fab', 'opencart']" size="2x"></font-awesome-icon>
-          <b-badge class="item-count">{{itemCount}}</b-badge>
-        </div>
-      </b-col>
-    </b-row>
-    <Home />
+    <b-container fluid class="logo-row">
+      <b-row cols="12">
+        <b-col offset="1">
+          <router-link to="/">
+            <img class alt="Vue logo" src="./assets/logo.png" />
+          </router-link>
+        </b-col>
+        <b-col class="cart-container" cols="1">
+          <div @click="click">
+            <span>Cart</span>
+            <font-awesome-icon class="cart-icon" :icon="['fab', 'opencart']" size="2x"></font-awesome-icon>
+            <b-badge class="item-count">{{itemCount}}</b-badge>
+          </div>
+        </b-col>
+      </b-row>
+    </b-container>
+    <Nav />
+    <router-view />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import Home from '@/views/Home.vue'; // @   is an alias to /src
+import Nav from '@/components/Nav.vue'; // @   is an alias to /src
 
 export default Vue.extend({
   name: 'App',
   components: {
-    Home,
+    Nav,
   },
   data() {
     return {};
