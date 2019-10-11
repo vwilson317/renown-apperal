@@ -20,7 +20,7 @@ export default new Vuex.Store({
     total(state) {
       let val: number = 0;
       state.cartItems.forEach((currentItem: IListing) => {
-          val += parseInt(currentItem.Price, 10);
+          val += parseFloat(currentItem.Price);
       });
       return val;
   },
