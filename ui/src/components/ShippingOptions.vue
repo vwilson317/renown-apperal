@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="custom-control custom-checkbox">
-      <input type="checkbox" class="custom-control-input" id="same-address" :checked="enabled"/>
+      <input type="checkbox" class="custom-control-input" id="same-address" :checked="enabled" @click="clickfunc"/>
       <label
         class="custom-control-label"
         for="same-address"
@@ -19,11 +19,8 @@ import Vue from 'vue';
 
 export default Vue.extend({
   name: 'Minicart',
-    props: ['enabled'],
+    props: ['enabled', 'clickfunc'],
     computed: {
-        isEnabled() {
-            return this.enabled;
-        },
     },
 });
 </script>

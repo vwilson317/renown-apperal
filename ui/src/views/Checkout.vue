@@ -12,8 +12,8 @@
           <Address />
 
           <hr class="mb-4" />
-          <ShippingOptions :enabled="{isSameAsBilling}" @change="toggleEnabled(isSameAsBilling)"/>
-          <div v-show="!isSameAsBilling">
+          <ShippingOptions :enabled="{enabled}" :clickfunc="toggleEnabled"/>
+          <div v-show="!enabled">
             <hr class="mb-4" />
             <h4 class="mb-3">Shipping address</h4>
             <Address />
@@ -50,14 +50,9 @@ export default Vue.extend({
       enabled: true,
     };
   },
-  computed: {
-    isSameAsBilling() {
-      return this.enabled;
-    },
-  },
   methods: {
-    toggleEnabled(value: boolean) {
-      enabled = !value;
+    toggleEnabled() {
+      this.enabled = !this.enabled;
     },
   },
 });
