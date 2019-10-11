@@ -27,7 +27,7 @@
         </b-col>
         <b-col>
             <b-button @click="checkout"> 
-Checkout
+              Checkout
             </b-button>
         </b-col>
         </b-row>

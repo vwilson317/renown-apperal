@@ -7,7 +7,7 @@
             <img class alt="Vue logo" src="./assets/logo.png" />
           </router-link>
         </b-col>
-        <b-col class="cart-container" cols="1">
+        <b-col class="cart-action-container" cols="1">
           <div @click="click">
             <span>Cart</span>
             <font-awesome-icon class="cart-icon" :icon="['fab', 'opencart']" size="2x"></font-awesome-icon>
@@ -55,6 +55,7 @@ export default Vue.extend({
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  margin-bottom: 2em;
 }
 
 img {
@@ -65,7 +66,7 @@ img {
 .logo-row {
 }
 
-.cart-container {
+.cart-action-container {
   text-align: right;
   border-left: 1px solid gray;
 }
