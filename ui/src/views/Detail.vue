@@ -31,12 +31,12 @@ export default Vue.extend({
     return {
       additionalImages: [
         "https://i.ebayimg.com/thumbs/images/g/9s0AAOSwURhdmlXN/s-l225.webp",
-        "https://i.ebayimg.com/thumbs/images/g/9s0AAOSwURhdmlXN/s-l225.webp",
-        "https://i.ebayimg.com/thumbs/images/g/9s0AAOSwURhdmlXN/s-l225.webp",
-        "https://i.ebayimg.com/thumbs/images/g/9s0AAOSwURhdmlXN/s-l225.webp",
-        "https://i.ebayimg.com/thumbs/images/g/9s0AAOSwURhdmlXN/s-l225.webp",
-        "https://i.ebayimg.com/thumbs/images/g/9s0AAOSwURhdmlXN/s-l225.webp",
-        "https://i.ebayimg.com/thumbs/images/g/9s0AAOSwURhdmlXN/s-l225.webp"
+        "https://i.ebayimg.com/thumbs/images/g/nXAAAOSwA5RdmlXO/s-l225.webp",
+        "https://i.ebayimg.com/thumbs/images/g/IAYAAOSw1EZdn8Pp/s-l225.webp",
+        "https://i.ebayimg.com/thumbs/images/g/1swAAOSwSChdn8PJ/s-l225.webp",
+        "https://i.ebayimg.com/thumbs/images/g/BHsAAOSwxjxdn8S1/s-l225.webp",
+        "https://i.ebayimg.com/thumbs/images/g/7QEAAOSwEYBdn8Py/s-l225.webp",
+        "https://i.ebayimg.com/thumbs/images/m/m-20LBx8QHXqGehfzKduUEA/s-l225.jpg"
       ],
       mainImg: "" as string
     };
