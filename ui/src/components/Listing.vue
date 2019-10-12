@@ -1,9 +1,7 @@
 <template>
-  <b-col class="listing-item-container">
-    <b-container>
-      <b-img thumbnail fluid-grow class="banner-img" :src="item.ImageUrl" @click="itemClick(item)" />
-    </b-container>
-    <div class="detail-container">
+  <b-col class="listing-item-container" cols="3">
+    <div>
+      <b-img thumbnail fluid class="banner-img" :src="item.ImageUrl" @click="itemClick(item)" />
       <b-button :id="getTargetId" variant="link" @click="addToCartClick(item)">
         <font-awesome-icon :icon="['far', 'plus-square']" size="2x"></font-awesome-icon>
       </b-button>
@@ -13,6 +11,8 @@
           title="Add item to cart"
           triggers="hover focus"
         ></b-popover>
+    </div>
+    <div class="detail-container">
       <h6>{{shortenName(item.Name)}}</h6>
       <h6>${{item.Price}}</h6>
     </div>
@@ -64,8 +64,6 @@ export default Vue.extend({
     right: 1em;
     bottom: -1.25em;
     color: $gun-metal;
-
-
   }
 
   a{
