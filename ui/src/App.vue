@@ -2,12 +2,12 @@
   <div id="app">
     <b-container fluid class="logo-row">
       <b-row cols="12">
-        <b-col class="left-side" offset="1">
+        <b-col class="left-side" offset="2" offset-sm="1">
           <router-link to="/">
             <img class="logo" alt="Vue logo" src="./assets/logo.png" />
           </router-link>
         </b-col>
-        <b-col class="cart-action-container" cols="1" align-self="center">
+        <b-col class="cart-action-container" cols="2" col-sm="1" align-self="center">
           <b-row align-h="center" align-v="center" @click="click">
             <span>Cart</span>
             <font-awesome-icon class="cart-icon" :icon="['fab', 'opencart']" size="2x"></font-awesome-icon>

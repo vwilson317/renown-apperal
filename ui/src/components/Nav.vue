@@ -1,6 +1,7 @@
 <template>
     <div class="nav" id="nav">
       <b-nav class="nav-bar" tabs align="center">
+      <b-nav class="navbar navbar-collapse" tabs align="center">
         <b-nav-item>
           <router-link to="/Mens">Mens</router-link>
         </b-nav-item>
@@ -28,8 +29,7 @@ export default Vue.extend({
 <style lang="scss">
 @import '../styles/global.scss';
 
-.nav-bar{
-  width: 100%;
+.navbar{
   background-color: $flash-white;
 }
 

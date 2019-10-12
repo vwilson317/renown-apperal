@@ -1,5 +1,5 @@
 <template>
-  <b-col class="listing-item-container" cols="3">
+  <b-col class="listing-item-container" cols="12" md="3">
     <div>
       <b-img thumbnail fluid class="banner-img" :src="item.ImageUrl" @click="itemClick(item)" />
       <b-button :id="getTargetId" variant="link" @click="addToCartClick(item)">
