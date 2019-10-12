@@ -73,13 +73,16 @@ body{
   text-align: center;
   color: #2c3e50;
   margin-bottom: 2em;
+  height: 100%;
 }
 
 #content {
   padding-top: 2em;
   background-image: url('./assets/background.jpg');
   background-repeat: no-repeat;
+  background-size: cover;
   height: 100%;
+  margin-bottom: 2em;
 }
 
 .logo-row {

@@ -6,7 +6,7 @@
       </b-col>
     </b-row>
     <b-row>
-      <Listing v-for="item in items" :key="item.index" :item="item"/>
+      <Listing v-for="(item, index) in items" :key="index" :item="item" :index="index"/>
     </b-row>
   </b-container>
 </template>

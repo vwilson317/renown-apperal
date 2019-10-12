@@ -4,9 +4,15 @@
       <b-img thumbnail fluid-grow class="banner-img" :src="item.ImageUrl" @click="itemClick(item)" />
     </b-container>
     <div class="detail-container">
-      <b-button variant="link" @click="addToCartClick(item)">
+      <b-button :id="getTargetId" variant="link" @click="addToCartClick(item)">
         <font-awesome-icon :icon="['far', 'plus-square']" size="2x"></font-awesome-icon>
       </b-button>
+      <b-popover
+          :target="getTargetId"
+          placement="rightbottom"
+          title="Add item to cart"
+          triggers="hover focus"
+        ></b-popover>
       <h6>{{shortenName(item.Name)}}</h6>
       <h6>${{item.Price}}</h6>
     </div>
@@ -19,6 +25,10 @@ import { IListing } from '../services/mock-data';
 import router from '../router';
 import store from '../store';
 
+const getTargetId = (obj: any): string =>{
+  return 'popover-' + obj.index;
+}
+
 const shortenName = (input: string): string => {
     const parts = input.split(' ');
     return [parts[0], parts[1], parts[2]].join(' ');
@@ -26,9 +36,7 @@ const shortenName = (input: string): string => {
 
 export default Vue.extend({
   name: 'Listing',
-  props: {
-    item: {},
-  },
+  props: ['item', 'index'],
   data() {
     return {};
   },
@@ -41,6 +49,9 @@ export default Vue.extend({
     },
     shortenName,
   },
+  computed:{
+    getTargetId,
+  }
 });
 </script>
 
