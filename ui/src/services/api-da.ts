@@ -11,7 +11,9 @@ const eBayAppId = 'VincentW-renownap-PRD-0b31f104d-07a63429';
 
 export const get = async (apiType: Api, params: string): Promise<any> => {
     // todo add ebay apis to dev server
-    let config;
+    let config = {
+        headers:[{'Access-Control-Allow-Origin':'*'}]
+    };
     let uri: string = '';
 
     debugger;
@@ -29,8 +31,8 @@ export const get = async (apiType: Api, params: string): Promise<any> => {
         }
     }
     debugger;
-    // const instance = axios.create(config);
-    return axios.get(uri);
+    const instance = axios.create(config);
+    return instance.get(uri);
 
 };
 
