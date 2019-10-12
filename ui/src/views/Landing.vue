@@ -6,7 +6,7 @@
       </b-col>
     </b-row>
     <b-row>
-      <Listing v-for="(item, index) in items" :key="index" :item="item" :index="index"/>
+      <Listing v-for="(item, index) in items" :key="index" :item="item" :index="index" />
     </b-row>
   </b-container>
 </template>
@@ -15,13 +15,15 @@
 import Vue from 'vue';
 import { GetListing, IListing } from '../services/mock-data';
 import Listing from '../components/Listing.vue';
-
+import { getStoreItems, getItemDetails } from '../services/api-da';
 export default Vue.extend({
   name: 'Landing',
   data() {
     return {
       loading: false,
       items: [] as IListing[],
+      eBayFindResponse: {},
+      eBayShoppingResponse: {},
     };
   },
   created() {
@@ -30,6 +32,20 @@ export default Vue.extend({
   methods: {
     getDataFromApi() {
       this.loading = true;
+
+      getStoreItems()
+        .then(async (response: any) => {
+          this.eBayFindResponse = reponse;
+          // probably parse response
+          // for each item in parsed reponse
+          this.eBayShoppingResponse = await getItemDetails(123935666154);
+
+          // this.loading = false;
+          // this.items = response;
+        })
+        .catch((error) => {
+          this.loading = false;
+        });
       GetListing()
         .then((response: IListing[]) => {
           this.loading = false;
@@ -38,15 +54,6 @@ export default Vue.extend({
         .catch((error) => {
           this.loading = false;
         });
-      // axios.get('/youApiUrl')
-      // .then(response => {
-      //     this.loading = false
-      //     this.rows = response.data
-      // })
-      // .catch(error => {
-      //     this.loading = false
-      //     console.log(error)
-      // })
     },
   },
   components: {
@@ -60,5 +67,4 @@ export default Vue.extend({
 h3 {
   margin: 40px 0 0;
 }
-
 </style>

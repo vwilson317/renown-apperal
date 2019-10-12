@@ -1,6 +1,5 @@
 <template>
     <div class="nav" id="nav">
-      <b-nav class="nav-bar" tabs align="center">
       <b-nav class="navbar navbar-collapse" tabs align="center">
         <b-nav-item>
           <router-link to="/Mens">Mens</router-link>
