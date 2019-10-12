@@ -46,7 +46,10 @@ export default Vue.extend({
       //     this.loading = false;
       //   });
 
-      this.eBayShoppingResponse = await getItemDetails(123935666154);
+      getItemDetails(123935666154)
+      .then((result) => {
+          this.eBayShoppingResponse = result;
+      });
 
       GetListing()
         .then((response: IListing[]) => {
