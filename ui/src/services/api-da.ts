@@ -14,26 +14,21 @@ const eBayAppId = 'VincentW-renownap-PRD-0b31f104d-07a63429';
 export const get = async (apiType: Api, params: string): Promise<any> => {
     // todo add ebay apis to dev server
     const config = {
-        headers: [{'Access-Control-Allow-Origin': '*'}],
+        headers: [{ 'Access-Control-Allow-Origin': '*' }],
     };
-    switch (apiType) {
-        case Api.Finding : {// storeName
-            const str = 'SERVICE-VERSION=' + findApiVersion + '&SECURITY-APPNAME=' + eBayAppId + '&RESPONSE-DATA-FORMAT=XML&REST-PAYLOAD';
-
-            const uri = findApiUrl + '?' + str + '&' + params;
-            const instance = axios.create(config);
-
-            return instance.get(uri);
-        }
-        case Api.Shopping: {// GetMultipleItems
-            const str = 'version=' + shoppingApiVersion + '&appid=' + eBayAppId + '&responseencoding=JSON';
-            const uri = shoppingApiUrl + '?' + str + '&' + params;
-            const instance = axios.create(config);
-
-            return instance.get(uri);
-        }
-        default:
+    let uri = '';
+    if (apiType === Api.Finding) {// storeName
+        const str = 'SERVICE-VERSION=' + findApiVersion + '&SECURITY-APPNAME=' + eBayAppId + '&RESPONSE-DATA-FORMAT=XML&REST-PAYLOAD';
+        uri = findApiUrl + '?' + str + '&' + params;
     }
+    else if (apiType === Api.Shopping) {
+        const str = 'version=' + shoppingApiVersion + '&appid=' + eBayAppId + '&responseencoding=JSON';
+        uri = shoppingApiUrl + '?' + str + '&' + params;
+    }
+
+    debugger;
+    const instance = axios.create(config);
+    return instance.get(uri);
 };
 
 enum sortOrder {
@@ -55,15 +50,16 @@ export const getStoreItems = async (): Promise<any> => {
     };
 
     const paginationInputJson = JSON.stringify(paginationInput);
+    debugger;
     const result = await get(Api.Finding, 'storeName=imyown')
-    .catch((e) => {
-        const error = e;
-        // todo: log error
-    }); // &paginationInput=' + paginationInput);
+        .catch((e) => {
+            const error = e;
+            // todo: log error
+        }); // &paginationInput=' + paginationInput);
     return result;
 };
 
 export const getItemDetails = async (itemId: number): Promise<any> => {
-    const result =  get(Api.Shopping, 'callname=GetMultipleItems&ItemId=' + itemId);
+    const result = get(Api.Shopping, 'callname=GetMultipleItems&ItemId=' + itemId);
     return result;
 };
