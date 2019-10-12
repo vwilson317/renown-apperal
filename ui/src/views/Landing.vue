@@ -35,7 +35,7 @@ export default Vue.extend({
 
       getStoreItems()
         .then(async (response: any) => {
-          this.eBayFindResponse = reponse;
+          this.eBayFindResponse = response;
           // probably parse response
           // for each item in parsed reponse
           this.eBayShoppingResponse = await getItemDetails(123935666154);

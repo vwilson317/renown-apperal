@@ -19,11 +19,11 @@ export const get = async (apiType: Api, params: string): Promise<any> => {
             config = {
                 // baseURL: findApiUrl,
                 headers: [
-                {'X-EBAY-SOA-OPERATION-NAME': 'findItemsIneBayStores'},
-                {'X-EBAY-SOA-SERVICE-VERSION': '1.13.0'},
-                {'X-EBAY-SOA-SERVICE-NAME': 'FindingService'},
-                {'X-EBAY-SOA-SECURITY-APPNAME': eBayAppId}, //
-                {'RESPONSE-DATA-FORMAT': 'JSON'}, // doesn't seem to work
+                    { 'X-EBAY-SOA-OPERATION-NAME': 'findItemsIneBayStores' },
+                    { 'X-EBAY-SOA-SERVICE-VERSION': '1.13.0' },
+                    { 'X-EBAY-SOA-SERVICE-NAME': 'FindingService' },
+                    { 'X-EBAY-SOA-SECURITY-APPNAME': eBayAppId }, //
+                    { 'RESPONSE-DATA-FORMAT': 'JSON' }, // doesn't seem to work
                 ],
             };
             uri = findApiUrl + '?' + params;
@@ -32,15 +32,15 @@ export const get = async (apiType: Api, params: string): Promise<any> => {
             config = {
                 // baseURL: shoppingApiUrl,
                 headers: [
-                    {'X-EBAY-API-VERSION': '1099'},
-                    {'X-EBAY-API-APP-ID': eBayAppId},
+                    { 'X-EBAY-API-VERSION': '1099' },
+                    { 'X-EBAY-API-APP-ID': eBayAppId },
                 ],
             };
             uri = shoppingApiUrl + '?' + params;
         }
-                          debugger;
-                          const instance = axios.create(config);
-                          return instance.get(uri);
+            //    debugger;
+            const instance = axios.create(config);
+            return instance.get(uri);
     }
 };
 
