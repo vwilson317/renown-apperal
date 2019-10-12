@@ -2,52 +2,69 @@
   <div id="app">
     <b-container fluid class="logo-row">
       <b-row cols="12">
-        <b-col offset="1">
+        <b-col class="left-side" offset="1">
           <router-link to="/">
-            <img class alt="Vue logo" src="./assets/logo.png" />
+            <img class="logo" alt="Vue logo" src="./assets/logo.png" />
           </router-link>
         </b-col>
-        <b-col class="cart-action-container" cols="1">
-          <div @click="click">
+        <b-col class="cart-action-container" cols="1" align-self="center">
+          <b-row align-h="center" align-v="center" @click="click">
             <span>Cart</span>
             <font-awesome-icon class="cart-icon" :icon="['fab', 'opencart']" size="2x"></font-awesome-icon>
-            <b-badge class="item-count">{{itemCount}}</b-badge>
-          </div>
+          <b-badge v-show="itemCount !== 0" class="item-count">{{itemCount}}</b-badge>
+          </b-row>
         </b-col>
       </b-row>
     </b-container>
     <Nav />
+    <div id="content">
     <router-view />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Nav from '@/components/Nav.vue'; // @   is an alias to /src
+import Vue from "vue";
+import Nav from "@/components/Nav.vue"; // @   is an alias to /src
 
 export default Vue.extend({
-  name: 'App',
+  name: "App",
   components: {
-    Nav,
+    Nav
   },
   data() {
     return {};
   },
   methods: {
     click() {
-      this.$router.push('cart');
-    },
+      this.$router.push("cart");
+    }
   },
   computed: {
     itemCount() {
       return this.$store.state.cartItems.length;
-    },
-  },
+    }
+  }
 });
 </script>
 
 <style lang='scss'>
 @import "@/styles/global.scss";
+
+html{
+  //overflow: hidden;
+  height: 100%;
+      -ms-overflow-style: none;  // IE 10+
+    overflow: -moz-scrollbars-none;  // Firefox
+
+    ::-webkit-scrollbar {
+    display: none; // Safari and Chrome
+}
+}
+
+body{
+  height: 100%;
+}
 
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -58,30 +75,40 @@ export default Vue.extend({
   margin-bottom: 2em;
 }
 
-img {
-  height: 10vh;
-  margin: 1vh;
+#content {
+  padding-top: 2em;
+  background-image: url('./assets/background.jpg');
+  background-repeat: no-repeat;
+  height: 100%;
 }
 
 .logo-row {
+  background-color: $gun-metal;
+  min-height: 4em;
+  .left-side {
+    border-right: 1px solid white;
+  }
+}
+
+.logo {
+  height: 4em;
+  padding: .25em;
+  background-color: white;
 }
 
 .cart-action-container {
   text-align: right;
-  border-left: 1px solid gray;
-}
+  color: white;
 
-.cart-icon {
+  .cart-icon {
   display: inline-block;
-  color: black;
-  margin-top: 0.5em;
-  margin-right: 0.5em;
+}
 }
 
 .item-count {
   position: absolute;
-  bottom: 15px;
-  right: 25px;
+  top: 15px;
+  right: 10px;
 }
 
 .badge-secondary {

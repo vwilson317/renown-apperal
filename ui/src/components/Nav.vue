@@ -41,8 +41,9 @@ export default Vue.extend({
       color: $red;
     }
   }
-
-  margin-bottom: 2em;
-
+  
+  .nav-item{
+    margin: 0 1em;
+  }
 }
 </style>

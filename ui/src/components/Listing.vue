@@ -8,6 +8,7 @@
         <font-awesome-icon :icon="['far', 'plus-square']" size="2x"></font-awesome-icon>
       </b-button>
       <h6>{{shortenName(item.Name)}}</h6>
+      <h6>${{item.Price}}</h6>
     </div>
   </b-col>
 </template>
@@ -53,7 +54,11 @@ export default Vue.extend({
     bottom: -1.25em;
     color: $gun-metal;
 
-    transition: color 5ms;
+
+  }
+
+  a{
+    // transition: color 5ms;
     :hover {
       color: $red;
     }
