@@ -10,7 +10,11 @@
     "build:docker": "npm run build && npm run dockerfile:move && npm run docker:compose",
     "docker:compose": "docker-compose -f ./dist/docker-compose.yml up --build",
     "dockerfile:move": "cp docker/* dist",
-    "docker:down": "docker-compose down"
+    "docker:down": "docker-compose down",
+    "docker:tag":"docker tag renown-apparel-ui:latest 475795201917.dkr.ecr.us-east-2.amazonaws.com/renown-apparel-ui:latest",
+    "docker:push": "docker push 475795201917.dkr.ecr.us-east-2.amazonaws.com/renown-apparel-ui:latest",
+    "docker:deploy": "npm run docker:tag && npm run docker:push",
+    "docker:login": "$(aws ecr get-login)"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.25",

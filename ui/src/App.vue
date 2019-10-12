@@ -24,27 +24,27 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Nav from "@/components/Nav.vue"; // @   is an alias to /src
+import Vue from 'vue';
+import Nav from '@/components/Nav.vue'; // @   is an alias to /src
 
 export default Vue.extend({
-  name: "App",
+  name: 'App',
   components: {
-    Nav
+    Nav,
   },
   data() {
     return {};
   },
   methods: {
     click() {
-      this.$router.push("cart");
-    }
+      this.$router.push('cart');
+    },
   },
   computed: {
     itemCount() {
       return this.$store.state.cartItems.length;
-    }
-  }
+    },
+  },
 });
 </script>
 

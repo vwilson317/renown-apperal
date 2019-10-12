@@ -25,9 +25,9 @@ import { IListing } from '../services/mock-data';
 import router from '../router';
 import store from '../store';
 
-const getTargetId = (obj: any): string =>{
+const getTargetId = (obj: any): string => {
   return 'popover-' + obj.index;
-}
+};
 
 const shortenName = (input: string): string => {
     const parts = input.split(' ');
@@ -48,10 +48,8 @@ export default Vue.extend({
       store.commit('addItemToCart', item);
     },
     shortenName,
-  },
-  computed:{
     getTargetId,
-  }
+  },
 });
 </script>
 
