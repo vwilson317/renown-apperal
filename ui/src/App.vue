@@ -66,6 +66,12 @@ body{
   height: 100%;
 }
 
+button {
+  :hover{
+    color: $red;
+  }
+}
+
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

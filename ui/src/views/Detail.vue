@@ -2,11 +2,11 @@
   <b-container class="detail-container">
     <b-row align-h="center">
       <div class="main-img">
-        <b-img :src="mainImg" />
+        <b-img fluid :src="mainImg" />
       </div>
       <b-col class="addition-images-col" cols="1">
         <b-row align-h="start">
-          <b-img
+          <b-img fluid
             v-for="currentImage in additionalImages"
             :src="currentImage"
             :key="currentImage.index"
@@ -64,11 +64,6 @@ export default Vue.extend({
   width: 25em;
   border: 1px solid black;
   margin-right: 1em;
-
-  img{
-      width: 100%;
-      height: 100%;
-  }
 }
 
 .addition-images-col {

@@ -2,7 +2,7 @@
   <b-container>
     <b-row>
       <b-col>
-        <h1>Most Viewed</h1>
+        <h1>Popular</h1>
       </b-col>
     </b-row>
     <b-row>
