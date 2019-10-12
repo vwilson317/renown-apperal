@@ -30,22 +30,24 @@ export default Vue.extend({
     this.getDataFromApi();
   },
   methods: {
-    getDataFromApi() {
+    async getDataFromApi() {
       this.loading = true;
 
-      getStoreItems()
-        .then(async (response: any) => {
-          this.eBayFindResponse = response;
-          // probably parse response
-          // for each item in parsed reponse
-          this.eBayShoppingResponse = await getItemDetails(123935666154);
+      // getStoreItems()
+      //   .then(async (response: any) => {
+      //     this.eBayFindResponse = response;
+      //     // probably parse response
+      //     // for each item in parsed reponse
+      //     // call shopping api
+      //     // this.loading = false;
+      //     // this.items = response;
+      //   })
+      //   .catch((error) => {
+      //     this.loading = false;
+      //   });
 
-          // this.loading = false;
-          // this.items = response;
-        })
-        .catch((error) => {
-          this.loading = false;
-        });
+      this.eBayShoppingResponse = await getItemDetails(123935666154);
+
       GetListing()
         .then((response: IListing[]) => {
           this.loading = false;

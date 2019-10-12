@@ -5,12 +5,12 @@
       <b-button :id="getTargetId" variant="link" @click="addToCartClick(item)">
         <font-awesome-icon :icon="['far', 'plus-square']" size="2x"></font-awesome-icon>
       </b-button>
-      <b-popover
+      <!-- <b-popover
           :target="getTargetId"
           placement="rightbottom"
           title="Add item to cart"
           triggers="hover focus"
-        ></b-popover>
+        ></b-popover> -->
     </div>
     <div class="detail-container">
       <h6>{{shortenName(item.Name)}}</h6>

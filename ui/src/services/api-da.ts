@@ -12,36 +12,26 @@ const eBayAppId = 'VincentW-renownap-PRD-0b31f104d-07a63429';
 export const get = async (apiType: Api, params: string): Promise<any> => {
     // todo add ebay apis to dev server
     let config;
-    let uri;
+    let uri: string = '';
 
+    debugger;
     switch (apiType) {
-        case Api.Finding: { // storeName
-            config = {
-                // baseURL: findApiUrl,
-                headers: [
-                    { 'X-EBAY-SOA-OPERATION-NAME': 'findItemsIneBayStores' },
-                    { 'X-EBAY-SOA-SERVICE-VERSION': '1.13.0' },
-                    { 'X-EBAY-SOA-SERVICE-NAME': 'FindingService' },
-                    { 'X-EBAY-SOA-SECURITY-APPNAME': eBayAppId }, //
-                    { 'RESPONSE-DATA-FORMAT': 'JSON' }, // doesn't seem to work
-                ],
-            };
-            uri = findApiUrl + '?' + params;
+        case Api.Finding : {// storeName
+            const str = 'SERVICE-VERSION=1.13.0&SECURITY-APPNAME=' + eBayAppId + '&RESPONSE-DATA-FORMAT=XML&REST-PAYLOAD'
+
+            uri = findApiUrl + '?' + str + '&' +params;
+            break;
         }
-        case Api.Shopping: { // GetMultipleItems
-            config = {
-                // baseURL: shoppingApiUrl,
-                headers: [
-                    { 'X-EBAY-API-VERSION': '1099' },
-                    { 'X-EBAY-API-APP-ID': eBayAppId },
-                ],
-            };
-            uri = shoppingApiUrl + '?' + params;
+        case Api.Shopping: {// GetMultipleItems
+            const str = 'version=' + 1099 + "&appid=" + eBayAppId + '&responseencoding=JSON'
+            uri = shoppingApiUrl + '?' + str + '&' + params;
+            break;
         }
-            //    debugger;
-            const instance = axios.create(config);
-            return instance.get(uri);
     }
+    debugger;
+    // const instance = axios.create(config);
+    return axios.get(uri);
+
 };
 
 enum sortOrder {
@@ -63,10 +53,15 @@ export const getStoreItems = async (): Promise<any> => {
     };
 
     const paginationInputJson = JSON.stringify(paginationInput);
-
-    return get(Api.Finding, 'storeName=imyown&paginationInput=' + paginationInputJson);
+    const result = await get(Api.Finding, 'storeName=imyown')
+    .catch(e =>{
+        debugger;
+        console.error(e);
+    });//&paginationInput=' + paginationInput);
+    return result;
 };
 
 export const getItemDetails = async (itemId: number): Promise<any> => {
-    return get(Api.Shopping, 'callname=GetMultipleItems&ItemId=' + itemId);
+    const result =  get(Api.Shopping, 'callname=GetMultipleItems&ItemId=' + itemId);
+    return result;
 };
