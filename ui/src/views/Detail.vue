@@ -1,23 +1,43 @@
 <template>
   <b-container class="detail-container">
-    <b-row align-h="center">
-      <div class="main-img">
-        <b-img fluid :src="selectedImg" />
-      </div>
+    <b-row align-h="center" align-v="center">
+      <b-col class="main-img" cols="4">
+        <b-img thumbnail fluid :src="selectedImg" />
+      </b-col>
+      <b-col class="addition-images-col" cols="2">
+        <b-row  align-v="center">
+          <b-col>
+            <b-img
+              fluid-grow
+              thumbnail
+              v-for="currentImage in additionalImages.slice(1,3)"
+              :src="currentImage"
+              :key="currentImage.index"
+              @mouseenter="changeMainPic(currentImage)"
+              @mouseleave="changeMainPic(item.ImageUrls[0])"
+            />
+          </b-col>
+        </b-row>
+      </b-col>
       <b-col class="addition-images-col" cols="1">
-        <b-row align-h="start">
-          <b-img
-            fluid
-            v-for="currentImage in additionalImages"
-            :src="currentImage"
-            :key="currentImage.index"
-            @mouseenter="changeMainPic(currentImage)"
-            @mouseleave="changeMainPic(item.ImageUrls[0])"
-          />
+        <b-row align-v="center">
+          <b-col>
+            <b-img
+              fluid-grow
+              thumbnail
+              v-for="currentImage in additionalImages.slice(3)"
+              :src="currentImage"
+              :key="currentImage.index"
+              @mouseenter="changeMainPic(currentImage)"
+              @mouseleave="changeMainPic(item.ImageUrls[0])"
+            />
+          </b-col>
         </b-row>
       </b-col>
     </b-row>
-    <b-row align-h="center">{{item.Name}}</b-row>
+    <b-row align-h="center">
+      <h5>{{item.Name}}</h5>
+      </b-row>
   </b-container>
 </template>
 
@@ -30,14 +50,14 @@ export default Vue.extend({
   props: ["item"],
   data() {
     return {
-      selectedImg: "" as string,
+      selectedImg: "" as string
     };
   },
   beforeMount() {
     this.selectedImg = this.$props.item.ImageUrls[0];
   },
-  computed:{
-    additionalImages(){
+  computed: {
+    additionalImages() {
       const copiedArray = [...this.item.ImageUrls];
       copiedArray.splice(1, 0);
       return copiedArray;
@@ -45,7 +65,7 @@ export default Vue.extend({
   },
   methods: {
     changeMainPic(imgSrc: string) {
-        this.selectedImg = imgSrc;
+      this.selectedImg = imgSrc;
     }
   }
 });
@@ -56,20 +76,18 @@ export default Vue.extend({
   img {
     margin: 0;
   }
+
+  .row{
+    height: 25em;
+  }
 }
 
 .main-img {
-  height: 25em;
-  width: 25em;
-  border: 1px solid black;
-  margin-right: 1em;
+  // height: 100%;
 }
 
 .addition-images-col {
-  border: 1px solid black;
-
   img {
-    width: 100%;
     padding-bottom: 0.5em;
   }
 }
