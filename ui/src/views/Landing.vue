@@ -46,7 +46,6 @@ export default Vue.extend({
       //   });
 
       if(this.$store.state.initListings.length === 0) {
-        debugger
         GetListing()
           .then((response: IListing[]) => {
             this.loading = false;

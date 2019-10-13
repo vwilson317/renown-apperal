@@ -14,7 +14,6 @@ export default new Vuex.Store({
       state.cartItems.push(item);
     },
     addListings(state: any, listings: IListing[]) {
-      debugger
       state.initListings = listings;
     }
   },

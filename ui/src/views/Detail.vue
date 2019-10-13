@@ -3,13 +3,11 @@
     <b-row align-h="center">
       <h5>{{item.Name}}</h5>
     </b-row>
-    <b-row align-h="center" align-v="center">
-      <b-col class="main-img" cols="4">
+    <b-row align-h="center" align-v="center" no-gutters>
+      <b-col class="main-img" cols="5" align-self="center">
         <b-img thumbnail fluid :src="selectedImg" />
       </b-col>
       <b-col class="addition-images-col" cols="2">
-        <b-row align-v="center">
-          <b-col>
             <b-img
               fluid-grow
               thumbnail
@@ -19,23 +17,29 @@
               @mouseenter="changeMainPic(currentImage)"
               @mouseleave="changeMainPic(item.ImageUrls[0])"
             />
-          </b-col>
-        </b-row>
       </b-col>
       <b-col class="addition-images-col" cols="1">
-        <b-row align-v="center">
-          <b-col>
             <b-img
               fluid-grow
               thumbnail
-              v-for="currentImage in additionalImages.slice(3)"
+              v-for="currentImage in additionalImages.slice(3,7)"
               :src="currentImage"
               :key="currentImage.index"
               @mouseenter="changeMainPic(currentImage)"
               @mouseleave="changeMainPic(item.ImageUrls[0])"
             />
-          </b-col>
-        </b-row>
+      </b-col>
+
+      <b-col class="addition-images-col" cols="1">
+            <b-img
+              fluid-grow
+              thumbnail
+              v-for="currentImage in additionalImages.slice(7,11)"
+              :src="currentImage"
+              :key="currentImage.index"
+              @mouseenter="changeMainPic(currentImage)"
+              @mouseleave="changeMainPic(item.ImageUrls[0])"
+            />
       </b-col>
     </b-row>
   </b-container>
@@ -76,8 +80,6 @@ export default Vue.extend({
   img {
     margin: 0;
   }
-
-
 }
 
 .main-img {
@@ -92,5 +94,7 @@ export default Vue.extend({
   .row {
     height: 25em;
   }
+
+  margin: 0 .2em;
 }
 </style>
