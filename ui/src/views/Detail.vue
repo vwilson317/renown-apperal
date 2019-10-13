@@ -31,21 +31,21 @@ export default Vue.extend({
   data() {
     return {
       selectedImg: "" as string,
-      additionalImages: "" as string[],
     };
   },
   beforeMount() {
     this.selectedImg = this.$props.item.ImageUrls[0];
-    this.additionalImages = this.getAdditionalImages();
+  },
+  computed:{
+    additionalImages(){
+      const copiedArray = [...this.item.ImageUrls];
+      copiedArray.splice(1, 0);
+      return copiedArray;
+    }
   },
   methods: {
     changeMainPic(imgSrc: string) {
         this.selectedImg = imgSrc;
-    },
-    getAdditionalImages() {
-      const copiedArray = [...this.item.ImageUrls];
-      copiedArray.splice(1, 0);
-      return copiedArray;
     }
   }
 });
