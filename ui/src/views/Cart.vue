@@ -11,7 +11,7 @@
       class="cart-item-row"
     >
       <b-col>
-        <b-img thumbnail :src="currentItem.ImageUrl" />
+        <b-img thumbnail :src="currentItem.ImageUrls[0]" />
       </b-col>
       <b-col>{{currentItem.Name}}</b-col>
       <b-col>{{currentItem.Price}}</b-col>
