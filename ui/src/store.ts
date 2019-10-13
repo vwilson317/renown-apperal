@@ -7,7 +7,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     cartItems: [],
-    initListings: []
+    initListings: [],
+    loading: true,
   },
   mutations: {
     addItemToCart(state: any, item: IListing) {
@@ -15,7 +16,10 @@ export default new Vuex.Store({
     },
     addListings(state: any, listings: IListing[]) {
       state.initListings = listings;
-    }
+    },
+    setLoading(state: any, isLoading: boolean) {
+      state.loading = isLoading;
+    },
   },
   actions: {
 

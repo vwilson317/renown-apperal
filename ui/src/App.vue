@@ -11,63 +11,71 @@
           <b-row align-h="center" align-v="center" @click="click">
             <span>Cart</span>
             <font-awesome-icon class="cart-icon" :icon="['fab', 'opencart']" size="2x"></font-awesome-icon>
-          <b-badge v-show="itemCount !== 0" class="item-count">{{itemCount}}</b-badge>
+            <b-badge v-show="itemCount !== 0" class="item-count">{{itemCount}}</b-badge>
           </b-row>
         </b-col>
       </b-row>
     </b-container>
     <Nav />
     <div id="content">
-    <router-view />
+      <Loading v-show="loading" />
+      <div id="content-sub">
+        <router-view />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Nav from '@/components/Nav.vue'; // @   is an alias to /src
+import Vue from "vue";
+import Nav from "@/components/Nav.vue"; // @   is an alias to /src
+import Loading from "@/components/Loading.vue";
 
 export default Vue.extend({
-  name: 'App',
+  name: "App",
   components: {
     Nav,
+    Loading
   },
   data() {
     return {};
   },
   methods: {
     click() {
-      this.$router.push('cart');
+      this.$router.push("cart");
     },
+    loading() {
+      return this.$store.state.loading;
+    }
   },
   computed: {
     itemCount() {
       return this.$store.state.cartItems.length;
-    },
-  },
+    }
+  }
 });
 </script>
 
 <style lang='scss'>
 @import "@/styles/global.scss";
 
-html{
+html {
   //overflow: hidden;
   height: 100%;
-      -ms-overflow-style: none;  // IE 10+
-    overflow: -moz-scrollbars-none;  // Firefox
+  -ms-overflow-style: none; // IE 10+
+  overflow: -moz-scrollbars-none; // Firefox
 
-    ::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     display: none; // Safari and Chrome
-}
+  }
 }
 
-body{
+body {
   height: 100%;
 }
 
 button {
-  :hover{
+  :hover {
     color: $red;
   }
 }
@@ -83,12 +91,17 @@ button {
 }
 
 #content {
-  padding-top: 2em;
-  background-image: url('./assets/background.jpg');
+  background-image: url("./assets/background.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   height: 100%;
+  position: relative;
+}
+
+#content-sub {
+  padding-top: 2em;
   margin-bottom: 2em;
+  height: 100%;
 }
 
 .logo-row {
@@ -101,7 +114,7 @@ button {
 
 .logo {
   height: 4em;
-  padding: .25em;
+  padding: 0.25em;
   background-color: white;
 }
 
@@ -110,8 +123,8 @@ button {
   color: white;
 
   .cart-icon {
-  display: inline-block;
-}
+    display: inline-block;
+  }
 }
 
 .item-count {

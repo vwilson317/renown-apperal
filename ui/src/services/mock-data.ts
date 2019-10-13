@@ -12,7 +12,7 @@ export interface IListing {
 
 export const GetListing = async (): Promise<IListing[]> => {
     // var jsonResponseObj = jsonResponseObj;//JSON.parse(jsonBlob);
-    const responseData: FindItemsIneBayStoresResponse = jsonBlob.findItemsIneBayStoresResponse[0];
+    const responseData = jsonBlob.findItemsIneBayStoresResponse[0];
     const items = responseData!.searchResult[0]!.item;
 
     const constItemIds = items.map((element: any) =>  {

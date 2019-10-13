@@ -9,7 +9,7 @@ export enum Api {
 const findApiUrl = 'https://svcs.ebay.com/services/search/FindingService/v1';
 const findApiVersion = '1.13.0';
 const shoppingApiUrl = 'api/shopping'; // "http://open.api.ebay.com/shopping";
-const shoppingApiVersion = 1099; // 1085 doesn't work now wtf
+const shoppingApiVersion = 1099; // 1085 doesn't work now wtf   
 const eBayAppId = 'VincentW-renownap-PRD-0b31f104d-07a63429';
 
 export const get = async (apiType: Api, params?: string): Promise<any> => {

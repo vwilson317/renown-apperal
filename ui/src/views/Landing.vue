@@ -21,7 +21,7 @@ export default Vue.extend({
   name: 'Landing',
   data() {
     return {
-      loading: false,
+      loading: true,
       items: [] as IListing[]
     };
   },
@@ -30,7 +30,7 @@ export default Vue.extend({
   },
   methods: {
     async getDataFromApi() {
-      this.loading = true;
+      //this.loading = true;
 
       // getStoreItems()
       //   .then((response) => {
@@ -48,12 +48,17 @@ export default Vue.extend({
       if(this.$store.state.initListings.length === 0) {
         GetListing()
           .then((response: IListing[]) => {
-            this.loading = false;
-            this.items = response;
+            setTimeout(() => {
+              this.items = response;
             this.$store.commit('addListings', response);
+            this.$store.commit('setLoading', false);
+            //this.loading = false;
+            }, 10 * 1000);
+            
           })
           .catch((error) => {
-            this.loading = false;
+            // this.loading = false;
+            this.$store.commit('setLoading', false);
           });
         }
       else {
