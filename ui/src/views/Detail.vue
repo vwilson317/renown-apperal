@@ -1,11 +1,14 @@
 <template>
   <b-container class="detail-container">
+    <b-row align-h="center">
+      <h5>{{item.Name}}</h5>
+    </b-row>
     <b-row align-h="center" align-v="center">
       <b-col class="main-img" cols="4">
         <b-img thumbnail fluid :src="selectedImg" />
       </b-col>
       <b-col class="addition-images-col" cols="2">
-        <b-row  align-v="center">
+        <b-row align-v="center">
           <b-col>
             <b-img
               fluid-grow
@@ -35,9 +38,6 @@
         </b-row>
       </b-col>
     </b-row>
-    <b-row align-h="center">
-      <h5>{{item.Name}}</h5>
-      </b-row>
   </b-container>
 </template>
 
@@ -77,9 +77,7 @@ export default Vue.extend({
     margin: 0;
   }
 
-  .row{
-    height: 25em;
-  }
+
 }
 
 .main-img {
@@ -89,6 +87,10 @@ export default Vue.extend({
 .addition-images-col {
   img {
     padding-bottom: 0.5em;
+  }
+
+  .row {
+    height: 25em;
   }
 }
 </style>

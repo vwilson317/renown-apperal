@@ -16,6 +16,7 @@ import Vue from 'vue';
 import { GetListing, IListing } from '../services/mock-data';
 import Listing from '../components/Listing.vue';
 import { getStoreItems, getItemDetails } from '../services/api-da';
+
 export default Vue.extend({
   name: 'Landing',
   data() {
@@ -44,14 +45,21 @@ export default Vue.extend({
       //     this.loading = false;
       //   });
 
-      GetListing()
-        .then((response: IListing[]) => {
-          this.loading = false;
-          this.items = response;
-        })
-        .catch((error) => {
-          this.loading = false;
-        });
+      if(this.$store.state.initListings.length === 0) {
+        debugger
+        GetListing()
+          .then((response: IListing[]) => {
+            this.loading = false;
+            this.items = response;
+            this.$store.commit('addListings', response);
+          })
+          .catch((error) => {
+            this.loading = false;
+          });
+        }
+      else {
+        this.items = this.$store.state.initListings;
+      }  
     },
   },
   components: {

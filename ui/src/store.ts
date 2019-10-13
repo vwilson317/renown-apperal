@@ -7,11 +7,16 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     cartItems: [],
+    initListings: []
   },
   mutations: {
     addItemToCart(state: any, item: IListing) {
       state.cartItems.push(item);
     },
+    addListings(state: any, listings: IListing[]) {
+      debugger
+      state.initListings = listings;
+    }
   },
   actions: {
 
