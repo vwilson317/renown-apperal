@@ -12,16 +12,16 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { GetListing, IListing } from '../services/mock-data';
-import Listing from '../components/Listing.vue';
-import { getStoreItems, getItemDetails } from '../services/api-da';
+import Vue from "vue";
+import { GetListing, IListing } from "../services/mock-data";
+import Listing from "../components/Listing.vue";
+import { getStoreItems, getItemDetails } from "../services/api-da";
 
 export default Vue.extend({
-  name: 'Landing',
+  name: "Landing",
   data() {
     return {
-      loading: true,
+      loading: false,
       items: [] as IListing[]
     };
   },
@@ -45,30 +45,25 @@ export default Vue.extend({
       //     this.loading = false;
       //   });
 
-      if(this.$store.state.initListings.length === 0) {
+      if (this.$store.state.initListings.length === 0) {
         GetListing()
           .then((response: IListing[]) => {
-            setTimeout(() => {
-              this.items = response;
-            this.$store.commit('addListings', response);
-            this.$store.commit('setLoading', false);
-            //this.loading = false;
-            }, 10 * 1000);
-            
+            this.items = response;
+            this.$store.commit("addListings", response);
+            this.$store.commit("setLoading", false);
           })
-          .catch((error) => {
+          .catch(error => {
             // this.loading = false;
-            this.$store.commit('setLoading', false);
+            this.$store.commit("setLoading", false);
           });
-        }
-      else {
+      } else {
         this.items = this.$store.state.initListings;
-      }  
-    },
+      }
+    }
   },
   components: {
-    Listing,
-  },
+    Listing
+  }
 });
 </script>
 

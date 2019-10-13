@@ -18,7 +18,7 @@
     </b-container>
     <Nav />
     <div id="content">
-      <Loading v-show="loading" />
+      <Loading v-show="loading()" />
       <div id="content-sub">
         <router-view />
       </div>
@@ -115,7 +115,6 @@ button {
 .logo {
   height: 4em;
   padding: 0.25em;
-  background-color: white;
 }
 
 .cart-action-container {
