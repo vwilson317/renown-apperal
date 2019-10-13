@@ -7,7 +7,7 @@
             <img class="logo" alt="Vue logo" src="./assets/logo.png" />
           </router-link>
         </b-col>
-        <b-col class="cart-action-container" cols="2" col-sm="1" align-self="center">
+        <b-col class="cart-action-container" cols="2" sm="1" align-self="center">
           <b-row align-h="center" align-v="center" @click="click">
             <span>Cart</span>
             <font-awesome-icon class="cart-icon" :icon="['fab', 'opencart']" size="2x"></font-awesome-icon>

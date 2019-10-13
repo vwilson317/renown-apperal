@@ -19,8 +19,8 @@ export const GetListing = async (): Promise<IListing[]> => {
         return element.itemId;
     });
     const itemDetails = await getItemDetails(constItemIds.join());
-    
-    var itemDetailsRepsonse = itemDetails.data as ShoppingResponse;
+
+    let itemDetailsRepsonse = itemDetails.data as ShoppingResponse;
 
     const itemsFromApi = itemDetailsRepsonse.Item.map((x: any) => {
         return{

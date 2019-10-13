@@ -14,7 +14,7 @@ export interface FindResponse {
 export interface FindItemsIneBayStoresResponse {
     ack: string[];
     version: string[];
-    timestamp: string[];// todo: maybe fix this
+    timestamp: string[]; // todo: maybe fix this
     searchResult: SearchResult[];
     paginationOutput: PaginationOutput[];
     itemSearchURL: string[];
@@ -155,7 +155,7 @@ function invalidValue(typ: any, val: any): never {
 
 function jsonToJSProps(typ: any): any {
     if (typ.jsonToJS === undefined) {
-        let map: any = {};
+        const map: any = {};
         typ.props.forEach((p: any) => map[p.json] = { key: p.js, typ: p.typ });
         typ.jsonToJS = map;
     }
@@ -164,7 +164,7 @@ function jsonToJSProps(typ: any): any {
 
 function jsToJSONProps(typ: any): any {
     if (typ.jsToJSON === undefined) {
-        let map: any = {};
+        const map: any = {};
         typ.props.forEach((p: any) => map[p.js] = { key: p.json, typ: p.typ });
         typ.jsToJSON = map;
     }
@@ -179,9 +179,9 @@ function transform(val: any, typ: any, getProps: any): any {
 
     function transformUnion(typs: any[], val: any): any {
         // val must validate against one typ in typs
-        let l = typs.length;
+        const l = typs.length;
         for (let i = 0; i < l; i++) {
-            let typ = typs[i];
+            const typ = typs[i];
             try {
                 return transform(val, typ, getProps);
             } catch (_) {}
@@ -215,7 +215,7 @@ function transform(val: any, typ: any, getProps: any): any {
         if (val === null || typeof val !== 'object' || Array.isArray(val)) {
             return invalidValue('object', val);
         }
-        let result: any = {};
+        const result: any = {};
         Object.getOwnPropertyNames(props).forEach((key) => {
             const prop = props[key];
             const v = Object.prototype.hasOwnProperty.call(val, key) ? val[key] : undefined;
