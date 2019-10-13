@@ -18,7 +18,7 @@ export const get = async (apiType: Api, params: string): Promise<any> => {
     };
     let uri = '';
     if (apiType === Api.Finding) {// storeName
-        const str = 'SERVICE-VERSION=' + findApiVersion + '&SECURITY-APPNAME=' + eBayAppId + '&RESPONSE-DATA-FORMAT=XML&REST-PAYLOAD';
+        const str = 'SERVICE-NAME='+ 'FindingService' + '&OPERATION-NAME=' + 'findItemsIneBayStores' + '&SERVICE-VERSION=' + findApiVersion + '&SECURITY-APPNAME=' + eBayAppId + '&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD';
         uri = findApiUrl + '?' + str + '&' + params;
     }
     else if (apiType === Api.Shopping) {
@@ -26,7 +26,6 @@ export const get = async (apiType: Api, params: string): Promise<any> => {
         uri = shoppingApiUrl + '?' + str + '&' + params;
     }
 
-    debugger;
     const instance = axios.create(config);
     return instance.get(uri);
 };
@@ -50,7 +49,6 @@ export const getStoreItems = async (): Promise<any> => {
     };
 
     const paginationInputJson = JSON.stringify(paginationInput);
-    debugger;
     const result = await get(Api.Finding, 'storeName=imyown')
         .catch((e) => {
             const error = e;
