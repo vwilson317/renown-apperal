@@ -13,7 +13,11 @@ module.exports = {
             '^/api/shopping': {
                 target: 'http://open.api.ebay.com/shopping',
                 changeOrigin: true
-            }
+            },
+            '^/api/trading': {
+                target: 'https://api.ebay.com/ws/api.dll',
+                changeOrigin: true
+            },
         }
     }
 }
