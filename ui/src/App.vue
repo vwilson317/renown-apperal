@@ -4,7 +4,7 @@
       <b-row cols="12">
         <b-col class="left-side" offset="2" offset-sm="1">
           <router-link to="/">
-            <img class="logo" alt="Vue logo" src="./assets/logo.png" />
+            <img class="logo" alt="Vue logo" src="./assets/logo-white.png" />
           </router-link>
         </b-col>
         <b-col class="cart-action-container" cols="2" sm="1" align-self="center">
