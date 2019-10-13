@@ -1,6 +1,7 @@
 import jsonBlob from './findResponseMock';
 import { getItemDetails } from '../services/api-da';
 import { FindItemsIneBayStoresResponse } from '../dto/findResponse';
+import { ShoppingResponse } from '@/dto/shoppingResponse';
 
 export interface IListing {
     Name: string;
@@ -18,9 +19,10 @@ export const GetListing = async (): Promise<IListing[]> => {
         return element.itemId;
     });
     const itemDetails = await getItemDetails(constItemIds.join());
-    //
+    
+    var itemDetailsRepsonse = itemDetails.data as ShoppingResponse;
 
-    const itemsFromApi = itemDetails.data.Item.map((x: any) => {
+    const itemsFromApi = itemDetailsRepsonse.Item.map((x: any) => {
         return{
             Name: x.Title,
             ImageUrl: x.PictureURL[0],
