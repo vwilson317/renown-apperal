@@ -12,7 +12,7 @@ const shoppingApiUrl = 'api/shopping'; // "http://open.api.ebay.com/shopping";
 const shoppingApiVersion = 1085; // 1099 should work but sometimes doesn't IDK
 const eBayAppId = 'VincentW-renownap-PRD-0b31f104d-07a63429';
 
-export const get = async (apiType: Api, params: string): Promise<any> => {
+export const get = async (apiType: Api, params?: string): Promise<any> => {
     // todo add ebay apis to dev server
     const config = {
         headers: [
@@ -35,8 +35,6 @@ export const get = async (apiType: Api, params: string): Promise<any> => {
             'paginationInput.entriesPerPage': '3',
             'storeName' : 'imyown',
           };
-        const str = 'SERVICE-NAME=' + 'FindingService' + '&OPERATION-NAME=' + 'findItemsIneBayStores' + '&SERVICE-VERSION=' + findApiVersion + '&SECURITY-APPNAME=' + eBayAppId + '&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD';
-        uri = findApiUrl + '?' + str + '&' + params;
 
         const instance = axios.create(config);
         return instance.get(findApiUrl, {params});
@@ -64,14 +62,14 @@ enum sortOrder {
 }
 
 export const getStoreItems = async (): Promise<any> => {
-    const paginationInput = {
-        entriesPerPage: 10,
-        pageNumber: 1,
-    };
+    // const paginationInput = {
+    //     entriesPerPage: 10,
+    //     pageNumber: 1,
+    // };
 
-    const paginationInputJson = JSON.stringify(paginationInput);
-    const result = await get(Api.Finding, 'storeName=imyown')
-        .catch((e) => {
+    // const paginationInputJson = JSON.stringify(paginationInput);
+    const result = await get(Api.Finding)
+        .catch((e: any) => {
             const error = e;
             // todo: log error
         }); // &paginationInput=' + paginationInput);

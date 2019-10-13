@@ -1,4 +1,4 @@
-const findResponse = {
+const findResponseMock = {
     findItemsIneBayStoresResponse: [
         {
             ack: [
@@ -2697,4 +2697,4 @@ const findResponse = {
     ],
 };
 
-export default findResponse;
+export default findResponseMock;
