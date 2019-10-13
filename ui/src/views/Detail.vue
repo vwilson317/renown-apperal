@@ -2,16 +2,17 @@
   <b-container class="detail-container">
     <b-row align-h="center">
       <div class="main-img">
-        <b-img fluid :src="mainImg" />
+        <b-img fluid :src="selectedImg" />
       </div>
       <b-col class="addition-images-col" cols="1">
         <b-row align-h="start">
-          <b-img fluid
+          <b-img
+            fluid
             v-for="currentImage in additionalImages"
             :src="currentImage"
             :key="currentImage.index"
             @mouseenter="changeMainPic(currentImage)"
-            @mouseleave="changeMainPic(item.ImageUrl)"
+            @mouseleave="changeMainPic(item.ImageUrls[0])"
           />
         </b-row>
       </b-col>
@@ -21,42 +22,40 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { IListing } from '../services/mock-data';
+import Vue from "vue";
+import { IListing } from "../services/mock-data";
 
 export default Vue.extend({
-  name: 'Detail',
-  props: ['item'],
+  name: "Detail",
+  props: ["item"],
   data() {
     return {
-      additionalImages: [
-        'https://i.ebayimg.com/thumbs/images/g/9s0AAOSwURhdmlXN/s-l225.webp',
-        'https://i.ebayimg.com/thumbs/images/g/nXAAAOSwA5RdmlXO/s-l225.webp',
-        'https://i.ebayimg.com/thumbs/images/g/IAYAAOSw1EZdn8Pp/s-l225.webp',
-        'https://i.ebayimg.com/thumbs/images/g/1swAAOSwSChdn8PJ/s-l225.webp',
-        'https://i.ebayimg.com/thumbs/images/g/BHsAAOSwxjxdn8S1/s-l225.webp',
-        'https://i.ebayimg.com/thumbs/images/g/7QEAAOSwEYBdn8Py/s-l225.webp',
-        'https://i.ebayimg.com/thumbs/images/m/m-20LBx8QHXqGehfzKduUEA/s-l225.jpg',
-      ],
-      mainImg: '' as string,
+      selectedImg: "" as string,
+      additionalImages: "" as string[],
     };
   },
   beforeMount() {
-    this.mainImg = this.$props.item.ImageUrl;
+    this.selectedImg = this.$props.item.ImageUrls[0];
+    this.additionalImages = this.getAdditionalImages();
   },
   methods: {
     changeMainPic(imgSrc: string) {
-      this.mainImg = imgSrc;
+        this.selectedImg = imgSrc;
     },
-  },
+    getAdditionalImages() {
+      const copiedArray = [...this.item.ImageUrls];
+      copiedArray.splice(1, 0);
+      return copiedArray;
+    }
+  }
 });
 </script>
 
 <style scoped lang="scss">
-.detail-container{
-    img {
-        margin: 0;
-    }
+.detail-container {
+  img {
+    margin: 0;
+  }
 }
 
 .main-img {
@@ -71,7 +70,7 @@ export default Vue.extend({
 
   img {
     width: 100%;
-    padding-bottom: .5em;
+    padding-bottom: 0.5em;
   }
 }
 </style>

@@ -21,9 +21,7 @@ export default Vue.extend({
   data() {
     return {
       loading: false,
-      items: [] as IListing[],
-      eBayFindResponse: {},
-      eBayShoppingResponse: {},
+      items: [] as IListing[]
     };
   },
   created() {
@@ -45,11 +43,6 @@ export default Vue.extend({
       //   .catch((error) => {
       //     this.loading = false;
       //   });
-
-      getItemDetails('123935666154')
-      .then((result) => {
-          this.eBayShoppingResponse = result;
-      });
 
       GetListing()
         .then((response: IListing[]) => {

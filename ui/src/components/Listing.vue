@@ -1,7 +1,7 @@
 <template>
   <b-col class="listing-item-container" cols="12" md="3">
     <div>
-      <b-img thumbnail fluid class="banner-img" :src="item.ImageUrl" @click="itemClick(item)" />
+      <b-img thumbnail fluid class="banner-img" :src="item.ImageUrls[0]" @click="itemClick(item)" />
       <b-button :id="getTargetId" variant="link" @click="addToCartClick(item)">
         <font-awesome-icon :icon="['far', 'plus-square']" size="2x"></font-awesome-icon>
       </b-button>

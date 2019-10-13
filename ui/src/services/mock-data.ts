@@ -5,7 +5,7 @@ import { ShoppingResponse } from '@/dto/shoppingResponse';
 
 export interface IListing {
     Name: string;
-    ImageUrl: string;
+    ImageUrls: string[];
     Price: string;
     id?: number;
 }
@@ -25,10 +25,11 @@ export const GetListing = async (): Promise<IListing[]> => {
     const itemsFromApi = itemDetailsRepsonse.Item.map((x: any) => {
         return{
             Name: x.Title,
-            ImageUrl: x.PictureURL[0],
+            ImageUrls: x.PictureURL,
             id: x.ItemID,
             Price: x.ConvertedCurrentPrice.Value,
         };
     });
+
     return Promise.resolve(itemsFromApi);
 };
