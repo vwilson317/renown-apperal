@@ -5,29 +5,50 @@ export enum Api {
     Shopping,
 }
 
-const findApiUrl = 'api/finding'; // "https://svcs.ebay.com/services/search/FindingService/v1";
+// const findApiUrl = 'api/finding'; // "https://svcs.ebay.com/services/search/FindingService/v1";
+const findApiUrl = 'https://svcs.ebay.com/services/search/FindingService/v1';
 const findApiVersion = '1.13.0';
 const shoppingApiUrl = 'api/shopping'; // "http://open.api.ebay.com/shopping";
-const shoppingApiVersion = 1085;
+const shoppingApiVersion = 1085; // 1099 should work but sometimes doesn't IDK
 const eBayAppId = 'VincentW-renownap-PRD-0b31f104d-07a63429';
 
 export const get = async (apiType: Api, params: string): Promise<any> => {
     // todo add ebay apis to dev server
     const config = {
-        headers: [{ 'Access-Control-Allow-Origin': '*' }],
+        headers: [
+            { 'Access-Control-Allow-Origin': '*' },
+            { 'Access-Control-Allow-Headers': 'X-Requested-With, Origin, Content-Type, X-Auth-Token' },
+            { 'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE' },
+        ],
     };
     let uri = '';
     if (apiType === Api.Finding) {// storeName
-        const str = 'SERVICE-NAME='+ 'FindingService' + '&OPERATION-NAME=' + 'findItemsIneBayStores' + '&SERVICE-VERSION=' + findApiVersion + '&SECURITY-APPNAME=' + eBayAppId + '&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD';
+        const params = {
+            'OPERATION-NAME': 'findItemsIneBayStores',
+            'SERVICE-VERSION': findApiVersion,
+            'SECURITY-APPNAME': eBayAppId,
+            // 'GLOBAL-ID': 'EBAY-US',
+            'RESPONSE-DATA-FORMAT': 'JSON',
+            'callback': '_cb_findItemsIneBayStores',
+            'REST-PAYLOAD': '',
+            // keywords: 'harry%20potter',
+            'paginationInput.entriesPerPage': '3',
+            'storeName' : 'imyown',
+          };
+        const str = 'SERVICE-NAME=' + 'FindingService' + '&OPERATION-NAME=' + 'findItemsIneBayStores' + '&SERVICE-VERSION=' + findApiVersion + '&SECURITY-APPNAME=' + eBayAppId + '&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD';
         uri = findApiUrl + '?' + str + '&' + params;
-    }
-    else if (apiType === Api.Shopping) {
+
+        const instance = axios.create(config);
+        return instance.get(findApiUrl, {params});
+    } else if (apiType === Api.Shopping) {
         const str = 'version=' + shoppingApiVersion + '&appid=' + eBayAppId + '&responseencoding=JSON';
         uri = shoppingApiUrl + '?' + str + '&' + params;
+
+        const instance = axios.create(config);
+        return instance.get(uri);
     }
 
-    const instance = axios.create(config);
-    return instance.get(uri);
+
 };
 
 enum sortOrder {
@@ -57,7 +78,7 @@ export const getStoreItems = async (): Promise<any> => {
     return result;
 };
 
-export const getItemDetails = async (itemId: number): Promise<any> => {
-    const result = get(Api.Shopping, 'callname=GetMultipleItems&ItemId=' + itemId);
+export const getItemDetails = async (itemIds: string): Promise<any> => {
+    const result = get(Api.Shopping, 'callname=GetMultipleItems&ItemId=' + itemIds);
     return result;
 };
