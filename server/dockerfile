@@ -1,0 +1,8 @@
+FROM golang:alpine3.10
+WORKDIR /go/src/app
+ADD src src
+RUN apk update && apk upgrade && \
+    apk add --no-cache git 
+RUN go get github.com/gin-gonic/gin
+EXPOSE 8083
+CMD ["go", "run", "src/main.go"]
