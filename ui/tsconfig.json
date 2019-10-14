@@ -12,7 +12,8 @@
     "baseUrl": ".",
     "allowJs": true,
     "types": [
-      "webpack-env"
+      "webpack-env",
+      "jest"
     ],
     "paths": {
       "@/*": [
@@ -27,8 +28,8 @@
     ]
   },
   "include": [
-    "tests/**/*.ts",
-    "tests/**/*.tsx",
+    "src/tests/**/*.ts",
+    "src/tests/**/*.tsx",
     "src/**/*"
   ],
   "exclude": [
