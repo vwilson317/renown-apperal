@@ -59,10 +59,25 @@ export default Vue.extend({
       } else {
         this.items = this.$store.state.initListings;
       }
+    },
+    scroll() {
+      window.onscroll = () => {
+        let nearBottom =
+          document.documentElement.scrollTop > 2 * window.innerHeight;
+
+        if (nearBottom) {
+          GetListing().then((response: IListing[]) => {
+            this.items.push(...response);
+          });
+        }
+      };
     }
   },
   components: {
     Listing
+  },
+  mounted() {
+    this.scroll();
   }
 });
 </script>
