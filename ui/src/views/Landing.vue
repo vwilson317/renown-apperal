@@ -29,23 +29,16 @@ export default Vue.extend({
   },
   created() {
     this.getDataFromApi();
+    this.getFindByStore(); // testing api call
   },
   methods: {
+    async getFindByStore() {
+      getStoreItems()
+        .then((response) => {
+        });
+    },
     async getDataFromApi() {
       //this.loading = true;
-
-      // getStoreItems()
-      //   .then((response) => {
-      //     this.eBayFindResponse = response;
-      //     // probably parse response
-      //     // for each item in parsed reponse
-      //     // call shopping api
-      //     // this.loading = false;
-      //     // this.items = response;
-      //   })
-      //   .catch((error) => {
-      //     this.loading = false;
-      //   });
       if (this.pageNum <= 20) {
         await GetListing().then((response: IListing[]) => {
           this.$store.commit("addListings", response);

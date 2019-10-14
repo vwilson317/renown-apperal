@@ -14,13 +14,7 @@ const eBayAppId = 'VincentW-renownap-PRD-0b31f104d-07a63429';
 
 export const get = async (apiType: Api, params?: string): Promise<any> => {
     // todo add ebay apis to dev server
-    const config = {
-        headers: [
-            { 'Access-Control-Allow-Origin': '*' },
-            { 'Access-Control-Allow-Headers': 'X-Requested-With, Origin, Content-Type, X-Auth-Token' },
-            { 'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE' },
-        ],
-    };
+
     let uri = '';
     if (apiType === Api.Finding) {// storeName
         const params = {
@@ -29,24 +23,40 @@ export const get = async (apiType: Api, params?: string): Promise<any> => {
             'SECURITY-APPNAME': eBayAppId,
             // 'GLOBAL-ID': 'EBAY-US',
             'RESPONSE-DATA-FORMAT': 'JSON',
-            'callback': '_cb_findItemsIneBayStores',
+            // 'callback': '_cb_findItemsIneBayStores',
             'REST-PAYLOAD': '',
             // keywords: 'harry%20potter',
-            'paginationInput.entriesPerPage': '3',
+            'paginationInput.entriesPerPage': '20',
+            'paginationInput.pageNumber': '1',
             'storeName' : 'imyown',
           };
 
+          const config = {
+            // headers: [
+            //     { 'Access-Control-Allow-Origin': '*' },
+            //     { 'Access-Control-Allow-Headers': 'X-Requested-With, Origin, Content-Type, X-Auth-Token' },
+            //     { 'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE' },
+            // ],
+        };
+
         const instance = axios.create(config);
-        return instance.get(findApiUrl, {params});
+        const result = instance.get(findApiUrl, {params})
+        .then(data =>{
+            const thisData = data;
+            debugger
+        })
+        .catch(error =>{
+            const thisError = error;
+            debugger;
+        });
+        return result;
     } else if (apiType === Api.Shopping) {
         const str = 'version=' + shoppingApiVersion + '&appid=' + eBayAppId + '&responseencoding=JSON';
         uri = shoppingApiUrl + '?' + str + '&' + params;
 
-        const instance = axios.create(config);
+        const instance = axios.create();
         return instance.get(uri);
     }
-
-
 };
 
 enum sortOrder {
