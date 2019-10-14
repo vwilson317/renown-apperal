@@ -7,6 +7,7 @@
     </b-row>
     <b-row>
       <Listing v-for="(item, index) in items" :key="index" :item="item" :index="index" />
+      <h2 v-show="pageNum > 20">End Of Content</h2>
     </b-row>
   </b-container>
 </template>
@@ -22,7 +23,8 @@ export default Vue.extend({
   data() {
     return {
       loading: false,
-      items: [] as IListing[]
+      items: [] as IListing[],
+      pageNum: 1 as number
     };
   },
   created() {
@@ -44,31 +46,28 @@ export default Vue.extend({
       //   .catch((error) => {
       //     this.loading = false;
       //   });
-
-      if (this.$store.state.initListings.length === 0) {
-        GetListing()
-          .then((response: IListing[]) => {
-            this.items = response;
-            this.$store.commit("addListings", response);
-            this.$store.commit("setLoading", false);
-          })
-          .catch(error => {
-            // this.loading = false;
-            this.$store.commit("setLoading", false);
-          });
+      if (this.pageNum <= 20) {
+        await GetListing().then((response: IListing[]) => {
+          this.$store.commit("addListings", response);
+          this.items = this.$store.state.listings;
+          this.pageNum += 1;
+        });
       } else {
-        this.items = this.$store.state.initListings;
+        this.items = this.$store.state.listings;
+      }
+      if (this.pageNum === 1) {
+        this.$store.commit("setLoading", false);
       }
     },
     scroll() {
       window.onscroll = () => {
         let nearBottom =
-          document.documentElement.scrollTop > 2 * window.innerHeight;
+          document.documentElement.scrollTop +
+            document.documentElement.offsetHeight >
+          document.documentElement.scrollHeight - 100;
 
         if (nearBottom) {
-          GetListing().then((response: IListing[]) => {
-            this.items.push(...response);
-          });
+          this.getDataFromApi();
         }
       };
     }
