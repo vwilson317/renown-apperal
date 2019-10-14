@@ -5,3 +5,10 @@ services:
     ports:
     - "8082:80"
     image: renown-apparel-ui
+    volumes:
+      - ~/:/var/log/nginx/
+  api:
+    build: ../../server/
+    ports:
+    - "8083:8083"
+    image: renown-api

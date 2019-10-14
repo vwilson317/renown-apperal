@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -27,6 +28,7 @@ func main() {
 
 	router.GET("/api/finding", getHandler)
 
+	router.Use(cors.Default())
 	router.Run(":8083")
 
 	fmt.Println("Terminating the application...")
