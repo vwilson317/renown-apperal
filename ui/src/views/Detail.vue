@@ -47,7 +47,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { IListing } from "../services/mock-data";
+import { IListing } from "../business-logic/getListings";
 
 export default Vue.extend({
   name: "Detail",

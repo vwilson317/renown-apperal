@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { IListing } from './services/mock-data';
+import { IListing } from './business-logic/getListings';
 
 Vue.use(Vuex);
 

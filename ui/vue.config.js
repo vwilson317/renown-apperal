@@ -2,7 +2,7 @@ module.exports = {
     devServer: {
         proxy: {
             '^/api/finding': {
-                target: 'https://svcs.ebay.com/services/search/FindingService/v1',
+                target: 'http://localhost:8083/api/finding',
                 changeOrigin: true
             },
             '^/api/shopping': {

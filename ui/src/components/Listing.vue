@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { IListing } from "../services/mock-data";
+import { IListing } from "../business-logic/getListings";
 import router from "../router";
 import store from "../store";
 

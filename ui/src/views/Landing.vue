@@ -14,9 +14,9 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { GetListing, IListing } from "../services/mock-data";
+import { GetListing, IListing } from "../business-logic/getListings";
 import Listing from "../components/Listing.vue";
-import { getStoreItems, getItemDetails } from "../services/api-da";
+import { getListingItemsByStore } from "../services/api-da";
 
 export default Vue.extend({
   name: "Landing",
@@ -29,27 +29,19 @@ export default Vue.extend({
   },
   created() {
     this.getDataFromApi();
-    this.getFindByStore(); // testing api call
   },
   methods: {
-    async getFindByStore() {
-      getStoreItems()
-        .then((response) => {
-        });
-    },
     async getDataFromApi() {
-      //this.loading = true;
       if (this.pageNum <= 20) {
-        await GetListing().then((response: IListing[]) => {
-          this.$store.commit("addListings", response);
-          this.items = this.$store.state.listings;
-          this.pageNum += 1;
-        });
+        const response = await GetListing(this.pageNum);
+        this.$store.commit("addListings", response);
+        this.items = this.$store.state.listings;
+        if (this.pageNum === 1) {
+          this.$store.commit("setLoading", false);
+        }
+        this.pageNum += 1;
       } else {
         this.items = this.$store.state.listings;
-      }
-      if (this.pageNum === 1) {
-        this.$store.commit("setLoading", false);
       }
     },
     scroll() {

@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { IListing } from '../services/mock-data';
+import { IListing } from '../business-logic/getListings';
 import store from '../store';
 import router from '../router';
 
