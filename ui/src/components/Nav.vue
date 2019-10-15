@@ -33,6 +33,8 @@ export default Vue.extend({
 }
 
 #nav {
+  min-height: 4em;
+  
   a {
     font-weight: bold;
     color: #2c3e50;
