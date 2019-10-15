@@ -1,4 +1,4 @@
-import { getListingItemsByStore, getItemDetails } from '../services/api-da';
+import { getListingItemsByStore, getItemDetails } from '../services/apiDataAccess';
 import { FindItemsIneBayStoresResponse } from '../dto/findResponse';
 import { ShoppingResponse } from '@/dto/shoppingResponse';
 
