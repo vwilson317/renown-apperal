@@ -43,7 +43,7 @@ export default new Router({
     {
       path: '/all',
       name: 'all',
-      component: Landing
+      component: Landing,
     },
     {
       path: '/detail',

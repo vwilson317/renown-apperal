@@ -29,32 +29,32 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Nav from "@/components/Nav.vue"; // @   is an alias to /src
-import Loading from "@/components/Loading.vue";
+import Vue from 'vue';
+import Nav from '@/components/Nav.vue'; // @   is an alias to /src
+import Loading from '@/components/Loading.vue';
 
 export default Vue.extend({
-  name: "App",
+  name: 'App',
   components: {
     Nav,
-    Loading
+    Loading,
   },
   data() {
     return {};
   },
   methods: {
     click() {
-      this.$router.push("cart");
+      this.$router.push('cart');
     },
     loading() {
       return this.$store.state.loading;
-    }
+    },
   },
   computed: {
     itemCount() {
       return this.$store.state.cartItems.length;
-    }
-  }
+    },
+  },
 });
 </script>
 
@@ -77,6 +77,8 @@ body {
 }
 
 button {
+  color: #23C4F8 !important;
+
   :hover {
     color: $red;
   }

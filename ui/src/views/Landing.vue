@@ -18,22 +18,22 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { GetListing, IListing } from "../business-logic/getListings";
-import Listing from "../components/Listing.vue";
-import { getListingItemsByStore } from "../services/api-da";
+import Vue from 'vue';
+import { GetListing, IListing } from '../business-logic/getListings';
+import Listing from '../components/Listing.vue';
+import { getListingItemsByStore } from '../services/api-da';
 
 export default Vue.extend({
-  name: "Landing",
+  name: 'Landing',
   data() {
     return {
-      loading: false
+      loading: false,
     };
   },
   created() {
     let i = 1;
     for (; i <= 5; i++) {
-      //preload 100 items
+      // preload 100 items
       this.getDataFromApi(i);
     }
   },
@@ -43,9 +43,9 @@ export default Vue.extend({
         this.$store.state.listings.length <= pageNum * 20 &&
         this.$store.state.listings.length < 400;
       if (shouldLoadData) {
-        const response = await GetListing(pageNum).then(response => {
-          this.$store.commit("addListings", response);
-          this.$store.commit("increasePageNum");
+        const response = await GetListing(pageNum).then((response) => {
+          this.$store.commit('addListings', response);
+          this.$store.commit('increasePageNum');
         });
       }
     },
@@ -60,9 +60,9 @@ export default Vue.extend({
       this.getDataFromApi(pageNum);
     },
     scroll() {
-      //not being called
+      // not being called
       window.onscroll = async () => {
-        let nearBottom =
+        const nearBottom =
           document.documentElement.scrollTop +
             document.documentElement.offsetHeight >
           document.documentElement.scrollHeight - 100;
@@ -71,18 +71,18 @@ export default Vue.extend({
           await this.getDataFromApi(1);
         }
       };
-    }
+    },
   },
   components: {
-    Listing
+    Listing,
   },
   mounted() {
     // todo: consider adding back when api limits are resolved
-    setTimeout(() =>{
-      this.$store.commit("setLoading", false);
+    setTimeout(() => {
+      this.$store.commit('setLoading', false);
 
-    },1500)
-  }
+    }, 1500);
+  },
 });
 </script>
 

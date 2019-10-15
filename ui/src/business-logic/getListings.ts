@@ -10,7 +10,7 @@ export interface IListing {
 }
 
 export const GetListing = async (pageNum: number): Promise<IListing[]> => {
-    var response = await getListingItemsByStore(pageNum);
+    const response = await getListingItemsByStore(pageNum);
     const responseData = response.data.findItemsIneBayStoresResponse[0];
     const items = responseData!.searchResult[0]!.item;
 
@@ -19,7 +19,7 @@ export const GetListing = async (pageNum: number): Promise<IListing[]> => {
     });
     const itemDetails = await getItemDetails(itemIds.join());
 
-    let itemDetailsResponse = itemDetails.data as ShoppingResponse;
+    const itemDetailsResponse = itemDetails.data as ShoppingResponse;
 
     const itemsFromApi = itemDetailsResponse.Item.map((x: any) => {
         return{

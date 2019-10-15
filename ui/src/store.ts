@@ -21,9 +21,9 @@ export default new Vuex.Store({
     setLoading(state: any, isLoading: boolean) {
       state.loading = isLoading;
     },
-    increasePageNum(state: any){
+    increasePageNum(state: any) {
       state.pageNum += 1;
-    }
+    },
   },
   actions: {
   },

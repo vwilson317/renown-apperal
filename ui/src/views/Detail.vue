@@ -46,15 +46,15 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { IListing } from "../business-logic/getListings";
+import Vue from 'vue';
+import { IListing } from '../business-logic/getListings';
 
 export default Vue.extend({
-  name: "Detail",
-  props: ["item"],
+  name: 'Detail',
+  props: ['item'],
   data() {
     return {
-      selectedImg: "" as string
+      selectedImg: '' as string,
     };
   },
   beforeMount() {
@@ -65,13 +65,13 @@ export default Vue.extend({
       const copiedArray = [...this.item.ImageUrls];
       copiedArray.splice(1, 0);
       return copiedArray;
-    }
+    },
   },
   methods: {
     changeMainPic(imgSrc: string) {
       this.selectedImg = imgSrc;
-    }
-  }
+    },
+  },
 });
 </script>
 
