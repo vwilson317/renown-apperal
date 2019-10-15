@@ -12,8 +12,7 @@
         :item="item"
         :index="index"
       />
-      <b-button v-show="$store.state.listings.length < pageNum * 20" @click="getDataFromApi()">More</b-button>
-      <h2 v-show="pageNum > 20">End Of Content</h2>
+      <b-button v-show="showMore" @click="moreClick()">More</b-button>
     </b-row>
   </b-container>
 </template>
@@ -28,28 +27,41 @@ export default Vue.extend({
   name: "Landing",
   data() {
     return {
-      loading: false,
-      pageNum: 1 as number
+      loading: false
     };
   },
   created() {
-    this.getDataFromApi();
+    let i = 1;
+    for(; i <= 5; i++){
+      //preload 100 items
+      this.getDataFromApi(i);
+    }
   },
   methods: {
-    async getDataFromApi() {
-      const pageNum = this.pageNum;
-      const shouldLoadData = this.$store.state.listings.length < (pageNum * 20) &&
+    async getDataFromApi(pageNum: number) {
+      const shouldLoadData = this.$store.state.listings.length <= (pageNum * 20) &&
         this.$store.state.listings.length < 400;
       if (shouldLoadData) {
         const response = await GetListing(pageNum).then(response =>{
         this.$store.commit("addListings", response);
-        this.pageNum += 1;
+        this.$store.commit("increasePageNum");
         })
 
         if (pageNum === 1) {
           this.$store.commit("setLoading", false);
         }
       }
+    },
+    getPageNum(){
+      return this.$store.state.pageNum;
+    },
+    showMore(){
+      return this.$store.state.listings.length <= this.getPageNum() * 20;
+    },
+    moreClick(){
+      debugger
+      const pageNum = this.getPageNum();
+      this.getDataFromApi(pageNum);
     },
     scroll() { //not being called
       window.onscroll = async () => {
@@ -59,7 +71,7 @@ export default Vue.extend({
           document.documentElement.scrollHeight - 100;
 
           if (nearBottom) {
-            await this.getDataFromApi();
+            await this.getDataFromApi(1);
           }
       };
     }
