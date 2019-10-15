@@ -262,7 +262,7 @@ html {
     /* top: 0; */
     /* bottom: 0; */
     background-color: white;
-    z-index: 1;
+    z-index: 99;
 }
 
 </style>

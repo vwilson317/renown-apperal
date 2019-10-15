@@ -77,9 +77,10 @@ export default {
   }
 
   .cart-item-row {
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
     margin-bottom: 1em;
+    background-color: white;
+    padding: .5em 0;
+    box-shadow: 4px 3px 3px grey;
   }
 }
 </style>

@@ -42,8 +42,8 @@ export default new Router({
     },
     {
       path: '/all',
-      name: 'all', // ,
-      // component: null
+      name: 'all',
+      component: Landing
     },
     {
       path: '/detail',

@@ -12,10 +12,10 @@
     </div>
     <div class="detail-container">
       <b-row align-content="center">
-        <b-col>
-          <h6>{{shortenName(item.Name)}}</h6>
-          <h6>${{item.Price}}</h6>
-        </b-col>
+      <b-row>
+          <h5>{{shortenName(item.Name)}}</h5>
+          <h5>${{item.Price}}</h5>
+        </b-row>
         <b-col>
           <b-button :id="getTargetId" variant="link" @click="addToCartClick(item)">
             <font-awesome-icon :icon="['far', 'plus-square']" size="2x"></font-awesome-icon>

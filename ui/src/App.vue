@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <div class="sticky">
     <b-container fluid class="logo-row">
       <b-row cols="12">
         <b-col class="left-side" offset="2" offset-sm="1">
@@ -17,6 +18,7 @@
       </b-row>
     </b-container>
     <Nav />
+    </div>
     <div id="content">
       <Loading v-show="loading()" />
       <div id="content-sub">
@@ -105,7 +107,7 @@ button {
 }
 
 .logo-row {
-  background-color: $gun-metal;
+  background-color: #5F699B;//$gun-metal;
   min-height: 4em;
   .left-side {
     border-right: 1px solid white;
@@ -135,5 +137,17 @@ button {
 .badge-secondary {
   background-color: $red;
   opacity: 0.8;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + #content {
+  padding-top: 102px;
 }
 </style>

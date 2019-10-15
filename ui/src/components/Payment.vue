@@ -3,7 +3,7 @@
           <h4 class="mb-3">Payment</h4>
 
           <div class="d-block my-3">
-            <div class="custom-control custom-radio">
+            <!-- <div class="custom-control custom-radio">
               <input
                 id="credit"
                 name="paymentMethod"
@@ -23,7 +23,7 @@
                 required
               />
               <label class="custom-control-label" for="debit">Debit card</label>
-            </div>
+            </div> -->
             <div class="custom-control custom-radio">
               <input
                 id="paypal"
@@ -36,7 +36,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-6 mb-3">
+            <!-- <div class="col-md-6 mb-3">
               <label for="cc-name">Name on card</label>
               <input type="text" class="form-control" id="cc-name" placeholder required />
               <small class="text-muted">Full name as displayed on card</small>
@@ -59,7 +59,8 @@
               <input type="text" class="form-control" id="cc-cvv" placeholder required />
               <div class="invalid-feedback">Security code required</div>
             </div>
+          </div> -->
+          <!-- <hr class="mb-4" /> -->
           </div>
-          <hr class="mb-4" />
-          </div>
+</div>
 </template>

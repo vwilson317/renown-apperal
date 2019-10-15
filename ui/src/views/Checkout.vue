@@ -8,16 +8,16 @@
 
           <hr class="mb-4" />
 
-          <h4 class="mb-3">Billing address</h4>
+          <h4 class="mb-3">Shipping address</h4>
           <Address />
 
           <hr class="mb-4" />
-          <ShippingOptions :enabled="{enabled}" :clickfunc="toggleEnabled"/>
+          <!-- <ShippingOptions :enabled="{enabled}" :clickfunc="toggleEnabled"/>
           <div v-show="!enabled">
             <hr class="mb-4" />
-            <h4 class="mb-3">Shipping address</h4>
+            <h4 class="mb-3">Billing address</h4>
             <Address />
-          </div>
+          </div> -->
 
           <hr class="mb-4" />
           <Payment />
