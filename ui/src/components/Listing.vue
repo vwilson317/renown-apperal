@@ -18,10 +18,10 @@
     </div>
     <div class="detail-container">
       <b-row align-content="center">
-        <b-row>
+        <b-col cols="12">
           <h5>{{shortenName(item.Name)}}</h5>
           <h5>${{item.Price}}</h5>
-        </b-row>
+        </b-col>
         <b-button :id="getTargetId" variant="link" @click="addToCartClick(item)">
           <font-awesome-icon :icon="['far', 'plus-square']" size="2x"></font-awesome-icon>
         </b-button>
@@ -70,9 +70,8 @@ export default Vue.extend({
 .listing-item-container {
   button {
     position: absolute;
-    right: 1em;
-    bottom: -1.25em;
-    color: $gun-metal;
+    right: 4em;
+    bottom: -0.15em;
   }
 
   a {
@@ -132,15 +131,15 @@ export default Vue.extend({
 
 /* Zoom In */
 .shine img {
-	-webkit-transform: scale(1);
-	transform: scale(1);
+	// -webkit-transform: scale(.8);
+	// transform: scale(.8);
 	-webkit-transition: .3s ease-in-out;
 	transition: .3s ease-in-out;
 }
 
 .shine:hover img {
-	-webkit-transform: scale(1.1);
-	transform: scale(1.1);
+	-webkit-transform: scale(1.08);
+	transform: scale(1.08);
 }
 
 @-webkit-keyframes shine {
