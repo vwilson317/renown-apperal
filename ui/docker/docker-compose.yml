@@ -10,4 +10,4 @@ services:
     build: ../../server/
     ports:
     - "8083:8083"
-    image: renown-api
+    image: renown-apparel-api

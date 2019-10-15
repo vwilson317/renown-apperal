@@ -32,47 +32,44 @@ export default Vue.extend({
   },
   created() {
     let i = 1;
-    for(; i <= 5; i++){
+    for (; i <= 5; i++) {
       //preload 100 items
       this.getDataFromApi(i);
     }
   },
   methods: {
     async getDataFromApi(pageNum: number) {
-      const shouldLoadData = this.$store.state.listings.length <= (pageNum * 20) &&
+      const shouldLoadData =
+        this.$store.state.listings.length <= pageNum * 20 &&
         this.$store.state.listings.length < 400;
       if (shouldLoadData) {
-        const response = await GetListing(pageNum).then(response =>{
-        this.$store.commit("addListings", response);
-        this.$store.commit("increasePageNum");
-        })
-
-        if (pageNum === 1) {
-          this.$store.commit("setLoading", false);
-        }
+        const response = await GetListing(pageNum).then(response => {
+          this.$store.commit("addListings", response);
+          this.$store.commit("increasePageNum");
+        });
       }
     },
-    getPageNum(){
+    getPageNum() {
       return this.$store.state.pageNum;
     },
-    showMore(){
+    showMore() {
       return this.$store.state.listings.length <= this.getPageNum() * 20;
     },
-    moreClick(){
-      debugger
+    moreClick() {
       const pageNum = this.getPageNum();
       this.getDataFromApi(pageNum);
     },
-    scroll() { //not being called
+    scroll() {
+      //not being called
       window.onscroll = async () => {
         let nearBottom =
           document.documentElement.scrollTop +
             document.documentElement.offsetHeight >
           document.documentElement.scrollHeight - 100;
 
-          if (nearBottom) {
-            await this.getDataFromApi(1);
-          }
+        if (nearBottom) {
+          await this.getDataFromApi(1);
+        }
       };
     }
   },
@@ -81,7 +78,10 @@ export default Vue.extend({
   },
   mounted() {
     // todo: consider adding back when api limits are resolved
-    // this.scroll();
+    setTimeout(() =>{
+      this.$store.commit("setLoading", false);
+
+    },1500)
   }
 });
 </script>

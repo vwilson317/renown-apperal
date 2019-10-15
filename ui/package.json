@@ -11,10 +11,12 @@
     "docker:compose": "npm run dockerfile:move && docker-compose -f ./dist/docker-compose.yml up --build",
     "dockerfile:move": "cp docker/* dist",
     "docker:down": "docker-compose down",
-    "docker:tag": "docker tag renown-apparel-ui:latest 475795201917.dkr.ecr.us-east-2.amazonaws.com/renown-apparel-ui:latest",
-    "docker:push": "docker push 475795201917.dkr.ecr.us-east-2.amazonaws.com/renown-apparel-ui:latest",
-    "docker:deploy": "npm run docker:tag && npm run docker:push",
-    "docker:login": "(aws ecr get-login)",
+    "docker:tag:ui": "docker tag renown-apparel-ui:latest 475795201917.dkr.ecr.us-east-2.amazonaws.com/renown-apparel-ui:latest",
+    "docker:tag:api": "docker tag renown-apparel-api:latest 475795201917.dkr.ecr.us-east-2.amazonaws.com/renown-apparel-api:latest",
+    "docker:push:ui": "docker push 475795201917.dkr.ecr.us-east-2.amazonaws.com/renown-apparel-ui:latest",
+    "docker:push:api": "docker push 475795201917.dkr.ecr.us-east-2.amazonaws.com/renown-apparel-api:latest",
+    "docker:deploy": "npm run docker:tag:ui && npm run docker:tag:api && npm run docker:push:ui && npm run docker:push:api",
+    "docker:login": "(aws ecr get-login --no-include-email)",
     "test": "jest"
   },
   "dependencies": {

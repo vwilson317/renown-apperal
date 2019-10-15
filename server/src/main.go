@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func getHandler(c *gin.Context) {
+func findingHandler(c *gin.Context) {
 	pageNum := c.DefaultQuery("pageNum", "1")
 	response, err := http.Get("https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsIneBayStores&SERVICE-VERSION=1.13.0&SECURITY-APPNAME=VincentW-renownap-PRD-0b31f104d-07a63429&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD=&paginationInput.entriesPerPage=20&paginationInput.pageNumber=" + pageNum + "&storeName=imyown")
 	if err != nil {
@@ -21,12 +21,17 @@ func getHandler(c *gin.Context) {
 	}
 }
 
+func healthHandler(c *gin.Context) {
+	c.Status(http.StatusOK)
+}
+
 func main() {
 	fmt.Println("Starting the application...")
 
 	router := gin.Default()
 
-	router.GET("/api/finding", getHandler)
+	router.GET("/api/finding", findingHandler)
+	router.GET("/health", healthHandler)
 
 	router.Use(cors.Default())
 	router.Run(":8083")
