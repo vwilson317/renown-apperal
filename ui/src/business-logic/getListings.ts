@@ -10,10 +10,8 @@ export interface IListing {
 }
 
 export const GetListing = async (pageNum: number): Promise<IListing[]> => {
-    debugger
-    var findStoreData = await getListingItemsByStore(pageNum);
-    debugger
-    const responseData = findStoreData.findItemsIneBayStoresResponse[0];
+    var response = await getListingItemsByStore(pageNum);
+    const responseData = response.data.findItemsIneBayStoresResponse[0];
     const items = responseData!.searchResult[0]!.item;
 
     const itemIds = items.map((element: any) =>  {

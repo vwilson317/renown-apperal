@@ -6,7 +6,13 @@
       </b-col>
     </b-row>
     <b-row>
-      <Listing v-for="(item, index) in items" :key="index" :item="item" :index="index" />
+      <Listing
+        v-for="(item, index) in $store.state.listings"
+        :key="index"
+        :item="item"
+        :index="index"
+      />
+      <b-button v-show="$store.state.listings.length < pageNum * 20" @click="getDataFromApi()">More</b-button>
       <h2 v-show="pageNum > 20">End Of Content</h2>
     </b-row>
   </b-container>
@@ -23,7 +29,6 @@ export default Vue.extend({
   data() {
     return {
       loading: false,
-      items: [] as IListing[],
       pageNum: 1 as number
     };
   },
@@ -32,28 +37,30 @@ export default Vue.extend({
   },
   methods: {
     async getDataFromApi() {
-      if (this.pageNum <= 20) {
-        const response = await GetListing(this.pageNum);
+      const pageNum = this.pageNum;
+      const shouldLoadData = this.$store.state.listings.length < (pageNum * 20) &&
+        this.$store.state.listings.length < 400;
+      if (shouldLoadData) {
+        const response = await GetListing(pageNum).then(response =>{
         this.$store.commit("addListings", response);
-        this.items = this.$store.state.listings;
-        if (this.pageNum === 1) {
+        this.pageNum += 1;
+        })
+
+        if (pageNum === 1) {
           this.$store.commit("setLoading", false);
         }
-        this.pageNum += 1;
-      } else {
-        this.items = this.$store.state.listings;
       }
     },
-    scroll() {
-      window.onscroll = () => {
+    scroll() { //not being called
+      window.onscroll = async () => {
         let nearBottom =
           document.documentElement.scrollTop +
             document.documentElement.offsetHeight >
           document.documentElement.scrollHeight - 100;
 
-        if (nearBottom) {
-          this.getDataFromApi();
-        }
+          if (nearBottom) {
+            await this.getDataFromApi();
+          }
       };
     }
   },
@@ -61,7 +68,8 @@ export default Vue.extend({
     Listing
   },
   mounted() {
-    this.scroll();
+    // todo: consider adding back when api limits are resolved
+    // this.scroll();
   }
 });
 </script>
