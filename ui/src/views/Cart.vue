@@ -8,7 +8,7 @@
       align-v="start"
       v-for="(currentItem, index) in cartItems"
       :key="index"
-      class="cart-item-row"
+      class="cart-item-row box-shadow"
     >
       <b-col>
         <b-img thumbnail :src="currentItem.ImageUrls[0]" />
@@ -80,7 +80,7 @@ export default {
     margin-bottom: 1em;
     background-color: white;
     padding: .5em 0;
-    box-shadow: 4px 3px 3px grey;
+
   }
 }
 </style>

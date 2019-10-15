@@ -143,11 +143,15 @@ button {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1;
+  z-index: 100;
 }
 
 /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
 .sticky + #content {
   padding-top: 8em;
+}
+
+.box-shadow {
+    box-shadow: 4px 3px 3px grey;
 }
 </style>

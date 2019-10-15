@@ -1,8 +1,14 @@
 <template>
   <b-col class="listing-item-container" cols="12" md="3">
-    <div>
-      <b-img thumbnail fluid class="banner-img" :src="item.ImageUrls[0]" @click="itemClick(item)" />
-
+    <div class="shine">
+      <figure>
+        <b-img
+          fluid
+          class="banner-img box-shadow"
+          :src="item.ImageUrls[0]"
+          @click="itemClick(item)"
+        />
+      </figure>
       <!-- <b-popover
           :target="getTargetId"
           placement="rightbottom"
@@ -12,15 +18,13 @@
     </div>
     <div class="detail-container">
       <b-row align-content="center">
-      <b-row>
+        <b-row>
           <h5>{{shortenName(item.Name)}}</h5>
           <h5>${{item.Price}}</h5>
         </b-row>
-        <b-col>
-          <b-button :id="getTargetId" variant="link" @click="addToCartClick(item)">
-            <font-awesome-icon :icon="['far', 'plus-square']" size="2x"></font-awesome-icon>
-          </b-button>
-        </b-col>
+        <b-button :id="getTargetId" variant="link" @click="addToCartClick(item)">
+          <font-awesome-icon :icon="['far', 'plus-square']" size="2x"></font-awesome-icon>
+        </b-button>
       </b-row>
     </div>
   </b-col>
@@ -90,6 +94,64 @@ export default Vue.extend({
 
   .detail-container {
     border: 2px solid black;
+  }
+}
+
+/* Shine */
+// figure {
+//     width: 100%;
+//     height: 100%;
+//     margin: 0;
+//     padding: 0;
+//     overflow: hidden;
+// }
+
+// .shine {
+// 	position: relative;
+// }
+
+// .shine figure::after {
+// 	position: absolute;
+// 	top: 0;
+// 	left: -75%; 
+// 	z-index: 2;
+// 	display: block;
+// 	content: '';
+// 	width: 50%;
+// 	height: 100%;
+// 	background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,.3) 100%);
+// 	background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,.3) 100%);
+// 	-webkit-transform: skewX(-25deg);
+// 	transform: skewX(-25deg);
+// }
+
+// .shine figure:hover::after {
+// 	-webkit-animation: shine .75s;
+// 	animation: shine .75s;
+// }
+
+/* Zoom In */
+.shine img {
+	-webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+}
+
+.shine:hover img {
+	-webkit-transform: scale(1.1);
+	transform: scale(1.1);
+}
+
+@-webkit-keyframes shine {
+  100% {
+    left: 125%;
+  }
+}
+
+@keyframes shine {
+  100% {
+    left: 125%;
   }
 }
 </style>
