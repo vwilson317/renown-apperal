@@ -8,7 +8,7 @@ export default new Vuex.Store({
   state: {
     cartItems: [],
     listings: [],
-    loading: true,
+    loading: {isLoading: true, position: 'top'},
     pageNum: 1,
   },
   mutations: {
@@ -19,7 +19,7 @@ export default new Vuex.Store({
       state.listings.push(...listings);
     },
     setLoading(state: any, isLoading: boolean) {
-      state.loading = isLoading;
+      state.loading.isLoading = isLoading;
     },
     increasePageNum(state: any) {
       state.pageNum += 1;

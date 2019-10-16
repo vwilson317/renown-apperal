@@ -48,7 +48,13 @@
 
 <script>
 export default {
-    name: 'Loading'
+    name: 'Loading',
+    props: ['position'],
+    methods: {
+        getPositionClass(){
+            return position === 'top' ? '.top' : '.bottom';
+        }
+    }
 }
 </script>
 
@@ -56,6 +62,14 @@ export default {
 $color: #8C6FF0;
 $colorRight: #5628EE;
 $colorLeft: #23C4F8;
+
+.top {
+
+}
+
+.bottom {
+    
+}
 
 .infinity {
     width: 120px;

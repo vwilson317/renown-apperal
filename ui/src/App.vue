@@ -19,11 +19,14 @@
       </b-container>
       <Nav />
     </div>
-    <div id="content">
+    <div id="content-wrapper">
       <Loading v-show="loading()" />
-      <div id="content-sub">
-        <router-view />
-      </div>
+
+      <b-container id="content">
+        <div id="content-sub">
+          <router-view />
+        </div>
+      </b-container>
     </div>
   </div>
 </template>
@@ -47,7 +50,7 @@ export default Vue.extend({
       this.$router.push("cart");
     },
     loading() {
-      return this.$store.state.loading;
+      return this.$store.state.loading.isLoading;
     }
   },
   computed: {
@@ -63,7 +66,6 @@ export default Vue.extend({
 
 html {
   //overflow: hidden;
-  height: 100%;
   -ms-overflow-style: none; // IE 10+
   overflow: -moz-scrollbars-none; // Firefox
 
@@ -80,25 +82,29 @@ button {
   color: $gun-metal;
   background-color: transparent;
 
-
   .btn-secondary {
     border-color: $red;
   }
 }
 
 @font-face {
-  font-family: 'bebas-neue';
-  src: url('./assets/BebasNeue-Regular.woff') format('woff'),
-  url('./assets/BebasNeue-Regular.woff2') format('woff2');
+  font-family: "bebas-neue";
+  src: url("./assets/BebasNeue-Regular.woff") format("woff"),
+    url("./assets/BebasNeue-Regular.woff2") format("woff2");
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'bebas-neue';
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "bebas-neue";
 }
 
 .btn-secondary:hover {
-    color: $red;
-    border-color: $red;
+  color: $red;
+  border-color: $red;
 }
 
 #app {
@@ -109,12 +115,19 @@ h1, h2, h3, h4, h5, h6 {
   color: #2c3e50;
   margin-bottom: 2em;
   height: 100%;
+
+}
+
+#content-wrapper {
+  // position: relative;
+  height: auto;
+    background-image: url("./assets/background.jpg");
+  background-repeat: no-repeat;
 }
 
 #content {
-  background-image: url("./assets/background.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
+  margin-top: 8em;
+
   height: 100%;
   position: relative;
 }
@@ -125,8 +138,10 @@ h1, h2, h3, h4, h5, h6 {
   height: 100%;
 }
 
+
+
 .logo-row {
-  background-color: #5f699b; //$gun-metal;
+  background-color: $main; //$gun-metal;
   min-height: 4em;
   .left-side {
     border-right: 1px solid white;

@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <div id="landing-container">
     <b-row>
       <b-col>
         <h1>Popular</h1>
@@ -13,12 +13,18 @@
         :index="index"
       />
     </b-row>
-    <b-row class="more-container" v-show="showMore" align-h="center" align-v="center" align-content="center">
+    <b-row
+      class="more-container"
+      v-show="showMore"
+      align-h="center"
+      align-v="center"
+      align-content="center"
+    >
       <b-col cols="4" align-self="center">
         <b-button class="more-btn" @click="moreClick()">More</b-button>
       </b-col>
     </b-row>
-  </b-container>
+  </div>
 </template>
 
 <script lang="ts">
@@ -31,7 +37,7 @@ export default Vue.extend({
   name: "Landing",
   data() {
     return {
-      loading: false
+      //loading: false
     };
   },
   created() {
@@ -64,7 +70,10 @@ export default Vue.extend({
     },
     moreClick() {
       const pageNum = this.getPageNum();
-      this.getDataFromApi(pageNum);
+      this.$store.commit("setLoading", true);
+      this.getDataFromApi(pageNum).then(() =>{
+        this.$store.commit("setLoading", false);
+      })
     },
     scroll() {
       // not being called
@@ -94,10 +103,14 @@ export default Vue.extend({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import '../styles/global.scss';
+@import "../styles/global.scss";
 
 h3 {
   margin: 40px 0 0;
+}
+
+#landing-container {
+  height: 100%;
 }
 
 .more-container {
@@ -105,8 +118,15 @@ h3 {
 
   .more-btn {
     width: 100%;
-    background-color: transparent;
-    color: $gun-metal;
+    background-color: transparent !important;
+    color: $gun-metal !important;
+  }
+
+  .more-btn:focus,
+  .more-btn:hover {
+    -webkit-box-shadow: 0 0 5px 0.2rem $main;
+    box-shadow: 0 0 5px 0.2rem $main;
+    border: 0;
   }
 }
 </style>
