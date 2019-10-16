@@ -1,23 +1,23 @@
 <template>
   <div id="app">
     <div class="sticky">
-    <b-container fluid class="logo-row">
-      <b-row cols="12">
-        <b-col class="left-side" offset="2" offset-sm="1">
-          <router-link to="/">
-            <img class="logo" alt="Vue logo" src="./assets/logo-white.png" />
-          </router-link>
-        </b-col>
-        <b-col class="cart-action-container" cols="2" sm="1" align-self="center">
-          <b-row align-h="center" align-v="center" @click="click">
-            <span>Cart</span>
-            <font-awesome-icon class="cart-icon" :icon="['fab', 'opencart']" size="2x"></font-awesome-icon>
-            <b-badge v-show="itemCount !== 0" class="item-count">{{itemCount}}</b-badge>
-          </b-row>
-        </b-col>
-      </b-row>
-    </b-container>
-    <Nav />
+      <b-container fluid class="logo-row">
+        <b-row cols="12">
+          <b-col class="left-side" offset="2" offset-sm="1">
+            <router-link to="/">
+              <img class="logo" alt="Vue logo" src="./assets/logo-white.png" />
+            </router-link>
+          </b-col>
+          <b-col class="cart-action-container" cols="2" sm="1" align-self="center">
+            <b-row align-h="center" align-v="center" @click="click">
+              <span>Cart</span>
+              <font-awesome-icon class="cart-icon" :icon="['fab', 'opencart']" size="2x"></font-awesome-icon>
+              <b-badge v-show="itemCount !== 0" class="item-count">{{itemCount}}</b-badge>
+            </b-row>
+          </b-col>
+        </b-row>
+      </b-container>
+      <Nav />
     </div>
     <div id="content">
       <Loading v-show="loading()" />
@@ -29,32 +29,32 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Nav from '@/components/Nav.vue'; // @   is an alias to /src
-import Loading from '@/components/Loading.vue';
+import Vue from "vue";
+import Nav from "@/components/Nav.vue"; // @   is an alias to /src
+import Loading from "@/components/Loading.vue";
 
 export default Vue.extend({
-  name: 'App',
+  name: "App",
   components: {
     Nav,
-    Loading,
+    Loading
   },
   data() {
     return {};
   },
   methods: {
     click() {
-      this.$router.push('cart');
+      this.$router.push("cart");
     },
     loading() {
       return this.$store.state.loading;
-    },
+    }
   },
   computed: {
     itemCount() {
       return this.$store.state.cartItems.length;
-    },
-  },
+    }
+  }
 });
 </script>
 
@@ -77,11 +77,28 @@ body {
 }
 
 button {
-  color: #23C4F8 !important;
+  color: $gun-metal;
+  background-color: transparent;
 
-  :hover {
-    color: $red;
+
+  .btn-secondary {
+    border-color: $red;
   }
+}
+
+@font-face {
+  font-family: 'bebas-neue';
+  src: url('./assets/BebasNeue-Regular.woff') format('woff'),
+  url('./assets/BebasNeue-Regular.woff2') format('woff2');
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'bebas-neue';
+}
+
+.btn-secondary:hover {
+    color: $red;
+    border-color: $red;
 }
 
 #app {
@@ -109,7 +126,7 @@ button {
 }
 
 .logo-row {
-  background-color: #5F699B;//$gun-metal;
+  background-color: #5f699b; //$gun-metal;
   min-height: 4em;
   .left-side {
     border-right: 1px solid white;
@@ -154,6 +171,6 @@ button {
 }
 
 .box-shadow {
-    box-shadow: 4px 3px 3px grey;
+  box-shadow: 4px 3px 3px grey;
 }
 </style>

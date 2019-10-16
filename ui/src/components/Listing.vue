@@ -18,49 +18,50 @@
     </div>
     <div class="detail-container">
       <b-row align-content="center">
-        <b-col cols="12">
+        <b-col class="detail-col" cols="12">
+          <div class="divider"></div>
           <h5>{{shortenName(item.Name)}}</h5>
-          <h5>${{item.Price}}</h5>
+          <h6>${{item.Price}}</h6 >
+          <b-button :id="getTargetId" variant="link" @click="addToCartClick(item)">
+            <font-awesome-icon :icon="['far', 'plus-square']" size="2x"></font-awesome-icon>
+          </b-button>
         </b-col>
-        <b-button :id="getTargetId" variant="link" @click="addToCartClick(item)">
-          <font-awesome-icon :icon="['far', 'plus-square']" size="2x"></font-awesome-icon>
-        </b-button>
       </b-row>
     </div>
   </b-col>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { IListing } from '../business-logic/getListings';
-import router from '../router';
-import store from '../store';
+import Vue from "vue";
+import { IListing } from "../business-logic/getListings";
+import router from "../router";
+import store from "../store";
 
 const getTargetId = (obj: any): string => {
-  return 'popover-' + obj.index;
+  return "popover-" + obj.index;
 };
 
 const shortenName = (input: string): string => {
-  const parts = input.split(' ');
-  return [parts[0], parts[1], parts[2]].join(' ');
+  const parts = input.split(" ");
+  return [parts[0], parts[1], parts[2]].join(" ");
 };
 
 export default Vue.extend({
-  name: 'Listing',
-  props: ['item', 'index'],
+  name: "Listing",
+  props: ["item", "index"],
   data() {
     return {};
   },
   methods: {
     itemClick: (item: any): void => {
-      router.push({ name: 'detail', params: { item } });
+      router.push({ name: "detail", params: { item } });
     },
     addToCartClick: (item: IListing): void => {
-      store.commit('addItemToCart', item);
+      store.commit("addItemToCart", item);
     },
     shortenName,
-    getTargetId,
-  },
+    getTargetId
+  }
 });
 </script>
 
@@ -70,30 +71,38 @@ export default Vue.extend({
 .listing-item-container {
   button {
     position: absolute;
-    right: 4em;
-    bottom: -0.15em;
-  }
+    right: 1em;
+    top: -4em;
+    color: white;
+    opacity: 0.8;
 
-  a {
-    // transition: color 5ms;
     :hover {
       color: $red;
+      opacity: 1;
     }
+  }
+
+  .detail-col {
+    // border-top: 2px solid $red;
   }
 }
 
 .banner-img {
-  height: 15em;
   margin-top: 2em;
 
   :hover {
     cursor: pointer;
-    transition-delay: s;
   }
 
   .detail-container {
-    border: 2px solid black;
+    margin-top: 2em;
   }
+}
+
+.divider {
+  border-top: 2px solid $red;
+  width: 80%;
+    margin: .5em auto;
 }
 
 /* Shine */
@@ -112,7 +121,7 @@ export default Vue.extend({
 // .shine figure::after {
 // 	position: absolute;
 // 	top: 0;
-// 	left: -75%; 
+// 	left: -75%;
 // 	z-index: 2;
 // 	display: block;
 // 	content: '';
@@ -131,15 +140,15 @@ export default Vue.extend({
 
 /* Zoom In */
 .shine img {
-	// -webkit-transform: scale(.8);
-	// transform: scale(.8);
-	-webkit-transition: .3s ease-in-out;
-	transition: .3s ease-in-out;
+  // -webkit-transform: scale(.8);
+  // transform: scale(.8);
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
 .shine:hover img {
-	-webkit-transform: scale(1.08);
-	transform: scale(1.08);
+  -webkit-transform: scale(1.08);
+  transform: scale(1.08);
 }
 
 @-webkit-keyframes shine {

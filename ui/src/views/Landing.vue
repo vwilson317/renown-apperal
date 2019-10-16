@@ -12,22 +12,26 @@
         :item="item"
         :index="index"
       />
-      <b-button v-show="showMore" @click="moreClick()">More</b-button>
+    </b-row>
+    <b-row class="more-container" v-show="showMore" align-h="center" align-v="center" align-content="center">
+      <b-col cols="4" align-self="center">
+        <b-button class="more-btn" @click="moreClick()">More</b-button>
+      </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { GetListing, IListing } from '../business-logic/getListings';
-import Listing from '../components/Listing.vue';
-import { getListingItemsByStore } from '../services/api-da';
+import Vue from "vue";
+import { GetListing, IListing } from "../business-logic/getListings";
+import Listing from "../components/Listing.vue";
+import { getListingItemsByStore } from "../services/apiDataAccess";
 
 export default Vue.extend({
-  name: 'Landing',
+  name: "Landing",
   data() {
     return {
-      loading: false,
+      loading: false
     };
   },
   created() {
@@ -43,9 +47,9 @@ export default Vue.extend({
         this.$store.state.listings.length <= pageNum * 20 &&
         this.$store.state.listings.length < 400;
       if (shouldLoadData) {
-        const response = await GetListing(pageNum).then((response) => {
-          this.$store.commit('addListings', response);
-          this.$store.commit('increasePageNum');
+        const response = await GetListing(pageNum).then(response => {
+          this.$store.commit("addListings", response);
+          this.$store.commit("increasePageNum");
         });
       }
     },
@@ -53,7 +57,10 @@ export default Vue.extend({
       return this.$store.state.pageNum;
     },
     showMore() {
-      return this.$store.state.listings.length <= this.getPageNum() * 20;
+      return (
+        this.$store.state.listings.length !== 0 &&
+        this.$store.state.listings.length <= this.getPageNum() * 20
+      );
     },
     moreClick() {
       const pageNum = this.getPageNum();
@@ -71,24 +78,35 @@ export default Vue.extend({
           await this.getDataFromApi(1);
         }
       };
-    },
+    }
   },
   components: {
-    Listing,
+    Listing
   },
   mounted() {
     // todo: consider adding back when api limits are resolved
     setTimeout(() => {
-      this.$store.commit('setLoading', false);
-
+      this.$store.commit("setLoading", false);
     }, 1500);
-  },
+  }
 });
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+@import '../styles/global.scss';
+
 h3 {
   margin: 40px 0 0;
+}
+
+.more-container {
+  margin: 3em 0;
+
+  .more-btn {
+    width: 100%;
+    background-color: transparent;
+    color: $gun-metal;
+  }
 }
 </style>
