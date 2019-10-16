@@ -4,18 +4,17 @@
       <b-col>No items in cart</b-col>
     </b-row>
     <b-row
-      cols="12"
       align-v="start"
       v-for="(currentItem, index) in cartItems"
       :key="index"
       class="cart-item-row box-shadow"
     >
-      <b-col>
+      <b-col cols="5" cols-sm="3">
         <b-img thumbnail :src="currentItem.ImageUrls[0]" />
       </b-col>
-      <b-col>{{currentItem.Name}}</b-col>
-      <b-col>{{currentItem.Price}}</b-col>
-      <b-col>
+      <b-col cols="7" cols-sm="3">{{currentItem.Name}}</b-col>
+      <b-col cols="6" cols-sm="3">{{currentItem.Price}}</b-col>
+      <b-col cols="6" cols-sm="3">
         <b-button variant="link" @click="remove(index)">
           <font-awesome-icon :icon="['far', 'minus-square']" size="2x"></font-awesome-icon>
         </b-button>

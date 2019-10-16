@@ -1,5 +1,6 @@
 <template>
-  <b-col class="listing-item-container" cols="12" md="3">
+    <b-row align-v="center" align-h="center">
+  <b-col class="listing-item-container" cols="8" cols-sm="12">
     <div class="shine">
       <figure>
         <b-img
@@ -18,7 +19,7 @@
     </div>
     <div class="detail-container">
       <b-row align-content="center">
-        <b-col class="detail-col" cols="12">
+        <b-col class="detail-col" col-sm="12">
           <div class="divider"></div>
           <h5>{{shortenName(item.Name)}}</h5>
           <h6>${{item.Price}}</h6>
@@ -29,6 +30,7 @@
       </b-row>
     </div>
   </b-col>
+    </b-row>
 </template>
 
 <script lang="ts">

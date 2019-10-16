@@ -5,14 +5,12 @@
         <h1>Popular</h1>
       </b-col>
     </b-row>
-    <b-row>
       <Listing
         v-for="(item, index) in $store.state.listings"
         :key="index"
         :item="item"
         :index="index"
       />
-    </b-row>
     <b-row
       class="more-container"
       v-show="showMore"
