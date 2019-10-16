@@ -9,12 +9,12 @@
       :key="index"
       class="cart-item-row box-shadow"
     >
-      <b-col cols="5" cols-sm="3">
+      <b-col cols="5" sm="3">
         <b-img thumbnail :src="currentItem.ImageUrls[0]" />
       </b-col>
-      <b-col cols="7" cols-sm="3">{{currentItem.Name}}</b-col>
-      <b-col cols="6" cols-sm="3">{{currentItem.Price}}</b-col>
-      <b-col cols="6" cols-sm="3">
+      <b-col cols="7" sm="3">{{currentItem.Name}}</b-col>
+      <b-col cols="6" sm="3">{{currentItem.Price}}</b-col>
+      <b-col cols="6" sm="3">
         <b-button variant="link" @click="remove(index)">
           <font-awesome-icon :icon="['far', 'minus-square']" size="2x"></font-awesome-icon>
         </b-button>
