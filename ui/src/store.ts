@@ -24,6 +24,10 @@ export default new Vuex.Store({
     increasePageNum(state: any) {
       state.pageNum += 1;
     },
+    removeItem(state: any, item: IListing) {
+      const index = state.listings.indexOf(item);
+      state.listings.splice(index, 1);
+    },
   },
   actions: {
   },

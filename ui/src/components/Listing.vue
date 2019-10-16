@@ -1,34 +1,34 @@
 <template>
-    <b-col class="listing-item-container" cols="10" sm="3">
-      <div class="shine">
-        <figure>
-          <b-img
-            fluid
-            class="banner-img box-shadow"
-            :src="item.ImageUrls[0]"
-            @click="itemClick(item)"
-          />
-        </figure>
-        <!-- <b-popover
+  <b-col class="listing-item-container" cols="10" sm="3">
+    <div class="shine">
+      <figure>
+        <b-img
+          fluid
+          class="banner-img box-shadow"
+          :src="item.ImageUrls[0]"
+          @click="itemClick(item)"
+        />
+      </figure>
+      <!-- <b-popover
           :target="getTargetId"
           placement="rightbottom"
           title="Add item to cart"
           triggers="hover focus"
-        ></b-popover>-->
-      </div>
-      <div class="detail-container">
-        <b-row align-content="center">
-          <b-col class="detail-col" sm="12">
-            <div class="divider"></div>
-            <h5>{{shortenName(item.Name)}}</h5>
-            <h6>${{item.Price}}</h6>
-            <b-button :id="getTargetId" variant="link" @click="addToCartClick(item)">
-              <font-awesome-icon :icon="['far', 'plus-square']" size="2x"></font-awesome-icon>
-            </b-button>
-          </b-col>
-        </b-row>
-      </div>
-    </b-col>
+      ></b-popover>-->
+    </div>
+    <div class="detail-container">
+      <b-row align-content="center">
+        <b-col class="detail-col" sm="12">
+          <div class="divider"></div>
+          <h5>{{shortenName(item.Name)}}</h5>
+          <h6>${{item.Price}}</h6>
+          <b-button :id="getTargetId" variant="link" @click="addToCartClick(item)">
+            <font-awesome-icon :icon="['far', 'plus-square']" size="2x"></font-awesome-icon>
+          </b-button>
+        </b-col>
+      </b-row>
+    </div>
+  </b-col>
 </template>
 
 <script lang="ts">
@@ -57,6 +57,7 @@ export default Vue.extend({
       router.push({ name: "detail", params: { item } });
     },
     addToCartClick: (item: IListing): void => {
+      store.commit("removeItem", item);
       store.commit("addItemToCart", item);
     },
     shortenName,

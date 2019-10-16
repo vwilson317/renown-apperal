@@ -10,7 +10,6 @@
       <b-col class="addition-images-col" cols="2">
             <b-img
               fluid-grow
-              thumbnail
               v-for="currentImage in additionalImages.slice(1,3)"
               :src="currentImage"
               :key="currentImage.index"
@@ -21,7 +20,6 @@
       <b-col class="addition-images-col" cols="1">
             <b-img
               fluid-grow
-              thumbnail
               v-for="currentImage in additionalImages.slice(3,7)"
               :src="currentImage"
               :key="currentImage.index"
@@ -33,7 +31,6 @@
       <b-col class="addition-images-col" cols="1">
             <b-img
               fluid-grow
-              thumbnail
               v-for="currentImage in additionalImages.slice(7,11)"
               :src="currentImage"
               :key="currentImage.index"
