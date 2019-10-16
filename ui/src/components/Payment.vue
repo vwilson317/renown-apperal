@@ -31,6 +31,7 @@
                 type="radio"
                 class="custom-control-input"
                 required
+                checked
               />
               <label class="custom-control-label" for="paypal">Paypal</label>
             </div>

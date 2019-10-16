@@ -102,10 +102,17 @@ h6 {
   font-family: "bebas-neue";
 }
 
-.btn-secondary:hover {
-  color: $red;
-  border-color: $red;
-}
+  .btn-secondary {
+    background-color: transparent !important;
+    color: $gun-metal !important;
+  }
+
+  .btn-secondary:focus,
+  .btn-secondary:hover {
+    -webkit-box-shadow: 0 0 5px 0.2rem $main;
+    box-shadow: 0 0 5px 0.2rem $main;
+    border: 0;
+  }
 
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -115,11 +122,10 @@ h6 {
   color: #2c3e50;
   margin-bottom: 2em;
   height: 100%;
-
 }
 
 #content-wrapper {
-  // position: relative;
+      min-height: 35em;
   height: auto;
     background-image: url("./assets/background.jpg");
   background-repeat: no-repeat;
@@ -137,6 +143,7 @@ h6 {
   margin-bottom: 2em;
   height: 100%;
 }
+
 
 
 

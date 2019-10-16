@@ -118,15 +118,7 @@ h3 {
 
   .more-btn {
     width: 100%;
-    background-color: transparent !important;
-    color: $gun-metal !important;
   }
 
-  .more-btn:focus,
-  .more-btn:hover {
-    -webkit-box-shadow: 0 0 5px 0.2rem $main;
-    box-shadow: 0 0 5px 0.2rem $main;
-    border: 0;
-  }
 }
 </style>
