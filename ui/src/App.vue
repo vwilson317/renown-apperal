@@ -10,7 +10,7 @@
           </b-col>
           <b-col class="cart-action-container" cols="2" sm="1" align-self="center">
             <b-row align-h="center" align-v="center" @click="click">
-              <span>Cart</span>
+              <span class="d-none d-sm-block">Cart</span>
               <font-awesome-icon class="cart-icon" :icon="['fab', 'opencart']" size="2x"></font-awesome-icon>
               <b-badge v-show="itemCount !== 0" class="item-count">{{itemCount}}</b-badge>
             </b-row>
@@ -21,7 +21,6 @@
     </div>
     <div id="content-wrapper">
       <Loading v-show="loading()" />
-
       <b-container id="content">
         <div id="content-sub">
           <router-view />
