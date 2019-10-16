@@ -21,7 +21,7 @@
         <b-col class="detail-col" cols="12">
           <div class="divider"></div>
           <h5>{{shortenName(item.Name)}}</h5>
-          <h6>${{item.Price}}</h6 >
+          <h6>${{item.Price}}</h6>
           <b-button :id="getTargetId" variant="link" @click="addToCartClick(item)">
             <font-awesome-icon :icon="['far', 'plus-square']" size="2x"></font-awesome-icon>
           </b-button>
@@ -73,13 +73,17 @@ export default Vue.extend({
     position: absolute;
     right: 1em;
     top: -4em;
-    color: white;
-    opacity: 0.8;
+    color: $red;
+    opacity: 0.6;
+  }
 
-    :hover {
-      color: $red;
-      opacity: 1;
-    }
+  .btn-link:hover {
+    color: $red;
+    opacity: 1;
+  }
+
+  button:hover {
+    opacity: 1;
   }
 
   .detail-col {
@@ -101,8 +105,8 @@ export default Vue.extend({
 
 .divider {
   border-top: 2px solid $red;
-  width: 80%;
-    margin: .5em auto;
+  width: 70%;
+  margin: 0.5em auto;
 }
 
 /* Shine */
