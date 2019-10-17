@@ -1,7 +1,13 @@
 version: '3'
 services:
+
   web:
     build: .
     ports:
-    - "8082:80"
+    - "9999:80"
     image: renown-apparel-ui
+  api:
+    build: ../../server/
+    ports:
+    - "8083:8083"
+    image: renown-apparel-api

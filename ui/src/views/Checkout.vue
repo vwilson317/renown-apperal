@@ -8,20 +8,21 @@
 
           <hr class="mb-4" />
 
-          <h4 class="mb-3">Billing address</h4>
+          <h4 class="mb-3">Shipping address</h4>
           <Address />
+          <PayPal />
 
-          <hr class="mb-4" />
+          <!-- <hr class="mb-4" />
           <ShippingOptions :enabled="{enabled}" :clickfunc="toggleEnabled"/>
           <div v-show="!enabled">
             <hr class="mb-4" />
-            <h4 class="mb-3">Shipping address</h4>
+            <h4 class="mb-3">Billing address</h4>
             <Address />
-          </div>
+          </div> -->
 
           <hr class="mb-4" />
           <Payment />
-          <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+          <button class="btn btn-secondary btn-lg btn-block" type="submit">Continue to checkout</button>
         </form>
       </div>
     </div>
@@ -35,6 +36,7 @@ import CustomerInfo from '../components/CustomerInfo.vue';
 import Address from '../components/Address.vue';
 import ShippingOptions from '../components/ShippingOptions.vue';
 import Payment from '../components/Payment.vue';
+import PayPal from '../components/PayPal.vue';
 
 export default Vue.extend({
   name: 'Checkout',
@@ -44,6 +46,7 @@ export default Vue.extend({
     Address,
     ShippingOptions,
     Payment,
+    PayPal,
   },
   data() {
     return {

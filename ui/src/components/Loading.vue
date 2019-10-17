@@ -48,8 +48,14 @@
 
 <script>
 export default {
-    name: 'Loading'
-}
+    name: 'Loading',
+    props: ['position'],
+    methods: {
+        getPositionClass() {
+            return position === 'top' ? '.top' : '.bottom';
+        },
+    },
+};
 </script>
 
 <style lang="scss">
@@ -252,8 +258,9 @@ html {
 
 .loading-container{
     position: absolute;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     /* left: 0; */
     /* right: 0; */
     height: 100%;
@@ -261,6 +268,7 @@ html {
     /* top: 0; */
     /* bottom: 0; */
     background-color: white;
+    z-index: 99;
 }
 
 </style>

@@ -1,20 +1,15 @@
 module.exports = {
     devServer: {
         proxy: {
-            '^/api/finding': {
-                target: 'https://svcs.ebay.com/services/search/FindingService/v1',
-                changeOrigin: true,
-                headers:{
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Headers': 'X-Requested-With, Origin, Content-Type, X-Auth-Token',
-                    'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE'
-                }
+            '/api/finding': {
+                target: 'http://localhost:8083',
+                changeOrigin: true
             },
-            '^/api/shopping': {
+            '/api/shopping': {
                 target: 'http://open.api.ebay.com/shopping',
                 changeOrigin: true
             },
-            '^/api/trading': {
+            '/api/trading': {
                 target: 'https://api.ebay.com/ws/api.dll',
                 changeOrigin: true
             },

@@ -1,58 +1,62 @@
 <template>
   <div id="app">
-    <b-container fluid class="logo-row">
-      <b-row cols="12">
-        <b-col class="left-side" offset="2" offset-sm="1">
-          <router-link to="/">
-            <img class="logo" alt="Vue logo" src="./assets/logo-white.png" />
-          </router-link>
-        </b-col>
-        <b-col class="cart-action-container" cols="2" sm="1" align-self="center">
-          <b-row align-h="center" align-v="center" @click="click">
-            <span>Cart</span>
-            <font-awesome-icon class="cart-icon" :icon="['fab', 'opencart']" size="2x"></font-awesome-icon>
-            <b-badge v-show="itemCount !== 0" class="item-count">{{itemCount}}</b-badge>
-          </b-row>
-        </b-col>
-      </b-row>
-    </b-container>
-    <Nav />
-    <div id="content">
-      <Loading v-show="loading" />
-      <div id="content-sub">
-        <router-view />
-      </div>
+    <div class="sticky">
+      <b-container fluid class="logo-row">
+        <b-row cols="12">
+          <b-col class="left-side" offset="2" offset-sm="1">
+            <router-link to="/">
+              <img class="logo" alt="Vue logo" src="./assets/logo-white.png" />
+            </router-link>
+          </b-col>
+          <b-col class="cart-action-container" cols="2" sm="1" align-self="center">
+            <b-row align-h="center" align-v="center" @click="click">
+              <span class="d-none d-sm-block">Cart</span>
+              <font-awesome-icon class="cart-icon" :icon="['fab', 'opencart']" size="2x"></font-awesome-icon>
+              <b-badge v-show="itemCount !== 0" class="item-count">{{itemCount}}</b-badge>
+            </b-row>
+          </b-col>
+        </b-row>
+      </b-container>
+      <Nav />
+    </div>
+    <div id="content-wrapper">
+      <Loading v-show="loading()" />
+      <b-container id="content">
+        <div id="content-sub">
+          <router-view />
+        </div>
+      </b-container>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Nav from "@/components/Nav.vue"; // @   is an alias to /src
-import Loading from "@/components/Loading.vue";
+import Vue from 'vue';
+import Nav from '@/components/Nav.vue'; // @   is an alias to /src
+import Loading from '@/components/Loading.vue';
 
 export default Vue.extend({
-  name: "App",
+  name: 'App',
   components: {
     Nav,
-    Loading
+    Loading,
   },
   data() {
     return {};
   },
   methods: {
     click() {
-      this.$router.push("cart");
+      this.$router.push('cart');
     },
     loading() {
-      return this.$store.state.loading;
-    }
+      return this.$store.state.loading.isLoading;
+    },
   },
   computed: {
     itemCount() {
       return this.$store.state.cartItems.length;
-    }
-  }
+    },
+  },
 });
 </script>
 
@@ -61,7 +65,6 @@ export default Vue.extend({
 
 html {
   //overflow: hidden;
-  height: 100%;
   -ms-overflow-style: none; // IE 10+
   overflow: -moz-scrollbars-none; // Firefox
 
@@ -75,10 +78,40 @@ body {
 }
 
 button {
-  :hover {
-    color: $red;
+  color: $gun-metal;
+  background-color: transparent;
+
+  .btn-secondary {
+    border-color: $red;
   }
 }
+
+@font-face {
+  font-family: "bebas-neue";
+  src: url("./assets/BebasNeue-Regular.woff") format("woff"),
+    url("./assets/BebasNeue-Regular.woff2") format("woff2");
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "bebas-neue";
+}
+
+  .btn-secondary {
+    background-color: transparent !important;
+    color: $gun-metal !important;
+  }
+
+  .btn-secondary:focus,
+  .btn-secondary:hover {
+    -webkit-box-shadow: 0 0 5px 0.2rem $main;
+    box-shadow: 0 0 5px 0.2rem $main;
+    border: 0;
+  }
 
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -90,10 +123,16 @@ button {
   height: 100%;
 }
 
-#content {
-  background-image: url("./assets/background.jpg");
+#content-wrapper {
+      min-height: 35em;
+  height: auto;
+    background-image: url("./assets/background.jpg");
   background-repeat: no-repeat;
-  background-size: cover;
+}
+
+#content {
+  margin-top: 8em;
+
   height: 100%;
   position: relative;
 }
@@ -104,8 +143,11 @@ button {
   height: 100%;
 }
 
+
+
+
 .logo-row {
-  background-color: $gun-metal;
+  background-color: $main; //$gun-metal;
   min-height: 4em;
   .left-side {
     border-right: 1px solid white;
@@ -115,7 +157,6 @@ button {
 .logo {
   height: 4em;
   padding: 0.25em;
-  background-color: white;
 }
 
 .cart-action-container {
@@ -136,5 +177,21 @@ button {
 .badge-secondary {
   background-color: $red;
   opacity: 0.8;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + #content {
+  padding-top: 8em;
+}
+
+.box-shadow {
+  box-shadow: 4px 3px 3px grey;
 }
 </style>

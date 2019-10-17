@@ -1,41 +1,38 @@
 <template>
   <b-container class="cart-container">
     <b-row v-show="noItemsInCart">
-      <b-col>No items in cart</b-col>
+      <b-col>
+        <h2>No items in cart</h2>
+      </b-col>
     </b-row>
     <b-row
-      cols="12"
       align-v="start"
       v-for="(currentItem, index) in cartItems"
       :key="index"
-      class="cart-item-row"
+      class="cart-item-row box-shadow"
     >
-      <b-col>
+      <b-col cols="5" sm="3">
         <b-img thumbnail :src="currentItem.ImageUrls[0]" />
       </b-col>
-      <b-col>{{currentItem.Name}}</b-col>
-      <b-col>{{currentItem.Price}}</b-col>
-      <b-col>
+      <b-col cols="7" sm="3">{{currentItem.Name}}</b-col>
+      <b-col cols="6" sm="3">{{currentItem.Price}}</b-col>
+      <b-col cols="6" sm="3">
         <b-button variant="link" @click="remove(index)">
           <font-awesome-icon :icon="['far', 'minus-square']" size="2x"></font-awesome-icon>
         </b-button>
       </b-col>
     </b-row>
     <b-row cols="12" v-show="!noItemsInCart">
-        <b-col>
-            Total: {{total}}
-        </b-col>
-        <b-col>
-            <b-button @click="checkout"> 
-              Checkout
-            </b-button>
-        </b-col>
-        </b-row>
+      <b-col>Total: {{total}}</b-col>
+      <b-col>
+        <b-button @click="checkout">Checkout</b-button>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
 <script lang="ts">
-import { IListing } from '../services/mock-data';
+import { IListing } from '../business-logic/getListings';
 import store from '../store';
 import router from '../router';
 
@@ -60,11 +57,11 @@ export default {
   },
   methods: {
     remove(index: number) {
-      store.state.cartItems.splice(index, 1);
-      // store.replaceState({ cartItems: this.cartItems });
+      const item: IListing[] = store.getters.removeItemFromCart(index);
+      store.commit('addListings', item);
     },
     checkout() {
-        router.push('checkout');
+      router.push('checkout');
     },
   },
 };
@@ -77,9 +74,9 @@ export default {
   }
 
   .cart-item-row {
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
     margin-bottom: 1em;
+    background-color: white;
+    padding: 0.5em 0;
   }
 }
 </style>

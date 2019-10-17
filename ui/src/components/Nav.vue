@@ -1,20 +1,20 @@
 <template>
-    <div class="nav" id="nav">
-      <b-nav class="navbar navbar-collapse" tabs align="center">
-        <b-nav-item>
-          <router-link to="/Mens">Mens</router-link>
-        </b-nav-item>
-        <b-nav-item>
-          <router-link to="/Womens">Womens</router-link>
-        </b-nav-item>
-        <b-nav-item>
-          <router-link to="/About">About</router-link>
-        </b-nav-item>
-        <b-nav-item>
-          <router-link to="/All">All</router-link>
-        </b-nav-item>
-      </b-nav>
-    </div>
+  <div class="nav" id="nav">
+    <b-nav sticky="" class="navbar navbar-collapse" tabs align="center">
+      <b-nav-item>
+        <router-link to="/All">All</router-link>
+      </b-nav-item>
+      <b-nav-item>
+        <router-link to="/Mens">Mens</router-link>
+      </b-nav-item>
+      <!-- <b-nav-item>
+        <router-link to="/Womens">Womens</router-link>
+      </b-nav-item> -->
+      <b-nav-item>
+        <router-link to="/About">About</router-link>
+      </b-nav-item>
+    </b-nav>
+  </div>
 </template>
 
 <script lang="ts">
@@ -26,13 +26,15 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-@import '../styles/global.scss';
+@import "../styles/global.scss";
 
-.navbar{
+.navbar {
   background-color: $flash-white;
 }
 
 #nav {
+  min-height: 4em;
+  
   a {
     font-weight: bold;
     color: #2c3e50;
@@ -40,8 +42,8 @@ export default Vue.extend({
       color: $red;
     }
   }
-  
-  .nav-item{
+
+  .nav-item {
     margin: 0 1em;
   }
 }

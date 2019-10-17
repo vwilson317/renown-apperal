@@ -172,7 +172,7 @@ function jsToJSONProps(typ: any): any {
 }
 
 function transform(val: any, typ: any, getProps: any): any {
-    function transformPrimitive(typ: string, val: any): any {
+    function transformPrimitive({ typ, val }: { typ: string; val: any; }): any {
         if (typeof typ === typeof val) { return val; }
         return invalidValue(typ, val);
     }
@@ -247,7 +247,7 @@ function transform(val: any, typ: any, getProps: any): any {
     }
     // Numbers can be parsed by Date but shouldn't be.
     if (typ === Date && typeof val !== 'number') { return transformDate(typ, val); }
-    return transformPrimitive(typ, val);
+    return transformPrimitive({ typ, val });
 }
 
 function cast<T>(val: any, typ: any): T {
