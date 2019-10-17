@@ -28,16 +28,16 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { GetListing, IListing } from "../business-logic/getListings";
-import Listing from "../components/Listing.vue";
-import { getListingItemsByStore } from "../services/apiDataAccess";
+import Vue from 'vue';
+import { GetListing, IListing } from '../business-logic/getListings';
+import Listing from '../components/Listing.vue';
+import { getListingItemsByStore } from '../services/apiDataAccess';
 
 export default Vue.extend({
-  name: "Landing",
+  name: 'Landing',
   data() {
     return {
-      //loading: false
+      // loading: false
     };
   },
   created() {
@@ -53,9 +53,9 @@ export default Vue.extend({
         this.$store.state.listings.length <= pageNum * 20 &&
         this.$store.state.listings.length < 400;
       if (shouldLoadData) {
-        const response = await GetListing(pageNum).then(response => {
-          this.$store.commit("addListings", response);
-          this.$store.commit("increasePageNum");
+        GetListing(pageNum).then((response) => {
+          this.$store.commit('addListings', response);
+          this.$store.commit('increasePageNum');
         });
       }
     },
@@ -70,10 +70,10 @@ export default Vue.extend({
     },
     moreClick() {
       const pageNum = this.getPageNum();
-      this.$store.commit("setLoading", true);
-      this.getDataFromApi(pageNum).then(() =>{
-        this.$store.commit("setLoading", false);
-      })
+      this.$store.commit('setLoading', true);
+      this.getDataFromApi(pageNum).then(() => {
+        this.$store.commit('setLoading', false);
+      });
     },
     scroll() {
       // not being called
@@ -87,17 +87,17 @@ export default Vue.extend({
           await this.getDataFromApi(1);
         }
       };
-    }
+    },
   },
   components: {
-    Listing
+    Listing,
   },
   mounted() {
     // todo: consider adding back when api limits are resolved
     setTimeout(() => {
-      this.$store.commit("setLoading", false);
+      this.$store.commit('setLoading', false);
     }, 1500);
-  }
+  },
 });
 </script>
 

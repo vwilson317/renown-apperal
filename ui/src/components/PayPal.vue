@@ -4,8 +4,8 @@
 
 <script lang="ts">
 export default {
-  name: "PayPal"
-}
+  name: 'PayPal',
+};
 </script>
 
 // export default {

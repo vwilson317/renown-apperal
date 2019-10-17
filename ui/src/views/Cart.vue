@@ -1,7 +1,9 @@
 <template>
   <b-container class="cart-container">
     <b-row v-show="noItemsInCart">
-      <b-col>No items in cart</b-col>
+      <b-col>
+        <h2>No items in cart</h2>
+      </b-col>
     </b-row>
     <b-row
       align-v="start"
@@ -21,15 +23,11 @@
       </b-col>
     </b-row>
     <b-row cols="12" v-show="!noItemsInCart">
-        <b-col>
-            Total: {{total}}
-        </b-col>
-        <b-col>
-            <b-button @click="checkout"> 
-              Checkout
-            </b-button>
-        </b-col>
-        </b-row>
+      <b-col>Total: {{total}}</b-col>
+      <b-col>
+        <b-button @click="checkout">Checkout</b-button>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
@@ -59,11 +57,11 @@ export default {
   },
   methods: {
     remove(index: number) {
-      let item: IListing[] = store.getters.removeItemFromCart(index);
+      const item: IListing[] = store.getters.removeItemFromCart(index);
       store.commit('addListings', item);
     },
     checkout() {
-        router.push('checkout');
+      router.push('checkout');
     },
   },
 };
@@ -78,8 +76,7 @@ export default {
   .cart-item-row {
     margin-bottom: 1em;
     background-color: white;
-    padding: .5em 0;
-
+    padding: 0.5em 0;
   }
 }
 </style>

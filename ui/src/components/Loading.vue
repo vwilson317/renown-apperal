@@ -51,25 +51,17 @@ export default {
     name: 'Loading',
     props: ['position'],
     methods: {
-        getPositionClass(){
+        getPositionClass() {
             return position === 'top' ? '.top' : '.bottom';
-        }
-    }
-}
+        },
+    },
+};
 </script>
 
 <style lang="scss">
 $color: #8C6FF0;
 $colorRight: #5628EE;
 $colorLeft: #23C4F8;
-
-.top {
-
-}
-
-.bottom {
-    
-}
 
 .infinity {
     width: 120px;

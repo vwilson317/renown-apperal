@@ -32,37 +32,37 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { IListing } from "../business-logic/getListings";
-import router from "../router";
-import store from "../store";
+import Vue from 'vue';
+import { IListing } from '../business-logic/getListings';
+import router from '../router';
+import store from '../store';
 
 const getTargetId = (obj: any): string => {
-  return "popover-" + obj.index;
+  return 'popover-' + obj.index;
 };
 
 const shortenName = (input: string): string => {
-  const parts = input.split(" ");
-  return [parts[0], parts[1], parts[2]].join(" ");
+  const parts = input.split(' ');
+  return [parts[0], parts[1], parts[2]].join(' ');
 };
 
 export default Vue.extend({
-  name: "Listing",
-  props: ["item", "index"],
+  name: 'Listing',
+  props: ['item', 'index'],
   data() {
     return {};
   },
   methods: {
     itemClick: (item: any): void => {
-      router.push({ name: "detail", params: { item } });
+      router.push({ name: 'detail', params: { item } });
     },
     addToCartClick: (item: IListing): void => {
-      store.commit("removeListing", item);
-      store.commit("addItemToCart", item);
+      store.commit('removeListing', item);
+      store.commit('addItemToCart', item);
     },
     shortenName,
-    getTargetId
-  }
+    getTargetId,
+  },
 });
 </script>
 
