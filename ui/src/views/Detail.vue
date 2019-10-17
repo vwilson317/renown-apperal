@@ -1,40 +1,27 @@
 <template>
   <b-container class="detail-container">
     <b-row align-h="center">
-      <h5>{{item.Name}}</h5>
+      <h3>{{item.Name}}</h3>
     </b-row>
-    <div class="d-block d-sm-none"> 
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-          <div v-for="currentImage in additionalImages" :key="currentImage" class="carousel-item active">
-            <img class="d-block w-100" :src="currentImage" alt="First slide" />
-          </div>
-        </div>
-        <a
-          class="carousel-control-prev"
-          href="#carouselExampleIndicators"
-          role="button"
-          data-slide="prev"
-        >
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a
-          class="carousel-control-next"
-          href="#carouselExampleIndicators"
-          role="button"
-          data-slide="next"
-        >
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
-    </div>
+
+    <b-carousel
+      id="carousel-fade"
+      style="text-shadow: 0px 0px 2px #000"
+      fade
+      controls
+      img-height="480"
+    >
+      <b-carousel-slide
+        v-for="currentImage in item.ImageUrls"
+        :key="currentImage.index"
+        class="d-block d-sm-none"
+      >
+        <template v-slot:img>
+          <img class="d-block img-fluid w-100" height="480" :src="currentImage" alt="image slot" />
+        </template>
+      </b-carousel-slide>
+    </b-carousel>
+
     <b-row class="d-none d-sm-block" align-h="center" align-v="center" no-gutters>
       <b-col class="main-img" cols="12" sm="5" align-self="center">
         <b-img thumbnail fluid :src="selectedImg" />
@@ -70,19 +57,22 @@
         />
       </b-col>
     </b-row>
+
+    <AddToCardButton :item="item" />
   </b-container>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { IListing } from '../business-logic/getListings';
+import Vue from "vue";
+import { IListing } from "../business-logic/getListings";
+import AddToCardButton from "../components/AddToCartButton.vue";
 
 export default Vue.extend({
-  name: 'Detail',
-  props: ['item'],
+  name: "Detail",
+  props: ["item"],
   data() {
     return {
-      selectedImg: '' as string,
+      selectedImg: "" as string
     };
   },
   beforeMount() {
@@ -93,20 +83,30 @@ export default Vue.extend({
       const copiedArray = [...this.item.ImageUrls];
       copiedArray.splice(1, 0);
       return copiedArray;
-    },
+    }
   },
   methods: {
     changeMainPic(imgSrc: string) {
       this.selectedImg = imgSrc;
-    },
+    }
   },
+  components: {
+    AddToCardButton
+  }
 });
 </script>
 
 <style scoped lang="scss">
+@import "@/styles/global.scss";
+
 .detail-container {
   img {
     margin: 0;
+  }
+
+  .carousel-indicators li {
+    color: $red;
+    opacity: 0.6;
   }
 }
 
@@ -120,13 +120,14 @@ export default Vue.extend({
     height: 7em;
   }
 
-  small {
-  }
-
   .row {
     height: 25em;
   }
 
   margin: 0 0.2em;
+}
+
+#carousel-fade {
+  margin-top: 2em;
 }
 </style>

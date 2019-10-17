@@ -22,9 +22,7 @@
           <div class="divider"></div>
           <h5>{{shortenName(item.Name)}}</h5>
           <h6>${{item.Price}}</h6>
-          <b-button :id="getTargetId" variant="link" @click="addToCartClick(item)">
-            <font-awesome-icon :icon="['far', 'plus-square']" size="2x"></font-awesome-icon>
-          </b-button>
+          <AddToCardButton is-small :item="item" />
         </b-col>
       </b-row>
     </div>
@@ -36,10 +34,11 @@ import Vue from 'vue';
 import { IListing } from '../business-logic/getListings';
 import router from '../router';
 import store from '../store';
+import AddToCardButton from '../components/AddToCartButton.vue'
 
-const getTargetId = (obj: any): string => {
-  return 'popover-' + obj.index;
-};
+// const getTargetId = (obj: any): string => {
+//   return 'popover-' + obj.index;
+// };
 
 const shortenName = (input: string): string => {
   const parts = input.split(' ');
@@ -56,41 +55,18 @@ export default Vue.extend({
     itemClick: (item: any): void => {
       router.push({ name: 'detail', params: { item } });
     },
-    addToCartClick: (item: IListing): void => {
-      store.commit('removeListing', item);
-      store.commit('addItemToCart', item);
-    },
+
     shortenName,
-    getTargetId,
+    // getTargetId,
+  },
+  components: {
+    AddToCardButton,
   },
 });
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/global.scss";
-
-.listing-item-container {
-  button {
-    position: absolute;
-    right: 1em;
-    top: -4em;
-    color: $red;
-    opacity: 0.6;
-  }
-
-  .btn-link:hover {
-    color: $red;
-    opacity: 1;
-  }
-
-  button:hover {
-    opacity: 1;
-  }
-
-  .detail-col {
-    // border-top: 2px solid $red;
-  }
-}
 
 .banner-img {
   margin-top: 2em;
