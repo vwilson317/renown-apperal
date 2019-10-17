@@ -57,7 +57,7 @@ export default Vue.extend({
       router.push({ name: "detail", params: { item } });
     },
     addToCartClick: (item: IListing): void => {
-      store.commit("removeItem", item);
+      store.commit("removeListing", item);
       store.commit("addItemToCart", item);
     },
     shortenName,

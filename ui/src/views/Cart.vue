@@ -59,8 +59,8 @@ export default {
   },
   methods: {
     remove(index: number) {
-      store.state.cartItems.splice(index, 1);
-      // store.replaceState({ cartItems: this.cartItems });
+      let item: IListing[] = store.getters.removeItemFromCart(index);
+      store.commit('addListings', item);
     },
     checkout() {
         router.push('checkout');

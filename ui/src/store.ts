@@ -24,7 +24,7 @@ export default new Vuex.Store({
     increasePageNum(state: any) {
       state.pageNum += 1;
     },
-    removeItem(state: any, item: IListing) {
+    removeListing(state: any, item: IListing) {
       const index = state.listings.indexOf(item);
       state.listings.splice(index, 1);
     },
@@ -38,6 +38,9 @@ export default new Vuex.Store({
           val += parseFloat(currentItem.Price);
       });
       return val;
+  },
+  removeItemFromCart: (state: any) => (index: number) => {
+    return state.cartItems.splice(index, 1);
   },
   },
 });
