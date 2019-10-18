@@ -1,6 +1,6 @@
 <template>
   <b-container class="detail-container">
-    <b-row align-h="center">
+    <b-row class="header" align-h="center">
       <h3>{{item.Name}}</h3>
     </b-row>
 
@@ -12,21 +12,18 @@
       img-height="480"
       class="d-block d-sm-none"
     >
-      <b-carousel-slide
-        v-for="currentImage in item.ImageUrls"
-        :key="currentImage.index"
-      >
+      <b-carousel-slide v-for="currentImage in item.ImageUrls" :key="currentImage.index">
         <template v-slot:img>
           <img class="d-block img-fluid w-100" height="480" :src="currentImage" alt="image slot" />
         </template>
       </b-carousel-slide>
     </b-carousel>
 
-    <b-row class="d-none d-sm-block" align-h="center" align-v="center" no-gutters>
-      <b-col class="main-img" cols="12" sm="5" align-self="center">
-        <b-img thumbnail fluid :src="selectedImg" />
+    <b-row class="d-none d-sm-flex non-mobile-content" align-v="center" align-h="center" no-gutters>
+      <b-col class="main-img" cols="5">
+        <b-img class="box-shadow" fluid :src="selectedImg" />
       </b-col>
-      <b-col class="addition-images-col" cols="4" sm="2">
+      <b-col class="addition-images-col" sm="2">
         <b-img
           fluid-grow
           v-for="currentImage in additionalImages.slice(1,3)"
@@ -36,9 +33,9 @@
           @mouseleave="changeMainPic(item.ImageUrls[0])"
         />
       </b-col>
-      <b-col class="addition-images-col" cols="4" sm="1">
+      <b-col class="addition-images-col" sm="1">
         <b-img
-          fluid-grow
+          fluid
           v-for="currentImage in additionalImages.slice(3,7)"
           :src="currentImage"
           :key="currentImage.index"
@@ -46,9 +43,9 @@
           @mouseleave="changeMainPic(item.ImageUrls[0])"
         />
       </b-col>
-      <b-col class="addition-images-col" cols="4" sm="1">
+      <b-col class="addition-images-col" sm="1">
         <b-img
-          fluid-grow
+          fluid
           v-for="currentImage in additionalImages.slice(7,11)"
           :src="currentImage"
           :key="currentImage.index"
@@ -56,6 +53,11 @@
           @mouseleave="changeMainPic(item.ImageUrls[0])"
         />
       </b-col>
+
+      <!-- The modal
+  <b-modal id="my-modal" hide-footer>
+    <b-img :src="selectedImg" />
+      </b-modal>-->
     </b-row>
 
     <AddToCardButton :item="item" />
@@ -72,22 +74,28 @@ export default Vue.extend({
   props: ["item"],
   data() {
     return {
-      selectedImg: "" as string
+      selectedImg: "" as string,
+      additionalImages: [] as string[]
     };
   },
   beforeMount() {
     this.selectedImg = this.$props.item.ImageUrls[0];
+    this.additionalImages = this.getAdditionalImages();
+    this.$store.commit('setLoading', true);
+
+    setTimeout(() => {
+      this.$store.commit('setLoading', false);
+    }, 1000)
   },
-  computed: {
-    additionalImages() {
-      const copiedArray = [...this.item.ImageUrls];
-      copiedArray.splice(1, 0);
-      return copiedArray;
-    }
-  },
+  computed: {},
   methods: {
     changeMainPic(imgSrc: string) {
       this.selectedImg = imgSrc;
+    },
+    getAdditionalImages() {
+      const copiedArray = [...this.item.ImageUrls];
+      copiedArray.splice(1, 0);
+      return copiedArray;
     }
   },
   components: {
@@ -96,12 +104,16 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "@/styles/global.scss";
 
 .detail-container {
   img {
     margin: 0;
+  }
+
+  .header {
+    margin-bottom: 2em;
   }
 
   .carousel-indicators li {
@@ -117,7 +129,8 @@ export default Vue.extend({
 .addition-images-col {
   img {
     padding-bottom: 0.5em;
-    height: 7em;
+    height: auto;
+    transition: ease-in;
   }
 
   .row {
@@ -128,7 +141,6 @@ export default Vue.extend({
 }
 
 #carousel-fade {
-  margin-top: 2em;
 }
 
 // .carousel-control-prev span::before {
@@ -153,7 +165,7 @@ export default Vue.extend({
 .carousel-control-next-icon:before,
 .carousel-control-prev-icon:before {
   position: absolute;
-  top: -.5em;
+  top: -0.5em;
   left: -5px;
   font-family: monospace;
 }
@@ -164,5 +176,9 @@ export default Vue.extend({
 
 .carousel-control-prev-icon:before {
   content: "<";
+}
+
+#my-modal {
+  height: 80em;
 }
 </style>
