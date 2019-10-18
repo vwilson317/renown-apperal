@@ -25,7 +25,6 @@ export default Vue.extend({
     addToCartClick: (item: IListing, goToCart?: Boolean): void => {
       store.commit("removeListing", item);
       store.commit("addItemToCart", item);
-      debugger
       if (goToCart) {
         router.push('cart');
       }

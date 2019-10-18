@@ -10,11 +10,11 @@
       fade
       controls
       img-height="480"
+      class="d-block d-sm-none"
     >
       <b-carousel-slide
         v-for="currentImage in item.ImageUrls"
         :key="currentImage.index"
-        class="d-block d-sm-none"
       >
         <template v-slot:img>
           <img class="d-block img-fluid w-100" height="480" :src="currentImage" alt="image slot" />
@@ -96,7 +96,7 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "@/styles/global.scss";
 
 .detail-container {
@@ -129,5 +129,40 @@ export default Vue.extend({
 
 #carousel-fade {
   margin-top: 2em;
+}
+
+// .carousel-control-prev span::before {
+//     // background-image: url();
+//     content: '<i class="fas fa-chevron-left"></i>';
+//     display: block;
+//     height: 3em;
+// }
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-image: none;
+  font-size: 55px;
+  color: $red;
+  position: relative;
+
+  span {
+    position: relative;
+  }
+}
+
+.carousel-control-next-icon:before,
+.carousel-control-prev-icon:before {
+  position: absolute;
+  top: -.5em;
+  left: -5px;
+  font-family: monospace;
+}
+
+.carousel-control-next-icon:before {
+  content: ">";
+}
+
+.carousel-control-prev-icon:before {
+  content: "<";
 }
 </style>

@@ -175,7 +175,7 @@ h6 {
 }
 
 .badge-secondary {
-  background-color: $red;
+  background-color: $red !important;
   opacity: 0.8;
 }
 
