@@ -33,7 +33,11 @@
       </b-col>
     </b-row>
 
-    <AddToCardButton class="d-block d-sm-none" :item="item" />
+    <b-row class="d-block d-sm-none" align-v="center" align-h="center">
+      <b-col align-self="center">
+    <AddToCardButton  :item="item" />
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
