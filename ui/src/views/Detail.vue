@@ -166,5 +166,6 @@ export default Vue.extend({
     padding-top: 4em;
     margin-top: 6em;
     width: 40%;
+    padding-left: 2em;
 }
 </style>
