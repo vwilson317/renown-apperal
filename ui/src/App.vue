@@ -31,32 +31,32 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Nav from '@/components/Nav.vue'; // @   is an alias to /src
-import Loading from '@/components/Loading.vue';
+import Vue from "vue";
+import Nav from "@/components/Nav.vue"; // @   is an alias to /src
+import Loading from "@/components/Loading.vue";
 
 export default Vue.extend({
-  name: 'App',
+  name: "App",
   components: {
     Nav,
-    Loading,
+    Loading
   },
   data() {
     return {};
   },
   methods: {
     click() {
-      this.$router.push('cart');
+      this.$router.push("cart");
     },
     loading() {
       return this.$store.state.loading.isLoading;
-    },
+    }
   },
   computed: {
     itemCount() {
       return this.$store.state.cartItems.length;
-    },
-  },
+    }
+  }
 });
 </script>
 
@@ -101,17 +101,17 @@ h6 {
   font-family: "bebas-neue";
 }
 
-  .btn-secondary {
-    background-color: transparent !important;
-    color: $gun-metal !important;
-  }
+.btn-secondary {
+  background-color: transparent !important;
+  color: $gun-metal !important;
+}
 
-  .btn-secondary:focus,
-  .btn-secondary:hover {
-    -webkit-box-shadow: 0 0 5px 0.2rem $main;
-    box-shadow: 0 0 5px 0.2rem $main;
-    border: 0;
-  }
+.btn-secondary:focus,
+.btn-secondary:hover {
+  -webkit-box-shadow: 0 0 5px 0.2rem $main;
+  box-shadow: 0 0 5px 0.2rem $main;
+  border: 0;
+}
 
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -124,9 +124,9 @@ h6 {
 }
 
 #content-wrapper {
-      min-height: 35em;
+  min-height: 35em;
   height: auto;
-    background-image: url("./assets/background.jpg");
+  background-image: url("./assets/background.jpg");
   background-repeat: no-repeat;
 }
 
@@ -142,9 +142,6 @@ h6 {
   margin-bottom: 2em;
   height: 100%;
 }
-
-
-
 
 .logo-row {
   background-color: $main; //$gun-metal;

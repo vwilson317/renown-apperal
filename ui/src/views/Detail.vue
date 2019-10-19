@@ -1,6 +1,6 @@
 <template>
   <b-container class="detail-container">
-    <b-row class="header" align-h="center">
+    <b-row class="header d-block d-sm-none" align-h="center">
       <h3>{{item.Name}}</h3>
     </b-row>
 
@@ -20,47 +20,20 @@
     </b-carousel>
 
     <b-row class="d-none d-sm-flex non-mobile-content" align-v="center" align-h="center" no-gutters>
-      <b-col class="main-img" cols="5">
-        <b-img class="box-shadow" fluid :src="selectedImg" />
+      <b-col class="main-img" sm="6" no-gutters>
+        <b-img 
+        v-for="currentImage in item.ImageUrls" :key="currentImage.index"
+        class="box-shadow" fluid :src="currentImage" />
       </b-col>
-      <b-col class="addition-images-col" sm="2">
-        <b-img
-          fluid-grow
-          v-for="currentImage in additionalImages.slice(1,3)"
-          :src="currentImage"
-          :key="currentImage.index"
-          @mouseenter="changeMainPic(currentImage)"
-          @mouseleave="changeMainPic(item.ImageUrls[0])"
-        />
+      <b-col sm="6" align-self="start">
+        <div id="detail-info-container">
+        <h3>{{item.Name}}</h3>
+        <AddToCardButton :item="item" />
+        </div>
       </b-col>
-      <b-col class="addition-images-col" sm="1">
-        <b-img
-          fluid
-          v-for="currentImage in additionalImages.slice(3,7)"
-          :src="currentImage"
-          :key="currentImage.index"
-          @mouseenter="changeMainPic(currentImage)"
-          @mouseleave="changeMainPic(item.ImageUrls[0])"
-        />
-      </b-col>
-      <b-col class="addition-images-col" sm="1">
-        <b-img
-          fluid
-          v-for="currentImage in additionalImages.slice(7,11)"
-          :src="currentImage"
-          :key="currentImage.index"
-          @mouseenter="changeMainPic(currentImage)"
-          @mouseleave="changeMainPic(item.ImageUrls[0])"
-        />
-      </b-col>
-
-      <!-- The modal
-  <b-modal id="my-modal" hide-footer>
-    <b-img :src="selectedImg" />
-      </b-modal>-->
     </b-row>
 
-    <AddToCardButton :item="item" />
+    <AddToCardButton class="d-block d-sm-none" :item="item" />
   </b-container>
 </template>
 
@@ -75,17 +48,18 @@ export default Vue.extend({
   data() {
     return {
       selectedImg: "" as string,
-      additionalImages: [] as string[]
+      additionalImages: [] as string[],
+      startIndex: 0
     };
   },
   beforeMount() {
     this.selectedImg = this.$props.item.ImageUrls[0];
     this.additionalImages = this.getAdditionalImages();
-    this.$store.commit('setLoading', true);
+    this.$store.commit("setLoading", true);
 
     setTimeout(() => {
-      this.$store.commit('setLoading', false);
-    }, 1000)
+      this.$store.commit("setLoading", false);
+    }, 1000);
   },
   computed: {},
   methods: {
@@ -129,7 +103,7 @@ export default Vue.extend({
 .addition-images-col {
   img {
     padding-bottom: 0.5em;
-    height: auto;
+    height: 3em;
     transition: ease-in;
   }
 
@@ -180,5 +154,13 @@ export default Vue.extend({
 
 #my-modal {
   height: 80em;
+}
+
+#detail-info-container {
+    position: fixed;
+    top: 8.5em;
+    padding-top: 4em;
+    margin-top: 6em;
+    width: 40%;
 }
 </style>
