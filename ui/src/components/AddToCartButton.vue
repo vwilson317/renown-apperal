@@ -4,7 +4,11 @@
       <font-awesome-icon :icon="['far', 'plus-square']" size="2x"></font-awesome-icon>
     </b-button>
     <b-col cols="8" align-self="center">
-      <b-button class="small-add-btn" v-show="!isSmall" @click="addToCartClick(item, true)">Add To Cart</b-button>
+      <b-button 
+      :disabled="isInCart(item)"
+      class="small-add-btn"
+       v-show="!isSmall" 
+       @click="addToCartClick(item, true)">Add To Cart</b-button>
     </b-col>
   </b-row>
 </template>
@@ -28,6 +32,10 @@ export default Vue.extend({
       if (goToCart) {
         router.push('cart');
       }
+    },
+    isInCart(item: IListing) {
+      const inCart = store.state.cartItems.includes(item);
+      return inCart;
     }
   }
 });

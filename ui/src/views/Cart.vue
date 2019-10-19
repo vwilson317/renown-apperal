@@ -12,7 +12,7 @@
       class="cart-item-row box-shadow"
     >
       <b-col cols="5" sm="3">
-        <b-img thumbnail :src="currentItem.ImageUrls[0]" />
+        <b-img @click="goToDetail(currentItem)" :src="currentItem.ImageUrls[0]" />
       </b-col>
       <b-col cols="7" sm="3">{{currentItem.Name}}</b-col>
       <b-col cols="6" sm="3">{{currentItem.Price}}</b-col>
@@ -63,6 +63,9 @@ export default {
     checkout() {
       router.push('checkout');
     },
+    goToDetail(item: IListing) {
+      router.push({name: 'detail', params: { item } })
+    }
   },
 };
 </script>
