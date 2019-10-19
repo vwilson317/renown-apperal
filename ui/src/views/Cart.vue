@@ -32,11 +32,12 @@
 </template>
 
 <script lang="ts">
+import Vue from 'vue';
 import { IListing } from '../business-logic/getListings';
 import store from '../store';
 import router from '../router';
 
-export default {
+export default Vue.extend({
   name: 'Cart',
   props: {},
   data() {
@@ -63,11 +64,11 @@ export default {
     checkout() {
       router.push('checkout');
     },
-    goToDetail(item: IListing) {
-      router.push({name: 'detail', params: { item } })
-    }
+    goToDetail(item: any) {
+      router.push({ name: 'detail', params: { item } });
+    },
   },
-};
+});
 </script>
 
 <style lang="scss">

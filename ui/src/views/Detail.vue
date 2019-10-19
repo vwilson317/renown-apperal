@@ -42,27 +42,27 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { IListing } from "../business-logic/getListings";
-import AddToCardButton from "../components/AddToCartButton.vue";
+import Vue from 'vue';
+import { IListing } from '../business-logic/getListings';
+import AddToCardButton from '../components/AddToCartButton.vue';
 
 export default Vue.extend({
-  name: "Detail",
-  props: ["item"],
+  name: 'Detail',
+  props: ['item'],
   data() {
     return {
-      selectedImg: "" as string,
+      selectedImg: '' as string,
       additionalImages: [] as string[],
-      startIndex: 0
+      startIndex: 0,
     };
   },
   beforeMount() {
     this.selectedImg = this.$props.item.ImageUrls[0];
     this.additionalImages = this.getAdditionalImages();
-    this.$store.commit("setLoading", true);
+    this.$store.commit('setLoading', true);
 
     setTimeout(() => {
-      this.$store.commit("setLoading", false);
+      this.$store.commit('setLoading', false);
     }, 1000);
   },
   computed: {},
@@ -74,11 +74,11 @@ export default Vue.extend({
       const copiedArray = [...this.item.ImageUrls];
       copiedArray.splice(1, 0);
       return copiedArray;
-    }
+    },
   },
   components: {
-    AddToCardButton
-  }
+    AddToCardButton,
+  },
 });
 </script>
 

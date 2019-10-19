@@ -14,21 +14,21 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { IListing } from "../business-logic/getListings";
-import store from "../store";
-import router from "../router";
+import Vue from 'vue';
+import { IListing } from '../business-logic/getListings';
+import store from '../store';
+import router from '../router';
 
 export default Vue.extend({
-  name: "AddToCartButton",
+  name: 'AddToCartButton',
   props: {
     isSmall: Boolean,
-    item: IListing
+    item: {},
   },
   methods: {
-    addToCartClick: (item: IListing, goToCart?: Boolean): void => {
-      store.commit("removeListing", item);
-      store.commit("addItemToCart", item);
+    addToCartClick: (item: IListing, goToCart?: boolean): void => {
+      store.commit('removeListing', item);
+      store.commit('addItemToCart', item);
       if (goToCart) {
         router.push('cart');
       }
@@ -36,8 +36,8 @@ export default Vue.extend({
     isInCart(item: IListing) {
       const inCart = store.state.cartItems.includes(item);
       return inCart;
-    }
-  }
+    },
+  },
 });
 </script>
 

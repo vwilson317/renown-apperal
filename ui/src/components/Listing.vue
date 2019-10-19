@@ -34,7 +34,7 @@ import Vue from 'vue';
 import { IListing } from '../business-logic/getListings';
 import router from '../router';
 import store from '../store';
-import AddToCardButton from '../components/AddToCartButton.vue'
+import AddToCardButton from '../components/AddToCartButton.vue';
 
 // const getTargetId = (obj: any): string => {
 //   return 'popover-' + obj.index;
