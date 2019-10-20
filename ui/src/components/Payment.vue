@@ -24,7 +24,7 @@
               />
               <label class="custom-control-label" for="debit">Debit card</label>
             </div> -->
-            <div class="custom-control custom-radio">
+            <!-- <div class="custom-control custom-radio">
               <input
                 id="paypal"
                 name="paymentMethod"
@@ -35,8 +35,12 @@
               />
               <label class="custom-control-label" for="paypal">Paypal</label>
             </div>
-          </div>
+          </div> -->
+          <PayPal />
+
           <div class="row">
+          <!-- <PayPal /> -->
+
             <!-- <div class="col-md-6 mb-3">
               <label for="cc-name">Name on card</label>
               <input type="text" class="form-control" id="cc-name" placeholder required />
@@ -65,3 +69,14 @@
           </div>
 </div>
 </template>
+
+<script>
+import PayPal from '../components/PayPal.vue';
+
+export default {
+  name: 'Payment',
+  components: {
+  PayPal
+  }
+};
+</script>
