@@ -3,6 +3,7 @@ import axios from 'axios';
 export enum Api {
     Finding,
     Shopping,
+    Trading
 }
 
 const findApiUrl = 'api/finding';
@@ -20,6 +21,11 @@ export const getItemDetails = async (itemIds: string): Promise<any> => {
     return result;
 };
 
+export const endListing = async(itemId: string): Promise<any> => {
+    const result = await get(Api.Trading, itemId);
+    return result;
+}
+
 export const get = async (apiType: Api, singleParam: string): Promise<any> => {
     // todo add ebay apis to dev server
 
@@ -31,6 +37,16 @@ export const get = async (apiType: Api, singleParam: string): Promise<any> => {
         uri = shoppingApiUrl + '?' + str + '&' + singleParam;
 
         return axios.get(uri);
+    }
+    else if(apiType === Api.Trading){
+        const params = {
+            EndingReason: 'NotAvailable',
+            ItemId: singleParam
+        }
+
+        return axios.get('api/trading', {
+            params: params
+        });
     }
 };
 

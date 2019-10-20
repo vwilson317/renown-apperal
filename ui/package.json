@@ -17,7 +17,8 @@
     "docker:push:api": "docker push 475795201917.dkr.ecr.us-east-2.amazonaws.com/renown-apparel-api:latest",
     "docker:deploy": "npm run docker:tag:ui && npm run docker:tag:api && npm run docker:push:ui && npm run docker:push:api",
     "docker:login": "(aws ecr get-login --no-include-email)",
-    "test": "jest"
+    "test": "jest",
+    "run:db": "docker run -p 8085:27027 mongo"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
