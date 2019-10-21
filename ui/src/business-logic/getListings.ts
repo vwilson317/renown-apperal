@@ -1,4 +1,4 @@
-import { getListingItemsByStore, getItemDetails } from '../services/apiDataAccess';
+import { getListingItemsByStore, getItemDetails, getCartStatus } from '../services/apiDataAccess';
 import { FindItemsIneBayStoresResponse } from '../dto/findResponse';
 import { ShoppingResponse } from '@/dto/shoppingResponse';
 
@@ -7,6 +7,7 @@ export interface IListing {
     ImageUrls: string[];
     Price: string;
     id?: number;
+    isInCart: boolean;
 }
 
 export const GetListing = async (pageNum: number): Promise<IListing[]> => {
@@ -21,14 +22,15 @@ export const GetListing = async (pageNum: number): Promise<IListing[]> => {
 
     const itemDetailsResponse = itemDetails.data as ShoppingResponse;
 
-    const itemsFromApi = itemDetailsResponse.Item.map((x: any) => {
-        return{
+    const itemPromises = itemDetailsResponse.Item.map(async (x: any): Promise<IListing> => {
+        return {
             Name: x.Title,
             ImageUrls: x.PictureURL,
             id: x.ItemID,
             Price: x.ConvertedCurrentPrice.Value,
-        };
-    });
+            isInCart: await getCartStatus(x.ItemID),
+        }});
 
-    return itemsFromApi;
+    const listings = Promise.all(itemPromises);
+    return listings;
 };

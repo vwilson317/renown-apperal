@@ -43,14 +43,10 @@ func listingPostHandler(c *gin.Context) {
 func listingGetHandler(c *gin.Context) {
 	key := c.DefaultQuery("itemId", "")
 	value, err := client.Get(key).Result()
-	if err != nil {
-		if err.Error() == "redis: nil" {
-			c.Status(http.StatusNotFound)
-		} else {
-			c.String(http.StatusInternalServerError, err.Error())
-		}
+	if err != nil && err.Error() != "redis: nil" {
+		c.String(http.StatusInternalServerError, err.Error())
 	} else {
-		var boolVal = value != "0"
+		var boolVal = value == "1"
 		c.String(http.StatusOK, strconv.FormatBool(boolVal))
 	}
 }

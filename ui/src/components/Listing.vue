@@ -1,5 +1,5 @@
 <template>
-  <b-col class="listing-item-container" cols="10" sm="3">
+  <b-col v-show="!item.isInCart" class="listing-item-container" cols="10" sm="3">
     <div class="shine">
       <figure>
         <b-img

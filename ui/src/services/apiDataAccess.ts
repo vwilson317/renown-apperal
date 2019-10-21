@@ -38,13 +38,13 @@ export const setCartStatus = async(itemId: number | undefined, status: boolean):
     return result;
 }
 
-export const getCartStatus = async(itemId: string): Promise<any> => {
+export const getCartStatus = async(itemId: string): Promise<boolean> => {
     const result = await axios.get('api/listings/cartstatus', {
         params: {
             itemId: itemId
         }
     });
-    return result;
+    return result.data;
 }
 
 export const get = async (apiType: Api, singleParam: string): Promise<any> => {
