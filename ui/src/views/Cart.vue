@@ -57,8 +57,8 @@ export default Vue.extend({
     },
   },
   methods: {
-    remove(index: number) {
-      const item: IListing[] = store.getters.removeItemFromCart(index);
+    remove: async (index: number) => {
+      const item: IListing[] = await store.getters.removeItemFromCart(index);
       store.commit('addListings', item);
     },
     checkout() {
