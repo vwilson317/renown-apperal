@@ -5,9 +5,12 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"time"
+	"strconv"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis"
 )
 
 func findingHandler(c *gin.Context) {
@@ -25,13 +28,57 @@ func healthHandler(c *gin.Context) {
 	c.Status(http.StatusOK)
 }
 
+func listingPostHandler(c *gin.Context) {
+	key := c.DefaultQuery("itemId", "true")
+	isInCart := c.DefaultQuery("isInCart", "true")
+	parsed, _ := strconv.ParseBool(isInCart)
+	err := client.Set(key, parsed, time.Hour).Err()	
+	if err != nil {
+		c.String(http.StatusInternalServerError, err.Error())
+	} else {
+		c.Status(http.StatusCreated)
+	}
+}
+
+func listingGetHandler(c *gin.Context) {
+	key := c.DefaultQuery("itemId", "")
+	value, err := client.Get(key).Result()	
+	if err != nil {
+		if err.Error() == "redis: nil" {
+			c.Status(http.StatusNotFound)
+		} else {
+			c.String(http.StatusInternalServerError, err.Error())
+		}
+	} else {
+		var boolVal = value != "0"
+		c.String(http.StatusOK, strconv.FormatBool(boolVal))
+	}
+}
+
+func initClient() *redis.Client {
+	client := redis.NewClient(&redis.Options{
+		Addr:     "localhost:8086",
+		Password: "", // no password set
+		DB:       0,  // use default DB
+	})
+
+	return client
+}
+
+var client *redis.Client
+
 func main() {
 	fmt.Println("Starting the application...")
 
 	router := gin.Default()
 
+	client = initClient()
+
 	router.GET("/api/finding", findingHandler)
 	router.GET("/health", healthHandler)
+
+	router.POST("/api/listing", listingPostHandler)
+	router.GET("/api/listing/cartstatus", listingGetHandler)
 
 	router.Use(cors.Default())
 	router.Run(":8083")
