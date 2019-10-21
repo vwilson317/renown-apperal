@@ -11,7 +11,7 @@ export default {
         purchase_units: [
           {
             amount: {
-              value: '0', // this.$store.getters.total,
+              value: this.$store.getters.total,
             },
           },
         ],

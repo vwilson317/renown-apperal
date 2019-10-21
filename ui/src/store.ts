@@ -39,7 +39,7 @@ export default new Vuex.Store({
       state.cartItems.forEach((currentItem: IListing) => {
         val += parseFloat(currentItem.Price);
       });
-      return val;
+      return val.toFixed(2);
     },
     removeItemFromCart: (state: any) => async (index: number) => {
       const removedItem = state.cartItems.splice(index, 1);
