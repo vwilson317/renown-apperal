@@ -18,7 +18,7 @@
     "docker:deploy": "npm run docker:tag:ui && npm run docker:tag:api && npm run docker:push:ui && npm run docker:push:api",
     "docker:login": "(aws ecr get-login --no-include-email)",
     "test": "jest",
-    "run:db": "docker run -p 8085:27027 mongo"
+    "run:db": "docker run -p 8086:6379 redis:5.0.6-alpine"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.25",

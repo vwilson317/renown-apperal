@@ -3,7 +3,7 @@ import axios from 'axios';
 export enum Api {
     Finding,
     Shopping,
-    Trading
+    Trading,
 }
 
 const findApiUrl = 'api/finding';
@@ -23,6 +23,25 @@ export const getItemDetails = async (itemIds: string): Promise<any> => {
 
 export const endListing = async(itemId: string): Promise<any> => {
     const result = await get(Api.Trading, itemId);
+    return result;
+}
+
+export const setCartStatus = async(itemId: string, status: boolean): Promise<any> => {
+    const result = await axios.post('api/listings', {
+        params: {
+            itemId: itemId,
+            isInCart: status
+        }
+    });
+    return result;
+}
+
+export const getCartStatus = async(itemId: string): Promise<any> => {
+    const result = await axios.get('api/listings/cartstatus', {
+        params: {
+            itemId: itemId
+        }
+    });
     return result;
 }
 

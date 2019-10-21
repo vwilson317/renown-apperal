@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"time"
 	"strconv"
+	"time"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -32,7 +32,7 @@ func listingPostHandler(c *gin.Context) {
 	key := c.DefaultQuery("itemId", "true")
 	isInCart := c.DefaultQuery("isInCart", "true")
 	parsed, _ := strconv.ParseBool(isInCart)
-	err := client.Set(key, parsed, time.Hour).Err()	
+	err := client.Set(key, parsed, time.Hour).Err()
 	if err != nil {
 		c.String(http.StatusInternalServerError, err.Error())
 	} else {
@@ -42,7 +42,7 @@ func listingPostHandler(c *gin.Context) {
 
 func listingGetHandler(c *gin.Context) {
 	key := c.DefaultQuery("itemId", "")
-	value, err := client.Get(key).Result()	
+	value, err := client.Get(key).Result()
 	if err != nil {
 		if err.Error() == "redis: nil" {
 			c.Status(http.StatusNotFound)
@@ -77,8 +77,8 @@ func main() {
 	router.GET("/api/finding", findingHandler)
 	router.GET("/health", healthHandler)
 
-	router.POST("/api/listing", listingPostHandler)
-	router.GET("/api/listing/cartstatus", listingGetHandler)
+	router.POST("/api/listings", listingPostHandler)
+	router.GET("/api/listings/cartstatus", listingGetHandler)
 
 	router.Use(cors.Default())
 	router.Run(":8083")
