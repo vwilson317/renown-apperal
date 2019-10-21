@@ -29,7 +29,7 @@ func healthHandler(c *gin.Context) {
 }
 
 func listingPostHandler(c *gin.Context) {
-	key := c.DefaultQuery("itemId", "true")
+	key := c.DefaultQuery("itemId", "")
 	isInCart := c.DefaultQuery("isInCart", "true")
 	parsed, _ := strconv.ParseBool(isInCart)
 	err := client.Set(key, parsed, time.Hour).Err()

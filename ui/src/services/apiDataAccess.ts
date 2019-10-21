@@ -26,12 +26,14 @@ export const endListing = async(itemId: string): Promise<any> => {
     return result;
 }
 
-export const setCartStatus = async(itemId: string, status: boolean): Promise<any> => {
-    const result = await axios.post('api/listings', {
+export const setCartStatus = async(itemId: number | undefined, status: boolean): Promise<any> => {
+    const result = await axios.request({
+        url: 'api/listings',
+        method: 'POST',
         params: {
             itemId: itemId,
             isInCart: status
-        }
+        },
     });
     return result;
 }

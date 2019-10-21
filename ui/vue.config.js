@@ -1,7 +1,11 @@
 module.exports = {
     devServer: {
         proxy: {
-            '/api': {
+            '/api/listings': {
+                target: 'http://localhost:8083',
+                changeOrigin: true
+            },
+            '/api/finding': {
                 target: 'http://localhost:8083',
                 changeOrigin: true
             },
