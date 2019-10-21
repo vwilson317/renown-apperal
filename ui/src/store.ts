@@ -43,7 +43,7 @@ export default new Vuex.Store({
     },
     removeItemFromCart: (state: any) => async (index: number) => {
       const removedItem = state.cartItems.splice(index, 1);
-      await setCartStatus(removedItem.id, false);
+      await setCartStatus(removedItem[0].id, false);
       return removedItem;
     },
   },

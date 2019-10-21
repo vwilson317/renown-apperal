@@ -15,7 +15,7 @@ export const GetListing = async (pageNum: number): Promise<IListing[]> => {
     const responseData = response.data.findItemsIneBayStoresResponse[0];
     const items = responseData!.searchResult[0]!.item;
 
-    const itemIds = items.map((element: any) =>  {
+    const itemIds = items.map((element: any) => {
         return element.itemId;
     });
     const itemDetails = await getItemDetails(itemIds.join());
@@ -29,7 +29,8 @@ export const GetListing = async (pageNum: number): Promise<IListing[]> => {
             id: x.ItemID,
             Price: x.ConvertedCurrentPrice.Value,
             isInCart: await getCartStatus(x.ItemID),
-        }});
+        };
+    });
 
     const listings = Promise.all(itemPromises);
     return listings;

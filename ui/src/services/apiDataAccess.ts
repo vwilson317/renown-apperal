@@ -21,31 +21,31 @@ export const getItemDetails = async (itemIds: string): Promise<any> => {
     return result;
 };
 
-export const endListing = async(itemId: string): Promise<any> => {
+export const endListing = async (itemId: string): Promise<any> => {
     const result = await get(Api.Trading, itemId);
     return result;
-}
+};
 
-export const setCartStatus = async(itemId: number | undefined, status: boolean): Promise<any> => {
+export const setCartStatus = async (itemId: number | undefined, status: boolean): Promise<any> => {
     const result = await axios.request({
         url: 'api/listings',
         method: 'POST',
         params: {
-            itemId: itemId,
-            isInCart: status
+            itemId,
+            isInCart: status,
         },
     });
     return result;
-}
+};
 
-export const getCartStatus = async(itemId: string): Promise<boolean> => {
+export const getCartStatus = async (itemId: string): Promise<boolean> => {
     const result = await axios.get('api/listings/cartstatus', {
         params: {
-            itemId: itemId
-        }
+            itemId,
+        },
     });
     return result.data;
-}
+};
 
 export const get = async (apiType: Api, singleParam: string): Promise<any> => {
     // todo add ebay apis to dev server
@@ -58,15 +58,14 @@ export const get = async (apiType: Api, singleParam: string): Promise<any> => {
         uri = shoppingApiUrl + '?' + str + '&' + singleParam;
 
         return axios.get(uri);
-    }
-    else if(apiType === Api.Trading){
+    } else if (apiType === Api.Trading) {
         const params = {
             EndingReason: 'NotAvailable',
-            ItemId: singleParam
-        }
+            ItemId: singleParam,
+        };
 
         return axios.get('api/trading', {
-            params: params
+            params,
         });
     }
 };
