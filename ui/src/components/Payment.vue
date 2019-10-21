@@ -2,8 +2,8 @@
 <div>
           <h4 class="mb-3">Payment</h4>
 
-          <div class="d-block my-3">
-            <!-- <div class="custom-control custom-radio">
+          <!-- <div class="d-block my-3">
+            <div class="custom-control custom-radio">
               <input
                 id="credit"
                 name="paymentMethod"
@@ -71,12 +71,12 @@
 </template>
 
 <script>
-import PayPal from '../components/PayPal.vue';
+import PayPal from './PayPal.vue';
 
 export default {
   name: 'Payment',
   components: {
-  PayPal
-  }
+  PayPal,
+  },
 };
 </script>

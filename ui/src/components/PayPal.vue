@@ -4,14 +4,14 @@
 
 <script lang="ts">
 export default {
-  name: 'Paypal',
+  name: 'PayPal',
   methods: {
     createOrder(data: any, actions: any) {
       return actions.order.create({
         purchase_units: [
           {
             amount: {
-              value: this.$store.getters.total,
+              value: '0', // this.$store.getters.total,
             },
           },
         ],
@@ -43,4 +43,8 @@ export default {
   },
 };
 </script>
+
+<style>
+
+</style>
 

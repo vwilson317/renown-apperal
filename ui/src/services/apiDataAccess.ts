@@ -12,7 +12,7 @@ const shoppingApiVersion = 1099; // 1085 doesn't work now wtf
 const eBayAppId = 'VincentW-renownap-PRD-0b31f104d-07a63429';
 
 export const getListingItemsByStore = async (pageNum: number): Promise<any> => {
-    const result = await get(Api.Finding, 'pageNum=' + pageNum);
+    const result = await get(Api.Finding, 'pageNum=' + pageNum);// + "&paginationInput.entriesPerPage=2");
     return result;
 };
 
