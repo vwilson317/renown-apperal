@@ -2,13 +2,13 @@
   <div class="nav" id="nav">
     <b-nav sticky="" class="navbar navbar-collapse" tabs align="center">
       <b-nav-item>
-        <router-link to="/All" @click="setKeywords()">All</router-link>
+        <router-link to="/All">All</router-link>
       </b-nav-item>
       <b-nav-item>
-        <router-link to="/Mens" @click="setKeywords('men')">Mens</router-link>
+        <router-link to="/Mens">Mens</router-link>
       </b-nav-item>
       <b-nav-item>
-        <router-link to="/Womens" @click="setKeywords('women')">Womens</router-link>
+        <router-link to="/Womens">Womens</router-link>
       </b-nav-item>
       <b-nav-item>
         <router-link to="/About" >About</router-link>
@@ -23,10 +23,7 @@ import Vue from 'vue';
 export default Vue.extend({
   name: 'Nav',
   methods: {
-    setKeywords(keyword?: string){
-      this.$store.commit('setKeywords', keyword);
-    }
-  }
+  },
 });
 </script>
 

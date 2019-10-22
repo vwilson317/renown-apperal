@@ -13,11 +13,12 @@ import store from './store';
 Vue.use(Router);
 
 const beforeEnterFunc = (keyword: string) => async (to: Route, from: Route, next: Function) => {
-  store.commit('setLoading', true)
+  store.commit('setKeywords', keyword);
+  store.commit('setLoading', true);
   store.commit('resetPageNum');
   const result = await GetListing(1, keyword);
   store.commit('replaceListings', result);
-  store.commit('setLoading', false)
+  store.commit('setLoading', false);
 
   next();
 };
