@@ -5,6 +5,7 @@ import Mens from './views/Mens.vue';
 import Detail from './views/Detail.vue';
 import Cart from './views/Cart.vue';
 import Checkout from './views/Checkout.vue';
+import About from './views/About.vue';
 
 Vue.use(Router);
 
@@ -37,8 +38,8 @@ export default new Router({
     },
     {
       path: '/about',
-      name: 'about', // ,
-      // component: null
+      name: 'about',
+      component: About
     },
     {
       path: '/all',

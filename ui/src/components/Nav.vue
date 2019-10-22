@@ -1,12 +1,12 @@
 <template>
   <div class="nav" id="nav">
     <b-nav sticky="" class="navbar navbar-collapse" tabs align="center">
-      <b-nav-item>
+      <!-- <b-nav-item>
         <router-link to="/All">All</router-link>
       </b-nav-item>
       <b-nav-item>
         <router-link to="/Mens">Mens</router-link>
-      </b-nav-item>
+      </b-nav-item> -->
       <!-- <b-nav-item>
         <router-link to="/Womens">Womens</router-link>
       </b-nav-item> -->

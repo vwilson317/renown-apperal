@@ -28,7 +28,7 @@ export default {
         paypal.Buttons({
           style: {
             shape: 'rect',
-            color: 'gold',
+            color: 'white',
             layout: 'vertical',
             label: 'paypal',
           },
