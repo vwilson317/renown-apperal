@@ -35,7 +35,6 @@ import { getListingItemsByStore } from '../services/apiDataAccess';
 
 export default Vue.extend({
   name: 'Landing',
-  props: {keyword: "" as string | undefinded},
   data() {
     return {
       // loading: false
@@ -51,7 +50,7 @@ export default Vue.extend({
         this.$store.state.listings.length < 400;
       if (shouldLoadData) {
         debugger
-        GetListing(pageNum, this.keyword).then((response) => {
+        GetListing(pageNum, this.$store.state.keywords).then((response) => {
           this.$store.commit('addListings', response);
           this.$store.commit('increasePageNum');
         });
@@ -61,10 +60,10 @@ export default Vue.extend({
       return this.$store.state.pageNum;
     },
     showMore() {
-      return (
-        this.$store.state.listings.length !== 0 &&
-        this.$store.state.listings.length <= this.getPageNum() * 20
-      );
+      const shouldShow = this.$store.state.listings.length !== 0 &&
+        this.$store.state.listings.length === 
+        (this.getPageNum() + this.$store.state.cartItems.length) * 20;
+      return shouldShow;
     },
     moreClick() {
       const pageNum = this.getPageNum();
@@ -91,15 +90,18 @@ export default Vue.extend({
     Listing,
   },
   beforeUpdate() {
-    let i = 1;
+    // let i = 1;
+    // for (; i <= 1; i++) {
+    //   // preload 100 items
+    //   this.getDataFromApi(i);
+    // }
+  },
+  created() {
+        let i = 1;
     for (; i <= 1; i++) {
       // preload 100 items
       this.getDataFromApi(i);
     }
-  },
-  mounted() {
-
-
     // todo: consider adding back when api limits are resolved
     setTimeout(() => {
       this.$store.commit('setLoading', false);

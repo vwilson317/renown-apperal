@@ -11,6 +11,7 @@ export default new Vuex.Store({
     listings: [],
     loading: { isLoading: true, position: 'top' },
     pageNum: 1,
+    keywords: '',
   },
   mutations: {
     addItemToCart: async (state: any, item: IListing): Promise<void> => {
@@ -20,19 +21,28 @@ export default new Vuex.Store({
     addListings(state: any, listings: IListing[]) {
       state.listings.push(...listings);
     },
+    replaceListings(state: any, listings: IListing[]) {
+      state.listings = listings;
+    },
     setLoading(state: any, isLoading: boolean) {
       state.loading.isLoading = isLoading;
     },
     increasePageNum(state: any) {
       state.pageNum += 1;
     },
+    resetPageNum(state: any) {
+      state.pageNum = 1;
+    },
     removeListing(state: any, item: IListing) {
       const index = state.listings.indexOf(item);
       state.listings.splice(index, 1);
     },
-    search: async (state: any, keywords: string) => {
-      const result = await GetListing(1, keywords);
+    search: async (state: any) => {
+      const result = await GetListing(1, state.keywords);
       state.listings = result;
+    },
+    setKeywords(state: any, keywords: string) {
+      state.keywords = keywords;
     }
   },
   actions: {

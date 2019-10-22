@@ -63,7 +63,10 @@ export default Vue.extend({
     },
     onSubmit(event) {
       event.preventDefault()
-      this.$store.commit('search', this.keywords);
+      this.$store.commit('setKeywords', this.keywords);
+      this.$store.commit('search');
+      this.$store.commit('increasePageNum');
+      this.onReset();
     },
     onReset() {
       this.keywords = '';

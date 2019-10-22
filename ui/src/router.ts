@@ -1,13 +1,26 @@
 import Vue from 'vue';
-import Router from 'vue-router';
+import Router, { Route } from 'vue-router';
 import Landing from './views/Landing.vue';
 import Mens from './views/Mens.vue';
+import Womens from './views/Womens.vue';
 import Detail from './views/Detail.vue';
 import Cart from './views/Cart.vue';
 import Checkout from './views/Checkout.vue';
 import About from './views/About.vue';
+import { GetListing } from './business-logic/getListings';
+import store from './store';
 
 Vue.use(Router);
+
+const beforeEnterFunc = (keyword: string) => async (to: Route, from: Route, next: Function) => {
+  store.commit('setLoading', true)
+  store.commit('resetPageNum');
+  const result = await GetListing(1, keyword);
+  store.commit('replaceListings', result);
+  store.commit('setLoading', false)
+
+  next();
+};
 
 export default new Router({
   mode: 'history',
@@ -30,13 +43,14 @@ export default new Router({
       path: '/mens',
       name: 'mens',
       component: Landing,
-      props: { keyword: 'men' },
+      beforeEnter: beforeEnterFunc('mens'),
+      // props: { keyword: 'men' },
     },
     {
       path: '/womens',
       name: 'womens',
       component: Landing,
-      props: { keyword: 'women' },
+      beforeEnter: beforeEnterFunc('womens'),
     },
     {
       path: '/about',
@@ -47,7 +61,7 @@ export default new Router({
       path: '/all',
       name: 'all',
       component: Landing,
-      props: true,
+      beforeEnter: beforeEnterFunc(''),
     },
     {
       path: '/detail',
