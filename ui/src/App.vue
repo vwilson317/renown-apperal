@@ -13,7 +13,7 @@
             <b-form-input v-model="keywords">
 
             </b-form-input>
-            <b-button>Search</b-button>
+            <b-button @click="onSubmit">Search</b-button>
             </b-form>
           </b-col>
           <b-col class="cart-action-container" cols="2" sm="1" align-self="center">

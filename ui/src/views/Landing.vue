@@ -35,17 +35,14 @@ import { getListingItemsByStore } from '../services/apiDataAccess';
 
 export default Vue.extend({
   name: 'Landing',
+  props: {keyword: "" as string | undefinded},
   data() {
     return {
       // loading: false
     };
   },
   created() {
-    let i = 1;
-    for (; i <= 1; i++) {
-      // preload 100 items
-      this.getDataFromApi(i);
-    }
+
   },
   methods: {
     async getDataFromApi(pageNum: number) {
@@ -53,7 +50,8 @@ export default Vue.extend({
         this.$store.state.listings.length <= pageNum * 20 &&
         this.$store.state.listings.length < 400;
       if (shouldLoadData) {
-        GetListing(pageNum).then((response) => {
+        debugger
+        GetListing(pageNum, this.keyword).then((response) => {
           this.$store.commit('addListings', response);
           this.$store.commit('increasePageNum');
         });
@@ -92,7 +90,16 @@ export default Vue.extend({
   components: {
     Listing,
   },
+  beforeUpdate() {
+    let i = 1;
+    for (; i <= 1; i++) {
+      // preload 100 items
+      this.getDataFromApi(i);
+    }
+  },
   mounted() {
+
+
     // todo: consider adding back when api limits are resolved
     setTimeout(() => {
       this.$store.commit('setLoading', false);

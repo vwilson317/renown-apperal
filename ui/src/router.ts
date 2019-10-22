@@ -29,12 +29,14 @@ export default new Router({
     {
       path: '/mens',
       name: 'mens',
-      component: Mens,
+      component: Landing,
+      props: { keyword: 'men' },
     },
     {
       path: '/womens',
-      name: 'womens', // ,
-      // component: null
+      name: 'womens',
+      component: Landing,
+      props: { keyword: 'women' },
     },
     {
       path: '/about',
@@ -45,6 +47,7 @@ export default new Router({
       path: '/all',
       name: 'all',
       component: Landing,
+      props: true,
     },
     {
       path: '/detail',
