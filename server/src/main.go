@@ -15,7 +15,12 @@ import (
 
 func findingHandler(c *gin.Context) {
 	pageNum := c.DefaultQuery("pageNum", "1")
-	response, err := http.Get("https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsIneBayStores&SERVICE-VERSION=1.13.0&SECURITY-APPNAME=VincentW-renownap-PRD-0b31f104d-07a63429&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD=&paginationInput.entriesPerPage=20&paginationInput.pageNumber=" + pageNum + "&storeName=imyown")
+	keywords := c.DefaultQuery("keywords", "")
+	
+	var queryStr = "https://svcs.ebay.com/services/search/FindingService/v1?OPERATION-NAME=findItemsIneBayStores&SERVICE-VERSION=1.13.0&SECURITY-APPNAME=VincentW-renownap-PRD-0b31f104d-07a63429&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD=&paginationInput.entriesPerPage=20&paginationInput.pageNumber=" + pageNum + "&storeName=imyown";
+	queryStr += "&keywords=" + keywords
+	
+	response, err := http.Get(queryStr)
 	if err != nil {
 		fmt.Printf("The HTTP request failed with error %s\n", err)
 	} else {

@@ -11,8 +11,12 @@ const shoppingApiUrl = 'api/shopping'; // "http://open.api.ebay.com/shopping";
 const shoppingApiVersion = 1099; // 1085 doesn't work now wtf
 const eBayAppId = 'VincentW-renownap-PRD-0b31f104d-07a63429';
 
-export const getListingItemsByStore = async (pageNum: number): Promise<any> => {
-    const result = await get(Api.Finding, 'pageNum=' + pageNum);// + "&paginationInput.entriesPerPage=2");
+export const getListingItemsByStore = async (pageNum: number, keyWords?: string): Promise<any> => {
+    let paramsStr = 'pageNum=' + pageNum ;
+    if(keyWords){
+        paramsStr +=  "&keywords=" + keyWords;
+    }
+    const result = await get(Api.Finding, paramsStr);// + "&paginationInput.entriesPerPage=2");
     return result;
 };
 

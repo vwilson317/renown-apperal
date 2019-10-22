@@ -10,8 +10,8 @@ export interface IListing {
     isInCart: boolean;
 }
 
-export const GetListing = async (pageNum: number): Promise<IListing[]> => {
-    const response = await getListingItemsByStore(pageNum);
+export const GetListing = async (pageNum: number, keyWords?: string): Promise<IListing[]> => {
+    const response = await getListingItemsByStore(pageNum, keyWords);
     const responseData = response.data.findItemsIneBayStoresResponse[0];
     const items = responseData!.searchResult[0]!.item;
 

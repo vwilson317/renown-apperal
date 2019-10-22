@@ -42,7 +42,7 @@ export default Vue.extend({
   },
   created() {
     let i = 1;
-    for (; i <= 5; i++) {
+    for (; i <= 1; i++) {
       // preload 100 items
       this.getDataFromApi(i);
     }

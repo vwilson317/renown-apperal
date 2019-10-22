@@ -8,6 +8,14 @@
               <img class="logo" alt="Vue logo" src="./assets/logo-white.png" />
             </router-link>
           </b-col>
+          <b-col sm=2>
+            <b-form @submit="onSubmit" @reset="onReset">
+            <b-form-input v-model="keywords">
+
+            </b-form-input>
+            <b-button>Search</b-button>
+            </b-form>
+          </b-col>
           <b-col class="cart-action-container" cols="2" sm="1" align-self="center">
             <b-row align-h="center" align-v="center" @click="click">
               <span class="d-none d-sm-block">Cart</span>
@@ -42,7 +50,9 @@ export default Vue.extend({
     Loading,
   },
   data() {
-    return {};
+    return {
+      keywords: ""
+    };
   },
   methods: {
     click() {
@@ -51,6 +61,13 @@ export default Vue.extend({
     loading() {
       return this.$store.state.loading.isLoading;
     },
+    onSubmit(event) {
+      event.preventDefault()
+      this.$store.commit('search', this.keywords);
+    },
+    onReset() {
+      this.keywords = '';
+    }
   },
   computed: {
     itemCount() {

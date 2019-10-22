@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { IListing } from './business-logic/getListings';
+import { IListing, GetListing } from './business-logic/getListings';
 import { setCartStatus } from './services/apiDataAccess';
 
 Vue.use(Vuex);
@@ -30,6 +30,10 @@ export default new Vuex.Store({
       const index = state.listings.indexOf(item);
       state.listings.splice(index, 1);
     },
+    search: async (state: any, keywords: string) => {
+      const result = await GetListing(1, keywords);
+      state.listings = result;
+    }
   },
   actions: {
   },
