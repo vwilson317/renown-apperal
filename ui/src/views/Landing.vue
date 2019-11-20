@@ -49,7 +49,6 @@ export default Vue.extend({
         this.$store.state.listings.length <= pageNum * 20 &&
         this.$store.state.listings.length < 400;
       if (shouldLoadData) {
-        debugger
         GetListing(pageNum, this.$store.state.keywords).then((response) => {
           this.$store.commit('addListings', response);
           this.$store.commit('increasePageNum');

@@ -6,11 +6,12 @@ import BootstrapVue from 'bootstrap-vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faOpencart } from '@fortawesome/free-brands-svg-icons';
 import { faPlusSquare, faMinusSquare } from '@fortawesome/free-regular-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 
-library.add(faOpencart, faPlusSquare, faMinusSquare);
+library.add(faOpencart, faPlusSquare, faMinusSquare, faSearch);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;

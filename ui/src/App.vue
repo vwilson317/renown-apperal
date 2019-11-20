@@ -2,19 +2,25 @@
   <div id="app">
     <div class="sticky">
       <b-container fluid class="logo-row">
+            <b-form @submit="onSubmit" @reset="onReset">
+
         <b-row cols="12">
           <b-col class="left-side" offset="2" offset-sm="1">
             <router-link to="/">
               <img class="logo" alt="Vue logo" src="./assets/logo-white.png" />
             </router-link>
           </b-col>
-          <b-col sm=2>
-            <b-form @submit="onSubmit" @reset="onReset">
-            <b-form-input v-model="keywords">
-
-            </b-form-input>
-            <b-button @click="onSubmit">Search</b-button>
-            </b-form>
+          <b-col cols="3" class="search-container">
+              <b-row no-gutters align-h="center" align-v="center">
+                <b-col cols="9">
+                  <b-form-input v-model="keywords" placeholder="Search..." />
+                </b-col>
+                <b-col cols="3" class="search-button-container">
+                  <b-button @click="onSubmit">
+                    <font-awesome-icon :icon="['fas', 'search']" />
+                  </b-button>
+                </b-col>
+              </b-row>
           </b-col>
           <b-col class="cart-action-container" cols="2" sm="1" align-self="center">
             <b-row align-h="center" align-v="center" @click="click">
@@ -24,6 +30,8 @@
             </b-row>
           </b-col>
         </b-row>
+            </b-form>
+
       </b-container>
       <Nav />
     </div>
@@ -39,15 +47,15 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Nav from '@/components/Nav.vue'; // @   is an alias to /src
-import Loading from '@/components/Loading.vue';
+import Vue from "vue";
+import Nav from "@/components/Nav.vue"; // @   is an alias to /src
+import Loading from "@/components/Loading.vue";
 
 export default Vue.extend({
-  name: 'App',
+  name: "App",
   components: {
     Nav,
-    Loading,
+    Loading
   },
   data() {
     return {
@@ -56,27 +64,27 @@ export default Vue.extend({
   },
   methods: {
     click() {
-      this.$router.push('cart');
+      this.$router.push("cart");
     },
     loading() {
       return this.$store.state.loading.isLoading;
     },
     onSubmit(event) {
-      event.preventDefault()
-      this.$store.commit('setKeywords', this.keywords);
-      this.$store.commit('search');
-      this.$store.commit('increasePageNum');
+      event.preventDefault();
+      this.$store.commit("setKeywords", this.keywords);
+      this.$store.commit("search");
+      this.$store.commit("increasePageNum");
       this.onReset();
     },
     onReset() {
-      this.keywords = '';
+      this.keywords = "";
     }
   },
   computed: {
     itemCount() {
       return this.$store.state.cartItems.length;
-    },
-  },
+    }
+  }
 });
 </script>
 
@@ -166,9 +174,6 @@ h6 {
 .logo-row {
   background-color: $main; //$gun-metal;
   min-height: 4em;
-  .left-side {
-    border-right: 1px solid white;
-  }
 }
 
 .logo {
@@ -210,5 +215,13 @@ h6 {
 
 .box-shadow {
   box-shadow: 4px 3px 3px grey;
+}
+
+.search-container {
+  border-right: 1px solid white;
+
+  .search-button-container {
+    background-color: white;
+  }
 }
 </style>
