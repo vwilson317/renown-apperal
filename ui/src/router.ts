@@ -12,7 +12,7 @@ import store from './store';
 
 Vue.use(Router);
 
-const beforeEnterFunc = (keyword: string) => async (to: Route, from: Route, next: Function) => {
+const beforeEnterFunc = (keyword: string) => async (to: Route, from: Route, next: () => void) => {
   store.commit('setKeywords', keyword);
   store.commit('setLoading', true);
   store.commit('resetPageNum');
@@ -56,7 +56,7 @@ export default new Router({
     {
       path: '/about',
       name: 'about',
-      component: About
+      component: About,
     },
     {
       path: '/all',

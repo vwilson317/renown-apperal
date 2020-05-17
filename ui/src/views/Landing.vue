@@ -40,9 +40,6 @@ export default Vue.extend({
       // loading: false
     };
   },
-  created() {
-
-  },
   methods: {
     async getDataFromApi(pageNum: number) {
       const shouldLoadData =
@@ -60,7 +57,7 @@ export default Vue.extend({
     },
     showMore() {
       const shouldShow = this.$store.state.listings.length !== 0 &&
-        this.$store.state.listings.length === 
+        this.$store.state.listings.length ===
         (this.getPageNum() + this.$store.state.cartItems.length) * 20;
       return shouldShow;
     },
@@ -97,12 +94,12 @@ export default Vue.extend({
   },
   created() {
         let i = 1;
-    for (; i <= 1; i++) {
+        for (; i <= 1; i++) {
       // preload 100 items
       this.getDataFromApi(i);
     }
     // todo: consider adding back when api limits are resolved
-    setTimeout(() => {
+        setTimeout(() => {
       this.$store.commit('setLoading', false);
     }, 1500);
   },

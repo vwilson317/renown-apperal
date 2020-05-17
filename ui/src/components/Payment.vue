@@ -36,7 +36,7 @@
               <label class="custom-control-label" for="paypal">Paypal</label>
             </div>
           </div> -->
-          <PayPal />
+          <!-- <PayPal /> -->
 
           <div class="row">
           <!-- <PayPal /> -->
@@ -71,12 +71,12 @@
 </template>
 
 <script>
-import PayPal from './PayPal.vue';
+// import PayPal from './PayPal.vue';
 
 export default {
   name: 'Payment',
   components: {
-  PayPal,
+  // PayPal,ç
   },
 };
 </script>

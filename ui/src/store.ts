@@ -43,7 +43,7 @@ export default new Vuex.Store({
     },
     setKeywords(state: any, keywords: string) {
       state.keywords = keywords;
-    }
+    },
   },
   actions: {
   },

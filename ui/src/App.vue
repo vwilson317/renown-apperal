@@ -47,44 +47,44 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Nav from "@/components/Nav.vue"; // @   is an alias to /src
-import Loading from "@/components/Loading.vue";
+import Vue from 'vue';
+import Nav from '@/components/Nav.vue'; // @   is an alias to /src
+import Loading from '@/components/Loading.vue';
 
 export default Vue.extend({
-  name: "App",
+  name: 'App',
   components: {
     Nav,
-    Loading
+    Loading,
   },
-  data() {
+  data: () => {
     return {
-      keywords: ""
+      keywords: '',
     };
   },
   methods: {
     click() {
-      this.$router.push("cart");
+      this.$router.push('cart');
     },
     loading() {
       return this.$store.state.loading.isLoading;
     },
-    onSubmit(event) {
+    onSubmit(event: any) {
       event.preventDefault();
-      this.$store.commit("setKeywords", this.keywords);
-      this.$store.commit("search");
-      this.$store.commit("increasePageNum");
-      this.onReset();
+      this.$store.commit('setKeywords', this.keywords);
+      this.$store.commit('search');
+      this.$store.commit('increasePageNum');
+      //this.onReset();
     },
-    onReset() {
-      this.keywords = "";
-    }
+    // onReset: () => {
+    //   this.keywords = '';
+    // },
   },
   computed: {
     itemCount() {
       return this.$store.state.cartItems.length;
-    }
-  }
+    },
+  },
 });
 </script>
 
