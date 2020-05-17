@@ -19,7 +19,6 @@ export const GetListing = async (pageNum: number, keyWords?: string): Promise<IL
         return element.itemId;
     });
     const itemDetails = await getItemDetails(itemIds.join());
-
     const itemDetailsResponse = itemDetails.data as ShoppingResponse;
 
     const itemPromises = itemDetailsResponse.Item.map(async (x: any): Promise<IListing> => {

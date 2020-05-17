@@ -76,9 +76,9 @@ export default Vue.extend({
       this.$store.commit('increasePageNum');
       //this.onReset();
     },
-    // onReset: () => {
-    //   this.keywords = '';
-    // },
+    onReset() {
+      this.keywords = '';
+    },
   },
   computed: {
     itemCount() {

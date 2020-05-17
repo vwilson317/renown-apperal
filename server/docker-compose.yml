@@ -5,3 +5,7 @@ services:
     ports:
       - "8083:8083"
     image: renown-apparel-api
+  redis:
+      image: "redis:alpine"
+      ports:
+      - "8086:6379"
