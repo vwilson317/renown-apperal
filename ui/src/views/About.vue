@@ -4,12 +4,11 @@
     <b-container fluid class="about box-shadow">
       <h3>About us</h3>
       <p>
-      This is your one stop shop for new and slightly used apparel.
+      Welcome!!! This is your one stop shop for new and slightly used apparel.
       We have decided to transition our very successful ebay store 
-      <strong><b-link href="https://www.ebay.com/usr/imyown" target="_blank">IMyOwn</b-link></strong> 
+      <strong><b-link href="https://www.ebay.com/usr/renown-apparel" target="_blank">Renown Apparel</b-link></strong> 
       to its own dedicated site. 
-      This allows us to offer lower prices along with a more streamlined buying experience.
-
+      This move allows us to offer, you the customer, lower prices along with a more streamlined buying experience.
       </p>
 
       <p>

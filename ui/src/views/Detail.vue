@@ -3,27 +3,17 @@
     <b-row class="header d-block d-sm-none" align-h="center">
       <h3>{{item.Name}}</h3>
     </b-row>
-
-    <b-carousel
-      id="carousel-fade"
-      style="text-shadow: 0px 0px 2px #000"
-      fade
-      controls
-      img-height="480"
-      class="d-block d-sm-none"
-    >
-      <b-carousel-slide v-for="currentImage in item.ImageUrls" :key="currentImage.index">
-        <template v-slot:img>
-          <img class="d-block img-fluid w-100" height="480" :src="currentImage" alt="image slot" />
-        </template>
-      </b-carousel-slide>
-    </b-carousel>
-
     <b-row class="d-none d-sm-flex non-mobile-content" align-v="center" align-h="center" no-gutters>
       <b-col class="main-img" sm="6" no-gutters>
-        <b-img 
-        v-for="currentImage in item.ImageUrls" :key="currentImage.index"
-        class="box-shadow" fluid :src="currentImage" />
+    <!-- directive -->
+    <div class="images" v-viewer>
+      <b-img v-for="currentImage in item.ImageUrls" :src="currentImage" class="p2"/>
+    </div>
+    <!-- component -->
+    <viewer :images="images">
+      <img v-for="src in images" :src="src" :key="src">
+    </viewer>
+
       </b-col>
       <b-col sm="6" align-self="start">
         <div id="detail-info-container">
@@ -43,20 +33,32 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { IListing } from '../business-logic/getListings';
+import { IListing, GetListing } from '../business-logic/getListings';
 import AddToCardButton from '../components/AddToCartButton.vue';
+import 'viewerjs/dist/viewer.css';
+import Viewer from 'v-viewer';
+import store from '../store';
+
+Vue.use(Viewer);
 
 export default Vue.extend({
   name: 'Detail',
-  props: ['item'],
+  props: {
+    id: String,
+  },
   data() {
     return {
       selectedImg: '' as string,
       additionalImages: [] as string[],
       startIndex: 0,
+      item: {} as IListing,
     };
   },
   beforeMount() {
+    //get image
+    store.getters.getListing(this.$props.id).then((x) =>{
+      this.item = x;
+    });
     this.selectedImg = this.$props.item.ImageUrls[0];
     this.additionalImages = this.getAdditionalImages();
     this.$store.commit('setLoading', true);
@@ -71,7 +73,7 @@ export default Vue.extend({
       this.selectedImg = imgSrc;
     },
     getAdditionalImages() {
-      const copiedArray = [...this.item.ImageUrls];
+      const copiedArray = [...this.item.ImageUrls] as string[];
       copiedArray.splice(1, 0);
       return copiedArray;
     },
@@ -169,3 +171,5 @@ export default Vue.extend({
     padding-left: 2em;
 }
 </style>
+
+

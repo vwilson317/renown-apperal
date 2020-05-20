@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { IListing, GetListing } from './business-logic/getListings';
 import { setCartStatus } from './services/apiDataAccess';
+import { Item } from './dto/findResponse';
 
 Vue.use(Vuex);
 
@@ -60,5 +61,8 @@ export default new Vuex.Store({
       await setCartStatus(removedItem[0].id, false);
       return removedItem;
     },
+    getListing: (state: any) => async (itemId: number) => {
+      return state.listings.find((x: any) => x.id === itemId);
+    }
   },
 });

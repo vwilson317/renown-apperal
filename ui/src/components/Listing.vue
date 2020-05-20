@@ -47,13 +47,16 @@ const shortenName = (input: string): string => {
 
 export default Vue.extend({
   name: 'Listing',
-  props: ['item', 'index'],
+  props: {
+    item: Object as () => IListing,
+    index: Number,
+  },
   data() {
     return {};
   },
   methods: {
-    itemClick: (item: any): void => {
-      router.push({ name: 'detail', params: { item } });
+    itemClick: (item: IListing): void => {
+      router.push({ name: 'detail', params: { id: item.id } });
     },
 
     shortenName,

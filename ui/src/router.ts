@@ -65,7 +65,7 @@ export default new Router({
       beforeEnter: beforeEnterFunc(''),
     },
     {
-      path: '/detail',
+      path: '/detail/:id',
       name: 'detail',
       component: Detail,
       props: true,
