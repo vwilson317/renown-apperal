@@ -169,40 +169,24 @@ func popHandler(c *gin.Context) {
 		// b             []byte
 		stringBuilder strings.Builder
 		// jsonData      string
-		responseObj  FindingReponse
 		responseObjs []FindingReponse
-		totalPages   int = 2 // assuming there's at least 2 pages
+		totalPages   int = 1
 	)
 
-	for i := 1; i < totalPages; i++ {
+	for i := 1; i <= totalPages; i++ {
 		pageNum := strconv.Itoa(i)
 		var responseByteArray = getData("", pageSize, pageNum)
 		stringBuilder.Grow(len(responseByteArray))
 		stringBuilder.Write(responseByteArray)
 
+		responseObj := FindingReponse{}
 		err := json.Unmarshal(responseByteArray, &responseObj)
 		if err != nil {
 			fmt.Println("error:", err)
 		}
 		responseObjs = append(responseObjs, responseObj)
-		// c.String(http.StatusOK, stringBuilder.String())
 		totalPages, _ = strconv.Atoi(responseObj.FindItemsIneBayStoresResponse[0].PaginationOutput[0].TotalPages[0])
 	}
-
-	addToEs(responseObjs, c)
-
-	// c.String(http.StatusOK, "")
-}
-
-func addToEs(response []FindingReponse, c *gin.Context) {
-	var (
-	// strBuilder strings.Builder
-	// raw       map[string]interface{}
-	// blk       *bulkResponse
-	// numErrors int
-	// buffer bytes.Buffer
-	// indexName string = "listings"
-	)
 
 	res, err := esClient.Indices.Delete([]string{indexName}, esClient.Indices.Delete.WithIgnoreUnavailable(true))
 	if err != nil || res.IsError() {
@@ -218,39 +202,36 @@ func addToEs(response []FindingReponse, c *gin.Context) {
 		fmt.Printf("Cannot create index: %s", res)
 	}
 
-	var items []Item
+	addToEs(responseObjs, c)
+
+	c.Status(http.StatusOK)
+}
+
+func addToEs(response []FindingReponse, c *gin.Context) {
+	items := []Item{}
 	linq.From(response).SelectManyT(
 		func(x FindingReponse) linq.Query {
 			return linq.From(x.FindItemsIneBayStoresResponse[0].SearchResult[0].Item)
 		}).ToSlice(&items)
 
 	bi, err := esutil.NewBulkIndexer(esutil.BulkIndexerConfig{
-		Index:         "listings",       // The default index name
-		Client:        esClient,         // The Elasticsearch client
-		NumWorkers:    50,               // The number of worker goroutines
-		FlushBytes:    int(1000000),     // The flush threshold in bytes
-		FlushInterval: 30 * time.Second, // The periodic flush interval
+		Index:      indexName, // The default index name
+		Client:     esClient,  // The Elasticsearch client
+		NumWorkers: 20,        // The number of worker goroutines
 	})
 	if err != nil {
 		log.Fatalf("Error creating the indexer: %s", err)
 	}
 
-	for _, rec := range items {
+	fmt.Println("rec count: " + strconv.Itoa(len(items)))
+
+	var index int
+	for i, rec := range items {
 		itemID := rec.ItemID[0]
-		data, _ := json.Marshal(rec)
-
-		// req := esapi.IndexRequest{
-		// 	Index:      "listings",
-		// 	DocumentID: itemID,
-		// 	Body:       bytes.NewReader(data),
-		// 	Refresh:    "true",
-		// }
-
-		// res, err = req.Do(context.Background(), esClient)
-		// if err != nil {
-		// 	fmt.Printf("Error getting response: %s %s", err, "/n")
-		// }
-		// res.Body.Close()
+		data, err := json.Marshal(rec)
+		if err != nil {
+			fmt.Println("Error creating the es client: %s", err)
+		}
 
 		err = bi.Add(
 			context.Background(),
@@ -277,7 +258,11 @@ func addToEs(response []FindingReponse, c *gin.Context) {
 		if err != nil {
 			log.Fatalf("Unexpected error: %s", err)
 		}
+
+		index = i + 1 //some of the records have dup item ids for some reason
 	}
+
+	fmt.Printf("Uploaded rec count: %d", index)
 
 	if err := bi.Close(context.Background()); err != nil {
 		log.Fatalf("Unexpected error: %s", err)
@@ -295,20 +280,7 @@ func initClient() *redis.Client {
 }
 
 func initEsClient() *elasticsearch.Client {
-	// cfg := elasticsearch.Config{
-	// 	Addresses: []string{"http://localhost:9200", "http://localhost:9300"},
-	// 	Transport: &http.Transport{
-	// 		MaxIdleConnsPerHost: 10,
-	// 		// ResponseHeaderTimeout: time.Millisecond,
-	// 		// DialContext:           (&net.Dialer{Timeout: time.Nanosecond}).DialContext,
-	// 		TLSClientConfig: &tls.Config{
-	// 			MinVersion: tls.VersionTLS11,
-	// 			// ...
-	// 		},
-	// 	},
-	// }
-
-	es, err := elasticsearch.NewDefaultClient() //elasticsearch.NewClient(cfg)
+	es, err := elasticsearch.NewDefaultClient()
 	if err != nil {
 		fmt.Println("Error creating the es client: %s", err)
 	}
