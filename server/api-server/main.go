@@ -1,8 +1,6 @@
 package main
 
 import (
-	// "encoding/json"
-
 	"bytes"
 	"context"
 	"encoding/json"
@@ -14,8 +12,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/elastic/go-elasticsearch"
-	"github.com/elastic/go-elasticsearch/esapi"
+	linq "github.com/ahmetb/go-linq"
+	elasticsearch "github.com/elastic/go-elasticsearch/v8"
+	esutil "github.com/elastic/go-elasticsearch/v8/esutil"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis"
@@ -28,61 +27,7 @@ type FindingReponse struct {
 		Timestamp    []time.Time `json:"timestamp"`
 		SearchResult []struct {
 			Count string `json:"@count"`
-			Item  []struct {
-				ItemID          []string `json:"itemId"`
-				Title           []string `json:"title"`
-				GlobalID        []string `json:"globalId"`
-				PrimaryCategory []struct {
-					CategoryID   []string `json:"categoryId"`
-					CategoryName []string `json:"categoryName"`
-				} `json:"primaryCategory"`
-				GalleryURL    []string `json:"galleryURL"`
-				ViewItemURL   []string `json:"viewItemURL"`
-				PaymentMethod []string `json:"paymentMethod"`
-				AutoPay       []string `json:"autoPay"`
-				PostalCode    []string `json:"postalCode"`
-				Location      []string `json:"location"`
-				Country       []string `json:"country"`
-				ShippingInfo  []struct {
-					ShippingServiceCost []struct {
-						CurrencyID string `json:"@currencyId"`
-						Value      string `json:"__value__"`
-					} `json:"shippingServiceCost"`
-					ShippingType            []string `json:"shippingType"`
-					ShipToLocations         []string `json:"shipToLocations"`
-					ExpeditedShipping       []string `json:"expeditedShipping"`
-					OneDayShippingAvailable []string `json:"oneDayShippingAvailable"`
-					HandlingTime            []string `json:"handlingTime"`
-				} `json:"shippingInfo"`
-				SellingStatus []struct {
-					CurrentPrice []struct {
-						CurrencyID string `json:"@currencyId"`
-						Value      string `json:"__value__"`
-					} `json:"currentPrice"`
-					ConvertedCurrentPrice []struct {
-						CurrencyID string `json:"@currencyId"`
-						Value      string `json:"__value__"`
-					} `json:"convertedCurrentPrice"`
-					SellingState []string `json:"sellingState"`
-					TimeLeft     []string `json:"timeLeft"`
-				} `json:"sellingStatus"`
-				ListingInfo []struct {
-					BestOfferEnabled  []string    `json:"bestOfferEnabled"`
-					BuyItNowAvailable []string    `json:"buyItNowAvailable"`
-					StartTime         []time.Time `json:"startTime"`
-					EndTime           []time.Time `json:"endTime"`
-					ListingType       []string    `json:"listingType"`
-					Gift              []string    `json:"gift"`
-					WatchCount        []string    `json:"watchCount"`
-				} `json:"listingInfo"`
-				ReturnsAccepted []string `json:"returnsAccepted"`
-				Condition       []struct {
-					ConditionID          []string `json:"conditionId"`
-					ConditionDisplayName []string `json:"conditionDisplayName"`
-				} `json:"condition"`
-				IsMultiVariationListing []string `json:"isMultiVariationListing"`
-				TopRatedListing         []string `json:"topRatedListing"`
-			} `json:"item"`
+			Item  []Item `json:"item"`
 		} `json:"searchResult"`
 		PaginationOutput []struct {
 			PageNumber     []string `json:"pageNumber"`
@@ -111,6 +56,62 @@ type bulkResponse struct {
 			} `json:"error"`
 		} `json:"index"`
 	} `json:"items"`
+}
+
+type Item struct {
+	ItemID          []string `json:"itemId"`
+	Title           []string `json:"title"`
+	GlobalID        []string `json:"globalId"`
+	PrimaryCategory []struct {
+		CategoryID   []string `json:"categoryId"`
+		CategoryName []string `json:"categoryName"`
+	} `json:"primaryCategory"`
+	GalleryURL    []string `json:"galleryURL"`
+	ViewItemURL   []string `json:"viewItemURL"`
+	PaymentMethod []string `json:"paymentMethod"`
+	AutoPay       []string `json:"autoPay"`
+	PostalCode    []string `json:"postalCode"`
+	Location      []string `json:"location"`
+	Country       []string `json:"country"`
+	ShippingInfo  []struct {
+		ShippingServiceCost []struct {
+			CurrencyID string `json:"@currencyId"`
+			Value      string `json:"__value__"`
+		} `json:"shippingServiceCost"`
+		ShippingType            []string `json:"shippingType"`
+		ShipToLocations         []string `json:"shipToLocations"`
+		ExpeditedShipping       []string `json:"expeditedShipping"`
+		OneDayShippingAvailable []string `json:"oneDayShippingAvailable"`
+		HandlingTime            []string `json:"handlingTime"`
+	} `json:"shippingInfo"`
+	SellingStatus []struct {
+		CurrentPrice []struct {
+			CurrencyID string `json:"@currencyId"`
+			Value      string `json:"__value__"`
+		} `json:"currentPrice"`
+		ConvertedCurrentPrice []struct {
+			CurrencyID string `json:"@currencyId"`
+			Value      string `json:"__value__"`
+		} `json:"convertedCurrentPrice"`
+		SellingState []string `json:"sellingState"`
+		TimeLeft     []string `json:"timeLeft"`
+	} `json:"sellingStatus"`
+	ListingInfo []struct {
+		BestOfferEnabled  []string    `json:"bestOfferEnabled"`
+		BuyItNowAvailable []string    `json:"buyItNowAvailable"`
+		StartTime         []time.Time `json:"startTime"`
+		EndTime           []time.Time `json:"endTime"`
+		ListingType       []string    `json:"listingType"`
+		Gift              []string    `json:"gift"`
+		WatchCount        []string    `json:"watchCount"`
+	} `json:"listingInfo"`
+	ReturnsAccepted []string `json:"returnsAccepted"`
+	Condition       []struct {
+		ConditionID          []string `json:"conditionId"`
+		ConditionDisplayName []string `json:"conditionDisplayName"`
+	} `json:"condition"`
+	IsMultiVariationListing []string `json:"isMultiVariationListing"`
+	TopRatedListing         []string `json:"topRatedListing"`
 }
 
 func findingHandler(c *gin.Context) {
@@ -168,8 +169,9 @@ func popHandler(c *gin.Context) {
 		// b             []byte
 		stringBuilder strings.Builder
 		// jsonData      string
-		responseObj FindingReponse
-		totalPages  int = 2 // assuming there's at least 2 pages
+		responseObj  FindingReponse
+		responseObjs []FindingReponse
+		totalPages   int = 2 // assuming there's at least 2 pages
 	)
 
 	for i := 1; i < totalPages; i++ {
@@ -182,32 +184,53 @@ func popHandler(c *gin.Context) {
 		if err != nil {
 			fmt.Println("error:", err)
 		}
+		responseObjs = append(responseObjs, responseObj)
 		// c.String(http.StatusOK, stringBuilder.String())
 		totalPages, _ = strconv.Atoi(responseObj.FindItemsIneBayStoresResponse[0].PaginationOutput[0].TotalPages[0])
-		addToEs(responseObj, i, c)
 	}
+
+	addToEs(responseObjs, c)
 
 	// c.String(http.StatusOK, "")
 }
 
-func addToEs(response FindingReponse, pageNum int, c *gin.Context) {
-	res, err := esClient.Indices.Create("listings")
-	if err != nil {
-		fmt.Printf("Cannot create index: %s", err)
-	}
-	if res.IsError() {
-		fmt.Printf("Cannot create index: %s", res)
-	}
+func addToEs(response []FindingReponse, c *gin.Context) {
 	var (
 	// strBuilder strings.Builder
 	// raw       map[string]interface{}
 	// blk       *bulkResponse
 	// numErrors int
 	// buffer bytes.Buffer
+	// indexName string = "listings"
 	)
 
-	items := response.FindItemsIneBayStoresResponse[0].SearchResult[0].Item
+	res, err := esClient.Indices.Delete([]string{indexName}, esClient.Indices.Delete.WithIgnoreUnavailable(true))
+	if err != nil || res.IsError() {
+		log.Fatalf("Cannot delete index: %s", err)
+	}
+	res.Body.Close()
 
+	res, err = esClient.Indices.Create(indexName)
+	if err != nil {
+		fmt.Printf("Cannot create index: %s", err)
+	}
+	if res.IsError() {
+		fmt.Printf("Cannot create index: %s", res)
+	}
+
+	var items []Item
+	linq.From(response).SelectManyT(
+		func(x FindingReponse) linq.Query {
+			return linq.From(x.FindItemsIneBayStoresResponse[0].SearchResult[0].Item)
+		}).ToSlice(&items)
+
+	bi, err := esutil.NewBulkIndexer(esutil.BulkIndexerConfig{
+		Index:         "listings",       // The default index name
+		Client:        esClient,         // The Elasticsearch client
+		NumWorkers:    50,               // The number of worker goroutines
+		FlushBytes:    int(1000000),     // The flush threshold in bytes
+		FlushInterval: 30 * time.Second, // The periodic flush interval
+	})
 	if err != nil {
 		log.Fatalf("Error creating the indexer: %s", err)
 	}
@@ -216,19 +239,48 @@ func addToEs(response FindingReponse, pageNum int, c *gin.Context) {
 		itemID := rec.ItemID[0]
 		data, _ := json.Marshal(rec)
 
-		req := esapi.IndexRequest{
-			Index:      "listings",
-			DocumentID: itemID,
-			Body:       bytes.NewReader(data),
-			Refresh:    "true",
-		}
+		// req := esapi.IndexRequest{
+		// 	Index:      "listings",
+		// 	DocumentID: itemID,
+		// 	Body:       bytes.NewReader(data),
+		// 	Refresh:    "true",
+		// }
 
-		res, err = req.Do(context.Background(), esClient)
+		// res, err = req.Do(context.Background(), esClient)
+		// if err != nil {
+		// 	fmt.Printf("Error getting response: %s %s", err, "/n")
+		// }
+		// res.Body.Close()
+
+		err = bi.Add(
+			context.Background(),
+			esutil.BulkIndexerItem{
+				// Action field configures the operation to perform (index, create, delete, update)
+				Action: "index",
+
+				// DocumentID is the (optional) document ID
+				DocumentID: itemID,
+
+				// Body is an `io.Reader` with the payload
+				Body: bytes.NewReader(data),
+
+				// OnFailure is called for each failed operation
+				OnFailure: func(ctx context.Context, item esutil.BulkIndexerItem, res esutil.BulkIndexerResponseItem, err error) {
+					if err != nil {
+						log.Printf("ERROR: %s", err)
+					} else {
+						log.Printf("ERROR: %s: %s", res.Error.Type, res.Error.Reason)
+					}
+				},
+			},
+		)
 		if err != nil {
-			fmt.Printf("Error getting response: %s %s", err, "/n")
+			log.Fatalf("Unexpected error: %s", err)
 		}
-		res.Body.Close()
+	}
 
+	if err := bi.Close(context.Background()); err != nil {
+		log.Fatalf("Unexpected error: %s", err)
 	}
 }
 
@@ -264,8 +316,11 @@ func initEsClient() *elasticsearch.Client {
 	return es
 }
 
-var client *redis.Client
-var esClient *elasticsearch.Client
+var (
+	client    *redis.Client
+	esClient  *elasticsearch.Client
+	indexName string = "listings"
+)
 
 func main() {
 	fmt.Println("Starting the application...")
