@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -164,31 +165,32 @@ func getData(keywords string, pageSize int, pageNum string) []byte {
 func popHandler(c *gin.Context) {
 	pageSize := 100
 	var (
-		b             []byte
+		// b             []byte
 		stringBuilder strings.Builder
 		// jsonData      string
 		responseObj FindingReponse
+		totalPages  int = 2 // assuming there's at least 2 pages
 	)
 
-	for i := 1; i < 2; i++ {
+	for i := 1; i < totalPages; i++ {
 		pageNum := strconv.Itoa(i)
 		var responseByteArray = getData("", pageSize, pageNum)
+		stringBuilder.Grow(len(responseByteArray))
 		stringBuilder.Write(responseByteArray)
-		b = append(b, responseByteArray...)
 
-		// jsonData := stringBuilder.String()
-		err := json.Unmarshal(b, &responseObj)
+		err := json.Unmarshal(responseByteArray, &responseObj)
 		if err != nil {
 			fmt.Println("error:", err)
 		}
-
-		addToEs(responseObj, i)
+		// c.String(http.StatusOK, stringBuilder.String())
+		totalPages, _ = strconv.Atoi(responseObj.FindItemsIneBayStoresResponse[0].PaginationOutput[0].TotalPages[0])
+		addToEs(responseObj, i, c)
 	}
 
-	c.String(http.StatusOK, "")
+	// c.String(http.StatusOK, "")
 }
 
-func addToEs(response FindingReponse, pageNum int) {
+func addToEs(response FindingReponse, pageNum int, c *gin.Context) {
 	res, err := esClient.Indices.Create("listings")
 	if err != nil {
 		fmt.Printf("Cannot create index: %s", err)
@@ -197,88 +199,37 @@ func addToEs(response FindingReponse, pageNum int) {
 		fmt.Printf("Cannot create index: %s", res)
 	}
 	var (
-		// strBuilder strings.Builder
-		raw       map[string]interface{}
-		blk       *bulkResponse
-		numErrors int
-		buffer    bytes.Buffer
+	// strBuilder strings.Builder
+	// raw       map[string]interface{}
+	// blk       *bulkResponse
+	// numErrors int
+	// buffer bytes.Buffer
 	)
 
 	items := response.FindItemsIneBayStoresResponse[0].SearchResult[0].Item
-	numItems := len(items)
+
+	if err != nil {
+		log.Fatalf("Error creating the indexer: %s", err)
+	}
 
 	for _, rec := range items {
 		itemID := rec.ItemID[0]
-		meta := []byte(fmt.Sprintf(`{ "index" : { "_id" : %s } }%s`, itemID, "\n"))
 		data, _ := json.Marshal(rec)
-		data = append(data, "\n"...)
-
-		buffer.Write(meta)
-		buffer.Write(data)
-		// strBuilder.Write(meta)
-		// strBuilder.Write(data)
 
 		req := esapi.IndexRequest{
 			Index:      "listings",
 			DocumentID: itemID,
-			Body:       bytes.NewReader(buffer.Bytes()),
+			Body:       bytes.NewReader(data),
 			Refresh:    "true",
 		}
 
 		res, err = req.Do(context.Background(), esClient)
 		if err != nil {
-			fmt.Printf("Error getting response: %s", err)
+			fmt.Printf("Error getting response: %s %s", err, "/n")
 		}
+		res.Body.Close()
+
 	}
-
-	res, err = esClient.Bulk(bytes.NewReader(buffer.Bytes()), esClient.Bulk.WithIndex("listings"))
-	if err != nil {
-		fmt.Printf("Failure indexing page %d %s", pageNum, err)
-	}
-
-	// If the whole request failed, print error and mark all documents as failed
-	//
-	if res.IsError() {
-		numErrors += numItems
-		if err := json.NewDecoder(res.Body).Decode(&raw); err != nil {
-			fmt.Println("Failure to to parse response body: %s", err)
-		} else {
-			fmt.Println("  Error: [%d] %s: %s",
-				res.StatusCode,
-				raw["error"].(map[string]interface{})["type"],
-				raw["error"].(map[string]interface{})["reason"],
-			)
-		}
-		// A successful response might still contain errors for particular documents...
-		//
-	} else {
-		if err := json.NewDecoder(res.Body).Decode(&blk); err != nil {
-			fmt.Println("Failure to to parse response body: %s", err)
-		} else {
-			for _, d := range blk.Items {
-				// ... so for any HTTP status above 201 ...
-				//
-				if d.Index.Status > 201 {
-					// ... increment the error counter ...
-					//
-					numErrors++
-
-					// ... and print the response status and error information ...
-					fmt.Println("  Error: [%d]: %s: %s: %s: %s",
-						d.Index.Status,
-						d.Index.Error.Type,
-						d.Index.Error.Reason,
-						d.Index.Error.Cause.Type,
-						d.Index.Error.Cause.Reason,
-					)
-				}
-			}
-		}
-	}
-
-	// Close the response body, to prevent reaching the limit for goroutines or file handles
-	//
-	res.Body.Close()
 }
 
 func initClient() *redis.Client {
@@ -292,22 +243,20 @@ func initClient() *redis.Client {
 }
 
 func initEsClient() *elasticsearch.Client {
-	cfg := elasticsearch.Config{
-		Addresses: []string{
-			"http://localhost:9200",
-			"http://localhost:9300",
-		},
-		// Transport: &http.Transport{
-		// 	MaxIdleConnsPerHost:   10,
-		// 	ResponseHeaderTimeout: time.Second,
-		// 	TLSClientConfig: &tls.Config{
-		// 		MinVersion: tls.VersionTLS11,
-		// 		// ...
-		// 	},
-		// 	// ...
-		//},
-	}
-	es, err := elasticsearch.NewClient(cfg)
+	// cfg := elasticsearch.Config{
+	// 	Addresses: []string{"http://localhost:9200", "http://localhost:9300"},
+	// 	Transport: &http.Transport{
+	// 		MaxIdleConnsPerHost: 10,
+	// 		// ResponseHeaderTimeout: time.Millisecond,
+	// 		// DialContext:           (&net.Dialer{Timeout: time.Nanosecond}).DialContext,
+	// 		TLSClientConfig: &tls.Config{
+	// 			MinVersion: tls.VersionTLS11,
+	// 			// ...
+	// 		},
+	// 	},
+	// }
+
+	es, err := elasticsearch.NewDefaultClient() //elasticsearch.NewClient(cfg)
 	if err != nil {
 		fmt.Println("Error creating the es client: %s", err)
 	}
