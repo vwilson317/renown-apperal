@@ -55,43 +55,27 @@ export default Vue.extend({
       additionalImages: [] as string[],
       startIndex: 0,
       item: {} as IListing,
-      firstImageUrl: '' as string
+      firstImageUrl: '' as string,
     };
   },
-  created() {
-    //get image
+  beforeMount() {
+    // get image
     this.$store.commit('setLoading', true);
-
     this.item = store.getters.getListing(this.$props.id);
-    if(this.item == undefined){
-      GetListing(this.$props.id).then((data: IListing) =>{
+    if (this.item === undefined) {
+      GetListing(this.$props.id).then((data: IListing) => {
         this.item = data;
-            this.firstImageUrl = data.ImageUrls[0];
-      this.$store.commit('setLoading', false);
-      })
-    }
-    else{
+        this.firstImageUrl = data.ImageUrls[0];
+        this.$store.commit('setLoading', false);
+      });
+    } else {
       this.firstImageUrl = this.item.ImageUrls[0];
     }
-
-      //.then((x: IListing) =>{
-    // debugger
-
-    //   this.item = x;
-    //   this.firstImageUrl = x.ImageUrls[0];
-    //   this.$store.commit('setLoading', false);
-
-    // });
-    // this.selectedImg = this.$props.item.ImageUrls[0];
-    // this.additionalImages = this.getAdditionalImages();
-
-    // setTimeout(() => {
-    //   this.$store.commit('setLoading', false);
-    // }, 1000);
+    this.$store.commit('setLoading', false);
   },
   computed: {
     getAdditionalImages() {
-      let copiedArray = [...this.item.ImageUrls] as string[];
+      const copiedArray = [...this.item.ImageUrls] as string[];
       copiedArray.splice(2, 1);
       return copiedArray;
     },

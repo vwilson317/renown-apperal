@@ -46,6 +46,7 @@ export default Vue.extend({
           this.$store.commit('addListings', response);
           this.$store.commit('increasePageNum');
         });
+
     },
     getPageNum() {
       return this.$store.state.pageNum;
@@ -67,18 +68,14 @@ export default Vue.extend({
   components: {
     Listing,
   },
-  beforeUpdate() {
-  },
-  created() {
+  beforeMount(){
     this.$store.commit('setLoading', true);
-     
-    // todo: consider adding back when api limits are resolved
-    //     setTimeout(() => {
-    //   this.$store.commit('setLoading', false);
-    // }, 1500);
-  },
-  mounted(){
-    
+      this.getDataFromApi(1).then(() => {
+      this.$store.commit('setLoading', false);
+      //         setTimeout(() => {
+
+      // }, 1500);
+    });
   }
 });
 </script>

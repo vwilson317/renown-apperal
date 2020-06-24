@@ -75,21 +75,19 @@ export default Vue.extend({
       this.$store.commit('setKeywords', this.keywords);
       this.$store.commit('search');
       this.$store.commit('increasePageNum');
-      //this.onReset();
+      // this.onReset();
     },
     onReset() {
       this.keywords = '';
     },
     async getDataFromApi(pageNum: number) {
       const shouldLoadData =
-        this.$store.state.listings.length <= pageNum * process.env.VUE_APP_PAGE_SIZE;// &&
-        //this.$store.state.listings.length < 400;
+        this.$store.state.listings.length <= pageNum * process.env.VUE_APP_PAGE_SIZE; // &&
+        // this.$store.state.listings.length < 400;
       if (shouldLoadData) {
-        let response = await GetListings(pageNum, this.$store.state.keywords);
+        const response = await GetListings(pageNum, this.$store.state.keywords);
         this.$store.commit('addListings', response);
         this.$store.commit('increasePageNum');
-
-        this.$store.state.listings;
       }
     },
   },
@@ -98,14 +96,6 @@ export default Vue.extend({
       return this.$store.state.cartItems.length;
     },
   },
-  beforeMount() {
-    this.getDataFromApi(1).then(() => {
-      this.$store.commit('setLoading', false);
-      //         setTimeout(() => {
-        
-      // }, 1500);
-    })
-  }
 });
 </script>
 

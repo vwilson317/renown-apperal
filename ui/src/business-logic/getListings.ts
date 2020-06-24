@@ -14,32 +14,31 @@ export const GetListings = async (pageNum: number, keyWords?: string): Promise<I
     const response = await getListingItemsByStore(pageNum, keyWords);
     const responseData = response.data.findItemsIneBayStoresResponse[0];
     const items = responseData!.searchResult[0]!.item;
-    const itemIds : string[] = items.map((element: any) => {
+    const itemIds: string[] = items.map((element: any) => {
         return element.itemId;
     });
 
     let availableItemCount = 0;
     let i = 0;
-    let itemDetails: ShoppingResponse[] = [];
-    do{
+    const itemDetails: ShoppingResponse[] = [];
+    do {
         i++;
-        if(itemIds.length < 20){
+        if (itemIds.length < 20) {
             availableItemCount = itemIds.length;
-        }
-        else{
+        } else {
             availableItemCount = 20;
         }
-        let subArray: string[] = itemIds.splice(1, availableItemCount);
-        let data = await getItemDetails(subArray).catch(e => {
-            console.error(e);
+        const subArray: string[] = itemIds.splice(1, availableItemCount);
+        const data = await getItemDetails(subArray).catch((e) => {
+            console.log(e);
         });
         itemDetails.push(data as ShoppingResponse);
-    } while(i * 20 < process.env.VUE_APP_PAGE_SIZE);
+    } while (i * 20 < process.env.VUE_APP_PAGE_SIZE);
 
-    let returnResult: IListing[] = []
+    const returnResult: IListing[] = [];
 
     itemDetails.forEach((x: ShoppingResponse) => {
-        let listings = MapListing(x);
+        const listings = MapListing(x);
         returnResult.push(...listings);
     });
     return returnResult;
@@ -47,37 +46,37 @@ export const GetListings = async (pageNum: number, keyWords?: string): Promise<I
 
 function MapListing(shoppingResponse: ShoppingResponse): IListing[] {
     let listings: IListing[] = [];
-    try{
+    try {
         listings = shoppingResponse.Item.map((x: any): IListing => {
+            debugger
             const listing = {
                 Name: x.Title,
                 ImageUrls: x.PictureURL,
                 id: x.ItemID,
-                Price: x.ConvertedCurrentPrice.Value
+                Price: x.ConvertedCurrentPrice.Value,
             } as IListing;
 
-            getCartStatus(x.ItemID).then(data => listing.isInCart = data);
-    
+            getCartStatus(x.ItemID).then((data) => listing.isInCart = data);
+
             return listing;
         });
-    }
-    catch(e){
-        console.error(e)
+    } catch (e) {
+        console.error(e);
     }
 
     return listings;
 }
 
 export const GetListing = async (id: string): Promise<IListing> => {
-    let itemDetail = await getItemDetails(id);
-    let casted = itemDetail.data as ShoppingResponse;
-    try{
-        const data = await MapListing(casted);
+    const itemDetail = await getItemDetails([id]);
+    debugger
+    const casted = itemDetail as ShoppingResponse;
+    try {
+        const data = MapListing(casted);
         return data[0];
-    }
-    catch(e){
-        console.error(e);
+    } catch (e) {
+        console.log(e);
     }
 
     return {} as IListing;
-}
+};

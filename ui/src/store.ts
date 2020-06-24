@@ -63,6 +63,6 @@ export default new Vuex.Store({
     },
     getListing: (state: any) => (itemId: number) => {
       return state.listings.find((x: any) => x.id === itemId);
-    }
+    },
   },
 });
