@@ -181,8 +181,6 @@ func getData(keywords string, pageSize int, pageNum string) []byte {
 		data, _ = ioutil.ReadAll(response.Body)
 	}
 
-	strData := string(data)
-	fmt.Printf(strData)
 	return data
 }
 

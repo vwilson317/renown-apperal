@@ -45,10 +45,8 @@ export const setCartStatus = async (itemId: number | undefined, status: boolean)
 
 export const getCartStatus = async (itemId: string): Promise<boolean> => {
     try {
-        const result = await axios.get('api/listings/cartstatus', {
-            params: {
-                itemId,
-            },
+        const result = await axios.get(`api/listings/cartstatus?${itemId}`, {
+            baseURL: '../'
         });
         return result.data;
     } catch (e) {
@@ -71,7 +69,6 @@ export const get = async (apiType: Api, singleParam: string): Promise<any> => {
         uri = shoppingApiUrl + '?' + str + '&' + singleParam;
 
         const response = await axios.get(uri);
-        debugger
         if (response.status === 200) {
             return response.data;
         }

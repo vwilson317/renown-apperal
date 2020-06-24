@@ -1,7 +1,7 @@
 <template>
   <b-container class="detail-container">
     <b-row class="header d-block d-sm-none" align-h="center">
-      <h3>{{item.Name}}</h3>
+      <h3>{{name}}</h3>
     </b-row>
     <b-row class="d-none d-sm-flex non-mobile-content" align-v="center" align-h="center" no-gutters>
       <b-col class="main-img" sm="6" no-gutters>
@@ -17,7 +17,7 @@
       </b-col>
       <b-col sm="6" align-self="start">
         <div id="detail-info-container">
-        <h3>{{item.Name}}</h3>
+        <h3>{{name}}</h3>
         <div class="divider"></div>
         <h5>${{item.Price}}</h5>
         <AddToCardButton :item="item" />
@@ -55,7 +55,7 @@ export default Vue.extend({
       additionalImages: [] as string[],
       startIndex: 0,
       item: {} as IListing,
-      firstImageUrl: '' as string,
+      images: [] as string[]
     };
   },
   beforeMount() {
@@ -65,24 +65,32 @@ export default Vue.extend({
     if (this.item === undefined) {
       GetListing(this.$props.id).then((data: IListing) => {
         this.item = data;
-        this.firstImageUrl = data.ImageUrls[0];
         this.$store.commit('setLoading', false);
       });
-    } else {
-      this.firstImageUrl = this.item.ImageUrls[0];
-    }
+    } 
     this.$store.commit('setLoading', false);
   },
   computed: {
+    name(): string {
+      let item = this.item
+      if(item !== undefined)
+        return item.Name;
+
+      return "";
+    },
+    firstImageUrl(): string {
+      if(this.item !== undefined)
+      {
+        return this.item.ImageUrls[0];
+      }
+
+      return "";
+    },
     getAdditionalImages() {
       const copiedArray = [...this.item.ImageUrls] as string[];
       copiedArray.splice(2, 1);
       return copiedArray;
     },
-    // firstImageUrl() {
-    //   debugger
-    //   return this.item.ImageUrls[0]
-    // }
   },
   methods: {
     changeMainPic(imgSrc: string) {

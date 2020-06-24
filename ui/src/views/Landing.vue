@@ -68,14 +68,20 @@ export default Vue.extend({
   components: {
     Listing,
   },
+  // created(){
+  //   this.$store.commit('setLoading', true);
+  // },
   beforeMount(){
     this.$store.commit('setLoading', true);
       this.getDataFromApi(1).then(() => {
-      this.$store.commit('setLoading', false);
+      // this.$store.commit('setLoading', false);
       //         setTimeout(() => {
 
       // }, 1500);
     });
+  },
+  updated(){
+      this.$store.commit('setLoading', false);
   }
 });
 </script>

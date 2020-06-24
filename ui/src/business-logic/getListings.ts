@@ -48,7 +48,6 @@ function MapListing(shoppingResponse: ShoppingResponse): IListing[] {
     let listings: IListing[] = [];
     try {
         listings = shoppingResponse.Item.map((x: any): IListing => {
-            debugger
             const listing = {
                 Name: x.Title,
                 ImageUrls: x.PictureURL,
@@ -69,7 +68,6 @@ function MapListing(shoppingResponse: ShoppingResponse): IListing[] {
 
 export const GetListing = async (id: string): Promise<IListing> => {
     const itemDetail = await getItemDetails([id]);
-    debugger
     const casted = itemDetail as ShoppingResponse;
     try {
         const data = MapListing(casted);
