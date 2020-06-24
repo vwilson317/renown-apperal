@@ -1,8 +1,14 @@
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
 
-$red: #EF233C;
+$red: #EF233C; 
 $flash-white: #EDF2F4;
 $grey-blue: #8D99AE;
 $gun-metal: #2B2D42;
 $main: #5f699b;
+
+.divider {
+    border-top: 2px solid $red;
+    width: 70%;
+    margin: 0.5em auto;
+  }

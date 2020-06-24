@@ -116,9 +116,11 @@ type Item struct {
 
 func findingHandler(c *gin.Context) {
 	pageNum := c.DefaultQuery("pageNum", "1")
+	pageSize := c.DefaultQuery("pageSize", "20")
 	keywords := c.DefaultQuery("keywords", "")
 
-	var responseData = getData(keywords, 20, pageNum)
+	parsedSized, _ := strconv.Atoi(pageSize)
+	var responseData = getData(keywords, parsedSized, pageNum)
 	c.String(http.StatusOK, string(responseData))
 }
 
@@ -137,6 +139,24 @@ func listingPostHandler(c *gin.Context) {
 		c.Status(http.StatusCreated)
 	}
 }
+
+// func shopHandler(c *gin.Context) {
+// 	type queryHolder struct {
+// 		Ids []string `form:"ids[]" binding:"required"`
+// 	}
+// 	var qholder queryHolder
+// 	if err := c.ShouldBindQuery(&qholder); err != nil {
+// 		c.AbortWithStatus(http.StatusBadRequest)
+// 		return
+// 	}
+// 	log.Printf("%+v\n", qholder)
+
+// 	var queryStr = "http://open.api.ebay.com/shopping?version=1099&appid=VincentW-renownap-PRD-0b31f104d-07a63429&responseencoding=JSON&callname=GetMultipleItems&ItemId=124150163896,124229824881,124210081637,124075792524,124210081439,124213947485,124210081529,124229824975,124229824984,124229824779,124206054067,124229824899,124084970319,124189357278,124224494536,124189357410,124224494550,124203491168,124215667117,124229824915"
+// 	idsStr := strings.Join(qholder.Ids, ",")
+// 	response, _ := http.Get(queryStr + idsStr)
+// 	data, _ := ioutil.ReadAll(response.Body)
+// 	c.String(http.StatusOK, string(data))
+// }
 
 func listingGetHandler(c *gin.Context) {
 	key := c.DefaultQuery("itemId", "")
@@ -160,6 +180,9 @@ func getData(keywords string, pageSize int, pageNum string) []byte {
 	} else {
 		data, _ = ioutil.ReadAll(response.Body)
 	}
+
+	strData := string(data)
+	fmt.Printf(strData)
 	return data
 }
 
@@ -305,6 +328,7 @@ func main() {
 	router.GET("/api/finding", findingHandler)
 	router.GET("/health", healthHandler)
 	router.GET("/api/populate", popHandler)
+	//router.GET("/api/shopping", shopHandler)
 
 	router.POST("/api/listings", listingPostHandler)
 	router.GET("/api/listings/cartstatus", listingGetHandler)

@@ -50,6 +50,7 @@
 import Vue from 'vue';
 import Nav from '@/components/Nav.vue'; // @   is an alias to /src
 import Loading from '@/components/Loading.vue';
+import { GetListings } from './business-logic/getListings';
 
 export default Vue.extend({
   name: 'App',
@@ -79,12 +80,32 @@ export default Vue.extend({
     onReset() {
       this.keywords = '';
     },
+    async getDataFromApi(pageNum: number) {
+      const shouldLoadData =
+        this.$store.state.listings.length <= pageNum * process.env.VUE_APP_PAGE_SIZE;// &&
+        //this.$store.state.listings.length < 400;
+      if (shouldLoadData) {
+        let response = await GetListings(pageNum, this.$store.state.keywords);
+        this.$store.commit('addListings', response);
+        this.$store.commit('increasePageNum');
+
+        this.$store.state.listings;
+      }
+    },
   },
   computed: {
     itemCount() {
       return this.$store.state.cartItems.length;
     },
   },
+  beforeMount() {
+    this.getDataFromApi(1).then(() => {
+      this.$store.commit('setLoading', false);
+      //         setTimeout(() => {
+        
+      // }, 1500);
+    })
+  }
 });
 </script>
 

@@ -83,11 +83,7 @@ export default Vue.extend({
   }
 }
 
-.divider {
-  border-top: 2px solid $red;
-  width: 70%;
-  margin: 0.5em auto;
-}
+
 
 /* Shine */
 // figure {

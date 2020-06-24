@@ -7,7 +7,7 @@ import Detail from './views/Detail.vue';
 import Cart from './views/Cart.vue';
 import Checkout from './views/Checkout.vue';
 import About from './views/About.vue';
-import { GetListing } from './business-logic/getListings';
+import { GetListings } from './business-logic/getListings';
 import store from './store';
 
 Vue.use(Router);
@@ -16,7 +16,7 @@ const beforeEnterFunc = (keyword: string) => async (to: Route, from: Route, next
   store.commit('setKeywords', keyword);
   store.commit('setLoading', true);
   store.commit('resetPageNum');
-  const result = await GetListing(1, keyword);
+  const result = await GetListings(1, keyword);
   store.commit('replaceListings', result);
   store.commit('setLoading', false);
 

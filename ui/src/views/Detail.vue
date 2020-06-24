@@ -7,17 +7,19 @@
       <b-col class="main-img" sm="6" no-gutters>
     <!-- directive -->
     <div class="images" v-viewer>
-      <b-img v-for="currentImage in item.ImageUrls" :src="currentImage" class="p2"/>
+      <b-img :src="firstImageUrl" class="p2 img-item"/>
     </div>
     <!-- component -->
     <viewer :images="images">
-      <img v-for="src in images" :src="src" :key="src">
+      <img v-for="src in getAdditionalImages" :src="src" :key="src">
     </viewer>
 
       </b-col>
       <b-col sm="6" align-self="start">
         <div id="detail-info-container">
         <h3>{{item.Name}}</h3>
+        <div class="divider"></div>
+        <h5>${{item.Price}}</h5>
         <AddToCardButton :item="item" />
         </div>
       </b-col>
@@ -38,6 +40,7 @@ import AddToCardButton from '../components/AddToCartButton.vue';
 import 'viewerjs/dist/viewer.css';
 import Viewer from 'v-viewer';
 import store from '../store';
+import { getItemDetails } from '../services/apiDataAccess';
 
 Vue.use(Viewer);
 
@@ -52,30 +55,54 @@ export default Vue.extend({
       additionalImages: [] as string[],
       startIndex: 0,
       item: {} as IListing,
+      firstImageUrl: '' as string
     };
   },
-  beforeMount() {
+  created() {
     //get image
-    store.getters.getListing(this.$props.id).then((x) =>{
-      this.item = x;
-    });
-    this.selectedImg = this.$props.item.ImageUrls[0];
-    this.additionalImages = this.getAdditionalImages();
     this.$store.commit('setLoading', true);
 
-    setTimeout(() => {
+    this.item = store.getters.getListing(this.$props.id);
+    if(this.item == undefined){
+      GetListing(this.$props.id).then((data: IListing) =>{
+        this.item = data;
+            this.firstImageUrl = data.ImageUrls[0];
       this.$store.commit('setLoading', false);
-    }, 1000);
+      })
+    }
+    else{
+      this.firstImageUrl = this.item.ImageUrls[0];
+    }
+
+      //.then((x: IListing) =>{
+    // debugger
+
+    //   this.item = x;
+    //   this.firstImageUrl = x.ImageUrls[0];
+    //   this.$store.commit('setLoading', false);
+
+    // });
+    // this.selectedImg = this.$props.item.ImageUrls[0];
+    // this.additionalImages = this.getAdditionalImages();
+
+    // setTimeout(() => {
+    //   this.$store.commit('setLoading', false);
+    // }, 1000);
   },
-  computed: {},
+  computed: {
+    getAdditionalImages() {
+      let copiedArray = [...this.item.ImageUrls] as string[];
+      copiedArray.splice(2, 1);
+      return copiedArray;
+    },
+    // firstImageUrl() {
+    //   debugger
+    //   return this.item.ImageUrls[0]
+    // }
+  },
   methods: {
     changeMainPic(imgSrc: string) {
       this.selectedImg = imgSrc;
-    },
-    getAdditionalImages() {
-      const copiedArray = [...this.item.ImageUrls] as string[];
-      copiedArray.splice(1, 0);
-      return copiedArray;
     },
   },
   components: {
@@ -87,9 +114,15 @@ export default Vue.extend({
 <style scoped lang="scss">
 @import "@/styles/global.scss";
 
+h4 {
+  // color: $red
+}
+
 .detail-container {
-  img {
+  img-item {
     margin: 0;
+    cursor: pointer;
+    padding: 1em;
   }
 
   .header {

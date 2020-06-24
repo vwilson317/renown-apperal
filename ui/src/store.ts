@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { IListing, GetListing } from './business-logic/getListings';
+import { IListing, GetListings } from './business-logic/getListings';
 import { setCartStatus } from './services/apiDataAccess';
 import { Item } from './dto/findResponse';
 
@@ -39,7 +39,7 @@ export default new Vuex.Store({
       state.listings.splice(index, 1);
     },
     search: async (state: any) => {
-      const result = await GetListing(1, state.keywords);
+      const result = await GetListings(1, state.keywords);
       state.listings = result;
     },
     setKeywords(state: any, keywords: string) {
@@ -61,7 +61,7 @@ export default new Vuex.Store({
       await setCartStatus(removedItem[0].id, false);
       return removedItem;
     },
-    getListing: (state: any) => async (itemId: number) => {
+    getListing: (state: any) => (itemId: number) => {
       return state.listings.find((x: any) => x.id === itemId);
     }
   },

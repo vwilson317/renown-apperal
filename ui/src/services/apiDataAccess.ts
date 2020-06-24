@@ -16,12 +16,13 @@ export const getListingItemsByStore = async (pageNum: number, keyWords?: string)
     if (keyWords) {
         paramsStr +=  '&keywords=' + keyWords;
     }
+    paramsStr += '&pageSize=' + process.env.VUE_APP_PAGE_SIZE;
     const result = await get(Api.Finding, paramsStr); // + "&paginationInput.entriesPerPage=2");
     return result;
 };
 
-export const getItemDetails = async (itemIds: string): Promise<any> => {
-    const result = await get(Api.Shopping, 'callname=GetMultipleItems&ItemId=' + itemIds);
+export const getItemDetails = async (itemIds: string[]): Promise<any> => {
+    const result = await get(Api.Shopping, 'callname=GetMultipleItems&ItemId=' + itemIds.join());
     return result;
 };
 
@@ -43,13 +44,22 @@ export const setCartStatus = async (itemId: number | undefined, status: boolean)
 };
 
 export const getCartStatus = async (itemId: string): Promise<boolean> => {
-    const result = await axios.get('api/listings/cartstatus', {
-        params: {
-            itemId,
-        },
-    });
-    return result.data;
+    try{
+        const result = await axios.get('api/listings/cartstatus', {
+            params: {
+                itemId,
+            },
+        });
+        return result.data;
+    }
+catch(e){
+    console.error(e);
+}
+
+return false;
 };
+
+// export const getSingleItem 
 
 export const get = async (apiType: Api, singleParam: string): Promise<any> => {
     // todo add ebay apis to dev server
@@ -60,8 +70,12 @@ export const get = async (apiType: Api, singleParam: string): Promise<any> => {
     } else if (apiType === Api.Shopping) {
         const str = 'version=' + shoppingApiVersion + '&appid=' + eBayAppId + '&responseencoding=JSON';
         uri = shoppingApiUrl + '?' + str + '&' + singleParam;
+        
+        let response = await axios.get(uri);
+        if(response.status === 200)
+            return response.data;
 
-        return axios.get(uri);
+        console.error(response.statusText)
     } else if (apiType === Api.Trading) {
         const params = {
             EndingReason: 'NotAvailable',
