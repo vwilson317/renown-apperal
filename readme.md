@@ -20,4 +20,6 @@ This is a custom ecommerce site written in vuejs (frontend), goland (backend, ap
     * from the `ui` vs code instance, use the vs code terminal to run the command `npm run serve`
 
 ## Architecture 
-<div style="width: 640px; height: 480px; margin: 10px; position: relative;"><iframe allowfullscreen frameborder="0" style="width:640px; height:480px" src="https://app.lucidchart.com/documents/embeddedchart/1849c7e4-c636-48ae-bcf2-5369a7c5352f" id="-Fy_qb9oIRDT"></iframe></div>
+
+
+![x](https://app.lucidchart.com/publicSegments/view/44b229ed-92bb-487a-b40a-38a9a87d6559/image.png)
