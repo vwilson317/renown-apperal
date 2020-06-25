@@ -20,4 +20,4 @@ This is a custom ecommerce site written in vuejs (frontend), goland (api), redis
     * from the `ui` vs code instance, use the vs code terminal to run the command `npm run serve`
 
 ## Architecture 
-![](https://app.lucidchart.com/publicSegments/view/44b229ed-92bb-487a-b40a-38a9a87d6559/image.png)
+![](https://app.lucidchart.com/publicSegments/view/186a07fb-d36d-446a-9865-f8f0edfa2eb9/image.png)
