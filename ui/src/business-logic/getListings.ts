@@ -32,33 +32,53 @@ export const GetListings = async (pageNum: number, keyWords?: string): Promise<I
         const data = await getItemDetails(subArray).catch((e) => {
             console.log(e);
         });
-        itemDetails.push(data as ShoppingResponse);
+        if(data !== "")
+            itemDetails.push(data as ShoppingResponse);
     } while (i * 20 < process.env.VUE_APP_PAGE_SIZE);
 
     const returnResult: IListing[] = [];
-
-    itemDetails.forEach((x: ShoppingResponse) => {
-        const listings = MapListing(x);
+    if(itemDetails.length > 0){
+        itemDetails.forEach((x: ShoppingResponse) => {
+            const listings = MapListing(x);
+            returnResult.push(...listings);
+        });
+    }
+    else{
+        //getMutipleItems api call is down for some reason
+        let listings = items.map((x: any): IListing => {
+            return {
+                Name: x.title[0],
+                ImageUrls: ['https://cdn.shopify.com/s/files/1/0273/5387/4537/products/594b26735d8cdc1e6099f4d0-original_1024x1024.jpg?v=1570681462'],
+                id: x.itemId[0],
+                Price: 'N/A',
+                isInCart: false
+            }
+        })
         returnResult.push(...listings);
-    });
+    }
+
     return returnResult;
 };
 
 function MapListing(shoppingResponse: ShoppingResponse): IListing[] {
     let listings: IListing[] = [];
     try {
-        listings = shoppingResponse.Item.map((x: any): IListing => {
-            const listing = {
-                Name: x.Title,
-                ImageUrls: x.PictureURL,
-                id: x.ItemID,
-                Price: x.ConvertedCurrentPrice.Value,
-            } as IListing;
-
-            getCartStatus(x.ItemID).then((data) => listing.isInCart = data);
-
-            return listing;
-        });
+        if(shoppingResponse.Item.length !== 0)
+        {
+            listings = shoppingResponse.Item.map((x: any): IListing => {
+                const listing = {
+                    Name: x.Title,
+                    ImageUrls: x.PictureURL,
+                    id: x.ItemID,
+                    Price: x.ConvertedCurrentPrice.Value,
+                } as IListing;
+    
+                getCartStatus(x.ItemID).then((data) => listing.isInCart = data);
+    
+                return listing;
+            });
+        }
+        
     } catch (e) {
         console.error(e);
     }

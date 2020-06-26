@@ -1,38 +1,7 @@
 <template>
   <div id="app">
     <div class="sticky">
-      <b-container fluid class="logo-row">
-            <b-form @submit="onSubmit" @reset="onReset">
-
-        <b-row cols="12">
-          <b-col class="left-side" offset="2" offset-sm="1">
-            <router-link to="/">
-              <img class="logo" alt="Vue logo" src="./assets/logo-white.png" />
-            </router-link>
-          </b-col>
-          <b-col cols="3" class="search-container">
-              <b-row no-gutters align-h="center" align-v="center">
-                <b-col cols="9">
-                  <b-form-input v-model="keywords" placeholder="Search..." />
-                </b-col>
-                <b-col cols="3" class="search-button-container">
-                  <b-button @click="onSubmit">
-                    <font-awesome-icon :icon="['fas', 'search']" />
-                  </b-button>
-                </b-col>
-              </b-row>
-          </b-col>
-          <b-col class="cart-action-container" cols="2" sm="1" align-self="center">
-            <b-row align-h="center" align-v="center" @click="click">
-              <span class="d-none d-sm-block">Cart</span>
-              <font-awesome-icon class="cart-icon" :icon="['fab', 'opencart']" size="2x"></font-awesome-icon>
-              <b-badge v-show="itemCount !== 0" class="item-count">{{itemCount}}</b-badge>
-            </b-row>
-          </b-col>
-        </b-row>
-            </b-form>
-
-      </b-container>
+      <Banner />
       <Nav />
     </div>
     <div id="content-wrapper">
@@ -47,55 +16,34 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import Nav from '@/components/Nav.vue'; // @   is an alias to /src
-import Loading from '@/components/Loading.vue';
-import { GetListings } from './business-logic/getListings';
+import Vue from "vue";
+import Nav from "@/components/Nav.vue"; // @   is an alias to /src
+import Loading from "@/components/Loading.vue";
+import { GetListings } from "./business-logic/getListings";
+import Banner from "./components/Banner.vue";
 
 export default Vue.extend({
-  name: 'App',
+  name: "App",
   components: {
     Nav,
     Loading,
+    Banner
   },
   data: () => {
     return {
-      keywords: '',
+      keywords: ""
     };
   },
   methods: {
-    click() {
-      this.$router.push('cart');
-    },
     loading() {
       return this.$store.state.loading.isLoading;
-    },
-    onSubmit(event: any) {
-      event.preventDefault();
-      this.$store.commit('setKeywords', this.keywords);
-      this.$store.commit('search');
-      this.$store.commit('increasePageNum');
-      // this.onReset();
-    },
-    onReset() {
-      this.keywords = '';
-    },
-    async getDataFromApi(pageNum: number) {
-      const shouldLoadData =
-        this.$store.state.listings.length <= pageNum * process.env.VUE_APP_PAGE_SIZE; // &&
-        // this.$store.state.listings.length < 400;
-      if (shouldLoadData) {
-        const response = await GetListings(pageNum, this.$store.state.keywords);
-        this.$store.commit('addListings', response);
-        this.$store.commit('increasePageNum');
-      }
     },
   },
   computed: {
     itemCount() {
       return this.$store.state.cartItems.length;
-    },
-  },
+    }
+  }
 });
 </script>
 
@@ -182,36 +130,6 @@ h6 {
   height: 100%;
 }
 
-.logo-row {
-  background-color: $main; //$gun-metal;
-  min-height: 4em;
-}
-
-.logo {
-  height: 4em;
-  padding: 0.25em;
-}
-
-.cart-action-container {
-  text-align: right;
-  color: white;
-
-  .cart-icon {
-    display: inline-block;
-  }
-}
-
-.item-count {
-  position: absolute;
-  top: 15px;
-  right: 10px;
-}
-
-.badge-secondary {
-  background-color: $red !important;
-  opacity: 0.8;
-}
-
 .sticky {
   position: fixed;
   top: 0;
@@ -226,13 +144,5 @@ h6 {
 
 .box-shadow {
   box-shadow: 4px 3px 3px grey;
-}
-
-.search-container {
-  border-right: 1px solid white;
-
-  .search-button-container {
-    background-color: white;
-  }
 }
 </style>

@@ -104,6 +104,5 @@ h3 {
   .more-btn {
     width: 100%;
   }
-
 }
 </style>

@@ -8,7 +8,7 @@ export enum Api {
 
 const findApiUrl = 'api/finding';
 const shoppingApiUrl = 'api/shopping'; // "http://open.api.ebay.com/shopping";
-const shoppingApiVersion = 1099; // 1085 doesn't work now wtf
+const shoppingApiVersion = 1119; // 1085 doesn't work now wtf
 const eBayAppId = 'VincentW-renownap-PRD-0b31f104d-07a63429';
 
 export const getListingItemsByStore = async (pageNum: number, keyWords?: string): Promise<any> => {
@@ -67,7 +67,6 @@ export const get = async (apiType: Api, singleParam: string): Promise<any> => {
     } else if (apiType === Api.Shopping) {
         const str = 'version=' + shoppingApiVersion + '&appid=' + eBayAppId + '&responseencoding=JSON';
         uri = shoppingApiUrl + '?' + str + '&' + singleParam;
-
         const response = await axios.get(uri);
         if (response.status === 200) {
             return response.data;
